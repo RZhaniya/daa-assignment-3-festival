@@ -18,6 +18,7 @@ def main():
   try:
    z=subprocess.run(cmd,input=json.dumps(c['input'])+'\n',capture_output=True,text=True,timeout=20);y=json.loads(z.stdout)
    from public_validate import check
+   t=c['input']['task']
    ok=z.returncode==0 and check(c['input'],y,c['output'])
    print(('PASS' if ok else 'FAIL')+f' public {i+1}: {t}')
    failures+=not ok
