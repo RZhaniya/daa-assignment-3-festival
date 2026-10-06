@@ -1,0 +1,25 @@
+name: Public checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Starter compiles and launches
+        run: python -c "import subprocess; [subprocess.run(['python','tools/run.py','--language',lang,'--setup'],check=True) for lang in ['Java','Python','Cpp','CSharp']]"
+      - name: Algorithm examples (TODOs intentionally fail until implemented)
+        run: python -c "import json,subprocess; lang=json.load(open('submission.json'))['language']; assert lang in ['Java','Python','Cpp','CSharp']; subprocess.run(['python','tools/run.py','--language',lang,'--check'],check=True)"

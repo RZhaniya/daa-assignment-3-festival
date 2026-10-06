@@ -1,0 +1,2 @@
+#include "algorithms.hpp"
+int main(){string line;while(getline(cin,line)){try{J x=J::parse(line),y;string t=x["task"].text();if(t=="ping")y=J::O{{"status","ready"}};else if(t=="dsu")y=dsu(x);else if(t=="kruskal")y=kruskal(x);else if(t=="prim")y=prim(x);else if(t=="scc")y=scc(x);else if(t=="topo")y=topo(x);else if(t=="dag")y=dag(x);else throw runtime_error("Unknown task");cout<<y.dump()<<"\n";}catch(const exception&e){cout<<J(J::O{{"error",e.what()}}).dump()<<"\n";}}}

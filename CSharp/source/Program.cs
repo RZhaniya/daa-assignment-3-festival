@@ -1,0 +1,2 @@
+using System.Text.Json.Nodes;
+string? line;while((line=Console.ReadLine())!=null){var x=JsonNode.Parse(line)!.AsObject();try{var t=x["task"]!.GetValue<string>();JsonObject y=t switch {"ping"=>new JsonObject{["status"]="ready"},"dsu"=>Algorithms.dsu(x),"kruskal"=>Algorithms.kruskal(x),"prim"=>Algorithms.prim(x),"scc"=>Algorithms.scc(x),"topo"=>Algorithms.topo(x),"dag"=>Algorithms.dag(x),_=>throw new ArgumentException("Unknown task")};Console.WriteLine(y.ToJsonString());}catch(NotImplementedException e){Console.WriteLine(new JsonObject{["error"]=e.Message}.ToJsonString());}}
