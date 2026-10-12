@@ -22,6 +22,12 @@ jobs:
       - name: Public tooling regressions
         run: python -m unittest discover -s tools -p "test_*.py"
       - name: Starter compiles and launches
+        run: python tools/run.py --setup
+      - name: All template languages launch
+        if: github.repository == 'RZhaniya/daa-assignment-3-festival'
         run: python -c "import subprocess; [subprocess.run(['python','tools/run.py','--language',lang,'--setup'],check=True) for lang in ['Java','Python','Cpp','CSharp']]"
       - name: Algorithm examples (TODOs intentionally fail until implemented)
-        run: python -c "import json,subprocess; lang=json.load(open('submission.json'))['language']; assert lang in ['Java','Python','Cpp','CSharp']; subprocess.run(['python','tools/run.py','--language',lang,'--check'],check=True)"
+        run: python tools/run.py --check
+      - name: Submission preparation
+        if: always() && github.repository != 'RZhaniya/daa-assignment-3-festival'
+        run: python tools/check_submission.py

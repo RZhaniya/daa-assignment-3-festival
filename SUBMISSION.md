@@ -1,11 +1,13 @@
 # Submission record
 
-Repository URL:
+Student name: REPLACE_WITH
 
-Selected language (Java/Python/Cpp/CSharp):
+University student ID: REPLACE_WITH
 
-Assignment version: 1.0.1
+Repository URL: REPLACE_WITH
 
-AI/resources disclosure is in ANALYSIS.md.
+Selected language (Java/Python/Cpp/CSharp): REPLACE_WITH
 
-Commit the completed source, tests and this file first. Then copy the full 40-character SHA of that final commit into Moodle together with the repository URL and language. Do not put the final commit SHA in a file inside that same commit. Do not submit credentials.
+The analysis, own tests and assistance disclosure are in ANALYSIS.md and tests/student/.
+
+Commit this record with your source and tests. Then run tools/package_submission.py and submit its ZIP and receipt text in Moodle. The receipt records the full SHA; do not put a commit's own SHA inside that same commit. Keep credentials and private instructor files out of the repository.

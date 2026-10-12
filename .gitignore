@@ -3,3 +3,9 @@
 **/obj/
 __pycache__/
 *.class
+.submission/
+.env
+*.pem
+*.key
+.DS_Store
+Thumbs.db

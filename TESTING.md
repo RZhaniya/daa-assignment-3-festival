@@ -15,8 +15,12 @@ Each case runs in a fresh process. Then the complete suite runs twice in one pro
 
 The semantic validator accepts alternative optimal forests, SCC labels, topological orders and shortest-route predecessors. JSON integer fields must be integers, not booleans or decimal numbers. Malformed answers fail normally.
 
-These checks are learning feedback, not the official grade and not an exhaustive test suite. Add your own randomized, boundary and larger-scale checks. Official grading uses the instructor's fixed checker and the submitted commit, with the unchanged published 50-point rubric. Before implementation, algorithm failures and a failing algorithm CI step are expected; setup and tool regression checks should pass.
+These checks are learning feedback, not the official grade and not an exhaustive test suite. Add your own randomized, boundary and larger-scale checks. Official grading uses the instructor's fixed checker and the uploaded Moodle ZIP, with the unchanged published 50-point rubric. Before implementation, algorithm failures and a failing algorithm CI step are expected; setup and tool regression checks should pass.
 
 ## Tool regression checks
 
 `python -m unittest discover -s tools -p "test_*.py"` checks launcher and validator behaviour without requiring completed student algorithms. These tests do not implement the assignment algorithms.
+
+## Your own tests and submission
+
+Add your own inputs and expected/actual results under tests/student/. Run python tools/check_submission.py for preparation reminders. Before packaging, commit and push the files and confirm git status is clean. Use python tools/package_submission.py --student-id YOUR_NUMERIC_STUDENT_ID. Upload its ZIP and receipt text in Moodle, then finalize the submission before the deadline. Public checks are feedback; the uploaded ZIP is used for official checking.

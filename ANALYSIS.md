@@ -1,11 +1,32 @@
 # Algorithm analysis
 
-For DSU, Kruskal, Prim, Kosaraju SCC, DFS topological ordering and DAG shortest paths, explain the state/invariant, update steps, edge cases, time and memory in 3-5 sentences each. Explain reconstruction for the forest, condensation and shortest routes where applicable. State how deep graphs avoid recursion failure and how requests reset their state.
+You may write this report in English or Russian. Replace every REPLACE_WITH field with your own explanation. Keep it concise.
+
+## Algorithms
+
+For each algorithm, write 3–5 sentences about its state/invariant, main steps, edge cases, time and memory. Explain how each request resets state and how DFS handles deep graphs.
+
+- DSU: REPLACE_WITH
+- Kruskal: REPLACE_WITH
+- Prim: REPLACE_WITH
+- Kosaraju SCC and condensation: REPLACE_WITH
+- DFS topological ordering: REPLACE_WITH
+- DAG shortest paths and route reconstruction: REPLACE_WITH
 
 ## Kruskal and Prim comparison
 
-Compare both implementations on the same graphs at three reproducible input sizes. Record n, m, random seeds, runtime version, commands, repetition count and median times. Confirm equal minimum costs and valid forests; selected edge IDs may differ. Explain observations; milliseconds do not directly earn points.
+Use the same graphs at three input sizes. Record n, m, seeds or input files, runtime version, commands, repetition count and median times. Check equal optimum costs and valid forests; edge IDs may differ. Explain your observations.
+
+REPLACE_WITH
+
+## Own tests
+
+Link your test files under tests/student/. State what each checks, expected and actual results, and how to reproduce the run. Include a route reconstruction example.
+
+REPLACE_WITH
 
 ## AI and other assistance
 
-List tools/resources used, their contribution and what you checked independently. Write "No AI assistance" if applicable. You must understand your implementation.
+Follow the syllabus policy. Identify the tools/resources used, what they contributed and what you checked yourself. If no AI assistance was used, state that. Do not claim checks you did not perform.
+
+REPLACE_WITH

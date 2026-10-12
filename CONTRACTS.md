@@ -1,6 +1,5 @@
 # Assignment 3 - exact contracts
 
-Version 1.0.1
 
 One JSON object per input line, one JSON result object per line. One task per request. No prompts or debug output on stdout. Independent requests reset all task state. Provided adapters handle input/output. Inputs satisfy the published domain; malformed JSON is not graded.
 
@@ -16,7 +15,7 @@ Input: {task:dsu,n,operations:[[u,v],...]}
 
 Output: {states:[[components,largest],...]}
 
-Limits: 0 <= n <= 100000; 0 <= operations <= 250000. If n=0, operations must be empty. Self-union and repeated union are valid.
+Limits: 0 <= n <= 100000; 0 <= q <= 250000 operations. If n=0, operations must be empty. Self-union and repeated union are valid.
 
 Implement find and union, path compression and union by size or rank. Initially n singleton components; largest=0 for n=0. Return a state after every operation. A union within one component does not change the count or size.
 
