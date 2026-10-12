@@ -21,7 +21,7 @@ jobs:
           dotnet-version: '8.0.x'
       - name: Public tooling regressions
         run: python -m unittest discover -s tools -p "test_*.py"
-      - name: Starter compiles and launches
+      - name: Compile and launch
         run: python tools/run.py --setup
       - name: All template languages launch
         if: github.repository == 'RZhaniya/daa-assignment-3-festival'

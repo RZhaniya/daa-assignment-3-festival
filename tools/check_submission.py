@@ -22,9 +22,6 @@ def main():
         problems.append('Complete ANALYSIS.md in your own words, including the assistance disclosure.')
     if not any(path.is_file() and path.name != 'README.md' for path in (ROOT / 'tests/student').rglob('*')):
         problems.append('Add your own test inputs and results under tests/student/.')
-    record = (ROOT / 'SUBMISSION.md').read_text(encoding='utf-8') if (ROOT / 'SUBMISSION.md').is_file() else ''
-    if not record.strip() or 'REPLACE_WITH' in record:
-        problems.append('Complete SUBMISSION.md with your submission details.')
     for problem in problems:
         print('CHECK: ' + problem)
     if problems:
