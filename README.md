@@ -19,3 +19,7 @@ Start with the [English assignment](docs/Assignment_3_EN.pdf) or [Russian assign
 After the deadline, the instructor checks the submitted commit with separate deeper tests. Public checks provide preparation feedback. Keep your private repository accessible for checking. Later commits do not replace the commit submitted in Moodle.
 
 [TESTING.md](TESTING.md) explains the optional local tools. [CONTRACTS.md](CONTRACTS.md) is the technical input/output reference. Student code belongs in the source folder of the selected language; helper source files may be added directly in that folder. Use standard collections, sorting and priority queues, but implement the required algorithms yourself rather than replacing them with an external algorithm library.
+
+## Prepare for the Assignment 3 quiz
+
+[Practice A](docs/A3_Practice_A_EN_RU.pdf) and [Practice B](docs/A3_Practice_B_EN_RU.pdf) each contain 30 questions in English and Russian, with explanations after all questions. Try one form in 30 minutes, then check your reasoning. These are new examples of the same skills; they are not questions from the graded bank. The main quiz is in English and includes basic Java arrays, loops and arithmetic, without testing Java library APIs.
