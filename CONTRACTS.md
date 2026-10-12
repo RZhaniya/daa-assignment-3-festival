@@ -1,12 +1,12 @@
 # Assignment 3 - exact contracts
 
-Version 1.0.0
+Version 1.0.1
 
 One JSON object per input line, one JSON result object per line. One task per request. No prompts or debug output on stdout. Independent requests reset all task state. Provided adapters handle input/output. Inputs satisfy the published domain; malformed JSON is not graded.
 
-UTF-8; strings contain printable ASCII characters (32..126), case-sensitive; no Unicode normalization
+UTF-8 JSON lines. Task names are case-sensitive.
 
-All vertices, edges, characters and original blocks use zero-based indices. An edge ID is its position in the input edge array. All costs, distances, weights and counts use signed 64-bit integers; null denotes unreachable distance.
+All vertices and edges use zero-based indices. An edge ID is its position in the input edge array. All costs, distances, weights and counts use signed 64-bit integers; null denotes unreachable distance.
 
 ## Task 1 - Connectivity / DSU
 

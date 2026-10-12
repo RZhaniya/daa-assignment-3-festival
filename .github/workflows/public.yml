@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Public tooling regressions
+        run: python -m unittest discover -s tools -p "test_*.py"
       - name: Starter compiles and launches
         run: python -c "import subprocess; [subprocess.run(['python','tools/run.py','--language',lang,'--setup'],check=True) for lang in ['Java','Python','Cpp','CSharp']]"
       - name: Algorithm examples (TODOs intentionally fail until implemented)

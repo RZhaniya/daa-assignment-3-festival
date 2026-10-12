@@ -1,9 +1,11 @@
 # Algorithm analysis
 
-For each required algorithm: state/invariant, recurrence or update, base cases, reconstruction, time and memory (3-5 sentences).
+For DSU, Kruskal, Prim, Kosaraju SCC, DFS topological ordering and DAG shortest paths, explain the state/invariant, update steps, edge cases, time and memory in 3-5 sentences each. Explain reconstruction for the forest, condensation and shortest routes where applicable. State how deep graphs avoid recursion failure and how requests reset their state.
 
-## Comparison
-Use three reproducible input sizes, record seeds, JDK/runtime version, commands, repetitions and medians. Explain differences; milliseconds do not directly earn points. A3: Kruskal vs Prim; A4: naive vs KMP vs RK on their common domain.
+## Kruskal and Prim comparison
+
+Compare both implementations on the same graphs at three reproducible input sizes. Record n, m, random seeds, runtime version, commands, repetition count and median times. Confirm equal minimum costs and valid forests; selected edge IDs may differ. Explain observations; milliseconds do not directly earn points.
 
 ## AI and other assistance
-List tools/resources used, what they helped with, and what you checked independently. Write "No AI assistance" if applicable. You must understand your submitted implementation.
+
+List tools/resources used, their contribution and what you checked independently. Write "No AI assistance" if applicable. You must understand your implementation.
