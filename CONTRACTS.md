@@ -9,7 +9,7 @@ All vertices and edges use zero-based indices. An edge ID is its position in the
 
 ## Task 1 - Connectivity / DSU
 
-Connect the waffle tent, quiet stage and emergency tea station, one cable at a time.
+Track connected components as undirected connections are added.
 
 Input: {task:dsu,n,operations:[[u,v],...]}
 
@@ -29,11 +29,11 @@ One accepted output:
 
 {"states": [[3, 2], [2, 3], [2, 3], [2, 3]]}
 
-The third cable is redundant. The tea station remains alone; connecting it to itself does not help.
+The third operation joins vertices already in one component. The self-union leaves vertex 3 isolated.
 
 ## Task 2 - Budget Network / Kruskal
 
-Build the cheapest undirected cable network; finance would prefer cables to an inspirational speech.
+Find a minimum spanning forest of an undirected weighted graph.
 
 Input: {task:kruskal,n,edges:[[u,v,weight],...]}
 
@@ -81,7 +81,7 @@ Several answers are optimal. The validator checks the forest rather than matchin
 
 ## Task 3 - Circular Dependencies / SCC
 
-Find groups such as 'print tickets before opening the printer room' and 'open the printer room with a printed ticket'.
+Identify maximal groups of mutually reachable vertices.
 
 Input: {task:scc,n,edges:[[u,v],...]}
 
@@ -105,7 +105,7 @@ Vertices 0 and 1 form one SCC. Two original edges become one condensation edge.
 
 ## Task 4 - Festival Schedule / Topological Ordering
 
-Schedule preparations before the band arrives to discover that the stage is still a diagram.
+Determine whether the directed dependency graph admits a topological order.
 
 Input: {task:topo,n,edges:[[u,v],...]}
 
@@ -129,7 +129,7 @@ Preparations 0 and 1 may be swapped; both must precede 2.
 
 ## Task 5 - Delivery Routes / DAG Shortest Paths
 
-Route supplies through a directed acyclic delivery graph. A downhill conveyor can give a negative edge cost.
+Find shortest routes in a directed acyclic graph, allowing negative edge weights.
 
 Input: {task:dag,n,edges:[[u,v,weight],...],source}
 
