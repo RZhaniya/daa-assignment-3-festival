@@ -1,6 +1,6 @@
 # How my solution works
 
-Write in English. Replace each REPLACE_WITH with your own explanation and evidence. This report contributes to the published instructor-reviewed score; see RUBRIC.md.
+Write in English. Replace each REPLACE_WITH with your own explanation and evidence. This report is a required learning deliverable. The practical grade is entirely automatic out of 50, with no separate manual points or discretionary deductions; see RUBRIC.md.
 
 ## Algorithms
 

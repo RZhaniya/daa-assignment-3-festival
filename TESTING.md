@@ -10,7 +10,7 @@ Fix failures and push again. Green Public checks for the submitted exact commit 
 
 A setup success followed by algorithm failures in the untouched starter is expected: its six methods contain intentional TODOs. Check the failing step and diagnostic before deciding whether it is a build, runtime or algorithm problem.
 
-The instructor checks the submitted SHA with independently controlled tooling and also reviews methods/helper (6 points), analysis (1), own tests (1) and benchmark (2). The 0–50 automatic diagnostic score contributes 0.8 times that score (maximum 40) to practice. An internal checker/environment error is pending investigation and rerun; it is not a student zero. See RUBRIC.md.
+The instructor checks the submitted SHA using independently controlled tooling. The automatic practical score is out of 50, with no manual component or scaling. Methods/helper, English analysis, own tests and benchmark remain learning deliverables; there are no separate manual points or discretionary deductions. An internal checker/environment error requires investigation and rerun, not a student zero. See RUBRIC.md.
 
 ## Local checking: optional
 

@@ -16,7 +16,7 @@ Follow the dates and any approved individual extension shown in Moodle. The link
 
 [Exact contracts](CONTRACTS.md) · [Testing and runtimes](TESTING.md) · [Practical rubric](RUBRIC.md) · [Lecture clarifications (English / Russian)](docs/Lecture_Clarifications_EN_RU.pdf)
 
-A3 combines **50 practical points + 50 quiz points** and retains its 20% contribution to the second attestation. The practical score is **40 automatic + 10 instructor-reviewed**: methods/helper (6), analysis (1), own tests (1), benchmark (2). The rubric explains criteria, partial credit and the automatic diagnostic scale.
+A3 combines **50 practical points + 50 quiz points** and retains its 20% contribution to the second attestation. The practical score is **50 automatic points**; the quiz is also automatically graded out of 50. There are no manual points or oral score recovery. See the rubric for group weights and assessment-defect corrections.
 
 The supplied algorithm bodies contain intentional TODOs. A successful setup followed by failed algorithm examples is expected until you implement them. Public checks provide feedback; the instructor also uses independent checks and reviews the required methods and analysis.
 
@@ -25,3 +25,10 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 ## Quiz preparation
 
 [Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 questions with answers and explanations on different examples. [Common pitfalls](docs/Common_Pitfalls.pdf).
+
+
+## Student lesson
+
+[PowerPoint with embedded English video](docs/Assignment_3_Student_Guide_EN.pptx) · [English video, about 17 minutes](docs/Assignment_3_Walkthrough_EN.mp4) · [Narration transcript](docs/Narration_EN.md)
+
+The guide includes worked traces, Java fragments, testing, benchmarking and submission. Download the PPTX for desktop PowerPoint. If your viewer does not play embedded media, use the separate MP4. Narration uses an English synthetic voice.
