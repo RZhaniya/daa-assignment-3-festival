@@ -107,7 +107,7 @@ After pushing changes, open **Actions → Public checks** in your repository. Th
 
 Add your own cases to tests/student/, recording the input, expected result and actual result. Cover the applicable cases: empty and disconnected graphs, isolated vertices, repeated edges or operations, self-loops, negative weights, cycles, unreachable vertices and deep DFS traversal.
 
-Complete ANALYSIS.md in English or Russian. For each of the six algorithms, provide 3–5 sentences explaining its main steps, state or invariant, relevant edge cases, and time and memory complexity. Explain how state is reset and how deep DFS traversal is handled.
+Complete ANALYSIS.md in English. For each of the six algorithms, provide 3–5 sentences explaining its main steps, state or invariant, relevant edge cases, and time and memory complexity. Explain how state is reset and how deep DFS traversal is handled.
 
 Compare Kruskal and Prim on the same graphs at three input sizes. Record n and m, reproducible input generation, commands or Actions links, at least three timing measurements per algorithm at each size, and median times. Verify equal minimum costs and valid forests, then explain the observed performance. Include the route reconstruction examples and acknowledge sources and assistance according to the syllabus.
 

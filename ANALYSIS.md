@@ -1,6 +1,6 @@
 # How my solution works
 
-Write in English or Russian. Replace the fields below with your own short explanation. For each algorithm, explain its state/invariant, main steps, edge cases, time and memory in 3–5 sentences. State how requests reset and how deep DFS avoids stack failure.
+Write the report in English. Replace the fields below with your own short explanation. For each algorithm, explain its state/invariant, main steps, edge cases, time and memory in 3–5 sentences. State how requests reset and how deep DFS avoids stack failure.
 
 ## Algorithms
 

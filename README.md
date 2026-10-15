@@ -10,7 +10,7 @@ Implement DSU, Kruskal, Prim, Kosaraju SCC, DFS topological ordering and DAG sho
 
 2. Select the language in submission.json and complete the corresponding Algorithms file.
 
-3. Run **Actions → Public checks**, add student tests and complete ANALYSIS.md.
+3. Run **Actions → Public checks**, add student tests and complete ANALYSIS.md in English.
 
 4. Submit the **commit URL** and the **successful Public checks run URL for that commit** in Moodle Online text, then click **Submit assignment**.
 

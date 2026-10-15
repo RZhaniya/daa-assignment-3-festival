@@ -10,7 +10,7 @@
 
 2. Выберите язык в submission.json и заполните соответствующий файл Algorithms.
 
-3. Запустите **Actions → Public checks**, добавьте собственные тесты и заполните ANALYSIS.md.
+3. Запустите **Actions → Public checks**, добавьте собственные тесты и заполните ANALYSIS.md на английском языке.
 
 4. В Online text Moodle укажите **URL коммита** и **URL успешного Public checks этого коммита**, затем нажмите **Submit assignment**.
 
