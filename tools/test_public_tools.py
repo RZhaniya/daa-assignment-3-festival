@@ -28,6 +28,28 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(public_validate.check(request, {'component': [7, 7, 20], 'condensation': [[7, 20]]},
                                              {'component': [0, 0, 1], 'condensation': [[0, 1]]}))
 
+    def test_alternative_optima_and_invalid_witnesses(self):
+        request = {'task': 'kruskal', 'n': 4,
+                   'edges': [[0, 1, -2], [0, 1, -2], [1, 2, 3], [0, 2, 3], [3, 3, -99]]}
+        expected = {'cost': 1, 'components': 2, 'edge_ids': [0, 2]}
+        for task in ('kruskal', 'prim'):
+            request['task'] = task
+            self.assertTrue(public_validate.check(request, dict(expected, edge_ids=[1, 3]), expected))
+            for ids in ([0, 0], [0, 1], [0, 4], [0], [0, 2, 3]):
+                self.assertFalse(public_validate.check(request, dict(expected, edge_ids=ids), expected))
+        request = {'task': 'dag', 'n': 5, 'source': 0,
+                   'edges': [[0, 1, 2], [0, 1, 2], [0, 2, 1], [1, 3, -3], [2, 3, -2]]}
+        expected = {'acyclic': True, 'distance': [0, 2, 1, -1, None], 'parent_edge': [-1, 0, 2, 3, -1]}
+        self.assertTrue(public_validate.check(request, dict(expected, parent_edge=[-1, 1, 2, 4, -1]), expected))
+        for parents in ([-1, 0, 2, 0, -1], [-1, 0, 2, 3, 4], [0, 0, 2, 3, -1]):
+            self.assertFalse(public_validate.check(request, dict(expected, parent_edge=parents), expected))
+        request = {'task': 'scc', 'n': 3, 'edges': [[0, 1], [1, 0], [1, 2], [1, 2]]}
+        expected = {'component': [0, 0, 1], 'condensation': [[0, 1]]}
+        for answer in ({'component': [5, 5, 9], 'condensation': [[5, 9], [5, 9]]},
+                       {'component': [5, 5, 9], 'condensation': []},
+                       {'component': [5, 5, 5], 'condensation': []}):
+            self.assertFalse(public_validate.check(request, answer, expected))
+
     def test_bad_types_missing_fields_and_witnesses(self):
         examples = [
             ({'task': 'dsu', 'n': 2, 'operations': [[0, 1]]}, {'states': [[1, 2]]}),
@@ -84,6 +106,44 @@ class LauncherTests(unittest.TestCase):
                 requests = [{'task': 'ping'}] * (2 if message.startswith('expected') else 1)
                 with self.subTest(message=message), self.assertRaisesRegex(ValueError, message):
                     run.execute(command, requests)
+
+    def test_utf8_transport(self):
+        with tempfile.TemporaryDirectory() as folder:
+            script = pathlib.Path(folder) / 'probe.py'
+            script.write_text('import sys,json\nfor line in sys.stdin:\n'
+                              ' x=json.loads(line);sys.stdout.buffer.write((json.dumps(x,ensure_ascii=False)+"\\n").encode("utf-8"))\n',
+                              encoding='utf-8')
+            requests = [{'note': 'Қазақша русский café 🎓'}] * 2
+            self.assertEqual(run.execute([sys.executable, str(script)], requests), requests)
+
+    @unittest.skipUnless(shutil.which('javac') and shutil.which('java'), 'Java compiler is not installed')
+    def test_java_helper_source(self):
+        with tempfile.TemporaryDirectory() as folder, patch.object(run, 'P', pathlib.Path(folder)):
+            source = pathlib.Path(folder) / 'Java/source'
+            source.mkdir(parents=True)
+            (source / 'Main.java').write_text('public class Main {public static void main(String[] a){if(Helper.value()!=42)throw new Error();}}\n')
+            (source / 'Helper.java').write_text('class Helper {static int value(){return 42;}}\n')
+            self.assertEqual(subprocess.run(run.build('Java'), timeout=20).returncode, 0)
+
+    def test_python_helper_source(self):
+        with tempfile.TemporaryDirectory() as folder, patch.object(run, 'P', pathlib.Path(folder)):
+            source = pathlib.Path(folder) / 'Python/source'
+            source.mkdir(parents=True)
+            (source / 'main.py').write_text('from helper import value\nassert value==42\n')
+            (source / 'helper.py').write_text('value=42\n')
+            self.assertEqual(subprocess.run(run.build('Python'), timeout=20).returncode, 0)
+
+    @unittest.skipUnless(shutil.which('dotnet') and subprocess.run(
+        ['dotnet', '--list-sdks'], capture_output=True, text=True).stdout.strip(),
+        '.NET SDK is not installed')
+    def test_csharp_helper_source(self):
+        with tempfile.TemporaryDirectory() as folder, patch.object(run, 'P', pathlib.Path(folder)):
+            source = pathlib.Path(folder) / 'CSharp/source'
+            source.mkdir(parents=True)
+            (source / 'App.csproj').write_text('<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup></Project>')
+            (source / 'Program.cs').write_text('if(Helper.Value()!=42)throw new System.Exception();\n')
+            (source / 'Helper.cs').write_text('static class Helper {public static int Value()=>42;}\n')
+            self.assertEqual(subprocess.run(run.build('CSharp'), timeout=20).returncode, 0)
 
     @unittest.skipUnless(shutil.which('g++'), 'C++ compiler not installed in this environment')
     def test_cpp_helper_translation_unit(self):
