@@ -35,4 +35,8 @@ The lesson explains all six methods through 64 matching steps in each language. 
 
 Both PowerPoint files and the slideshow include a supplementary [English narrated video, about 17 minutes](docs/Assignment_3_Walkthrough_EN.mp4). Narration uses an English synthetic voice; the Russian version provides translated slides and detailed written explanations. If your PowerPoint viewer does not play embedded media, use the HTML slideshow or separate MP4. [English video transcript](docs/Narration_EN.md).
 
+[Full English video lesson (28 minutes)](docs/video/Assignment_3_Explained_EN.mp4) · [English transcript](docs/video/Transcript_EN.md) · [Chapters](docs/video/Chapters_EN.md)
+
+The video works through all six required algorithms with changing graph states, original edge IDs, short Java fragments, correctness reasoning and complexity. It also covers route reconstruction, testing, benchmarking and submission. English synthetic neural narration and on-screen captions are included. For chapter navigation, open [the video player](docs/video/Watch_Assignment_3_EN.html) from a downloaded repository, keeping the files in docs/video together.
+
 [English videos by A3 topic](docs/A3_Video_Guide_EN_RU.md): eight topic videos cover all six required algorithms, plus an optional DFS introduction. The HTML lesson links to the relevant videos in each chapter.
