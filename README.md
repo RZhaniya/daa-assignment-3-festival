@@ -27,8 +27,10 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 [Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 questions with answers and explanations on different examples. [Common pitfalls](docs/Common_Pitfalls.pdf).
 
 
-## Student lesson
+## Student lesson: English / Russian
 
-[PowerPoint with embedded English video](docs/Assignment_3_Student_Guide_EN.pptx) · [English video, about 17 minutes](docs/Assignment_3_Walkthrough_EN.mp4) · [Narration transcript](docs/Narration_EN.md)
+[Offline bilingual slideshow](docs/A3_Bilingual_Slideshow.html) · [PowerPoint in English](docs/A3_Explanation_EN.pptx) · [PowerPoint in Russian](docs/A3_Explanation_RU.pptx) · [Detailed explanations in both languages](docs/A3_Explanations_EN_RU.md)
 
-The guide includes worked traces, Java fragments, testing, benchmarking and submission. Download the PPTX for desktop PowerPoint. If your viewer does not play embedded media, use the separate MP4. Narration uses an English synthetic voice.
+The lesson contains 41 matching topics in each language: graph models, all six methods, worked traces, Java fragments, edge cases, tests, benchmarking and submission. Download the HTML file and open it in your browser; slides, explanations and video work offline. Switch languages without losing your place, choose a topic, search, or use the arrow keys. Detailed explanations appear below each slide.
+
+Both PowerPoint files and the slideshow include a supplementary [English narrated video, about 17 minutes](docs/Assignment_3_Walkthrough_EN.mp4). Narration uses an English synthetic voice; the Russian version provides translated slides and detailed written explanations. If your PowerPoint viewer does not play embedded media, use the HTML slideshow or separate MP4. [English video transcript](docs/Narration_EN.md).
