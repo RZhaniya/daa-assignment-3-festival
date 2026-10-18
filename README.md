@@ -27,16 +27,12 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 [Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 questions with answers and explanations on different examples. [Common pitfalls](docs/Common_Pitfalls.pdf).
 
 
-## Student lesson: English / Russian
+## Graph algorithms: lesson and code
 
-[Offline bilingual slideshow](docs/A3_Bilingual_Slideshow.html) · [PowerPoint in English](docs/A3_Explanation_EN.pptx) · [PowerPoint in Russian](docs/A3_Explanation_RU.pptx) · [Detailed explanations in both languages](docs/A3_Explanations_EN_RU.md)
+[Open the lesson](https://rzhaniya.github.io/daa-assignment-3-festival/) · [Download the HTML](docs/A3_Bilingual_Slideshow.html) · [Java source](docs/code/GraphLesson.java) · [Independent checks](docs/code/GraphLessonChecks.java)
 
-The lesson explains all six methods through 64 matching steps in each language. It starts with vertices and edges, then works through small examples one decision at a time. Tables show how groups, DFS states and route costs change. Plain explanations, a glossary and 10 self-check questions with revealable answers support independent study. Java fragments follow the idea and worked steps. Testing, benchmarking and submission are included. Download the HTML file and open it in your browser; the lesson text and embedded MP4 work offline. External YouTube videos require internet access. Switch languages without losing your place, choose a topic, search, or use the arrow keys. Detailed explanations appear below each slide.
+The English and Russian lesson covers applications, graph representation, the six required algorithms, correctness, complexity, route reconstruction and assignment integration. Worked traces show DSU states, Kruskal, Prim and DAG relaxation. The Java 17 examples are complete and runnable without external dependencies. The integration chapter distinguishes the `festival` and `graphs` template paths and interfaces.
 
-Both PowerPoint files and the slideshow include a supplementary [English narrated video, about 17 minutes](docs/Assignment_3_Walkthrough_EN.mp4). Narration uses an English synthetic voice; the Russian version provides translated slides and detailed written explanations. If your PowerPoint viewer does not play embedded media, use the HTML slideshow or separate MP4. [English video transcript](docs/Narration_EN.md).
+[English video lesson (28 minutes)](docs/video/Assignment_3_Explained_EN.mp4) · [Video player and chapters](docs/video/Watch_Assignment_3_EN.html) · [Transcript](docs/video/Transcript_EN.md)
 
-[Full English video lesson (28 minutes)](docs/video/Assignment_3_Explained_EN.mp4) · [English transcript](docs/video/Transcript_EN.md) · [Chapters](docs/video/Chapters_EN.md)
-
-The video works through all six required algorithms with changing graph states, original edge IDs, short Java fragments, correctness reasoning and complexity. It also covers route reconstruction, testing, benchmarking and submission. English synthetic neural narration and on-screen captions are included. For chapter navigation, open [the video player](docs/video/Watch_Assignment_3_EN.html) from a downloaded repository, keeping the files in docs/video together.
-
-[English videos by A3 topic](docs/A3_Video_Guide_EN_RU.md): eight topic videos cover all six required algorithms, plus an optional DFS introduction. The HTML lesson links to the relevant videos in each chapter.
+The lesson links each topic to textbook sections. Choose your local CLRS fourth-edition PDF in the reading chapter to open the referenced pages; the file stays in your browser. Official Sedgewick–Wayne booksite links are provided. For offline use, download the repository and keep `docs`, `docs/code` and `docs/video` together.
