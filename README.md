@@ -27,12 +27,16 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 [Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 questions with answers and explanations on different examples. [Common pitfalls](docs/Common_Pitfalls.pdf).
 
 
-## Graph algorithms: lesson and code
+## Graph algorithms: interactive lesson
 
-[Open the lesson](https://rzhaniya.github.io/daa-assignment-3-festival/) · [Download the HTML](docs/A3_Bilingual_Slideshow.html) · [Java source](docs/code/GraphLesson.java) · [Independent checks](docs/code/GraphLessonChecks.java)
+[Open the lesson](https://rzhaniya.github.io/daa-assignment-3-festival/) · [Offline HTML](docs/A3_Bilingual_Slideshow.html) · [Related BFS example](docs/code/ReachabilityDemo.java)
 
-The English and Russian lesson covers applications, graph representation, the six required algorithms, correctness, complexity, route reconstruction and assignment integration. Worked traces show DSU states, Kruskal, Prim and DAG relaxation. The Java 17 examples are complete and runnable without external dependencies. The integration chapter distinguishes the `festival` and `graphs` template paths and interfaces.
+Start with a familiar situation, try a choice on the graph, check your prediction and then open the reasoning and code fragments. Interactive activities cover connectivity, path compression, Kruskal, Prim, DFS, SCC condensation, task ordering and DAG relaxation. The English and Russian lesson connects each topic to practical applications and assignment requirements.
 
-[English video lesson (28 minutes)](docs/video/Assignment_3_Explained_EN.mp4) · [Video player and chapters](docs/video/Watch_Assignment_3_EN.html) · [Transcript](docs/video/Transcript_EN.md)
+Implement the six assignment methods and route helper yourself. The downloadable BFS example is a different learning task; the lesson does not provide complete assignment implementations.
 
-The lesson links each topic to textbook sections. Choose your local CLRS fourth-edition PDF in the reading chapter to open the referenced pages; the file stays in your browser. Official Sedgewick–Wayne booksite links are provided. For offline use, download the repository and keep `docs`, `docs/code` and `docs/video` together.
+[28-minute English video](docs/video/Assignment_3_Explained_EN.mp4) · [YouTube guide](docs/A3_Video_Guide_EN_RU.md) · [Transcript](docs/video/Transcript_EN.md)
+
+The topic cards link to verified original YouTube videos. Open the supplied syllabus textbooks directly from the lesson: CLRS 4e and Sedgewick–Wayne 4e (main), and Skiena 3e (additional), with links to relevant PDF pages. Offline reading and the course video require the full docs folder; external YouTube videos require internet.
+
+To edit the lesson, update docs/lesson_content.json, docs/lesson.js or docs/lesson.css, then run `python tools/build_lesson.py`.

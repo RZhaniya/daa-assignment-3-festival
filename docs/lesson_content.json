@@ -1,0 +1,914 @@
+[
+  {
+    "id": "overview",
+    "RU": {
+      "title": "Графы: от знакомой ситуации к решению",
+      "story": "Один план кампуса — три задачи: провести кабель, составить порядок работ и рассчитать доставку. Переключите цель и посмотрите, почему ответы различаются.",
+      "steps": [
+        "Назовите объекты: комнаты, работы или состояния программы. Это вершины.",
+        "Назовите связи: кабели, зависимости или переходы. Это рёбра.",
+        "Сформулируйте цель: соединить всё, соблюсти порядок или найти лучший путь."
+      ],
+      "transfer": "В реальной работе начните с вопроса и ограничений, а затем выбирайте алгоритм. Например, минимальная стоимость кабелей и кратчайший маршрут доставки требуют разных ответов. В задании вы реализуете шесть методов; здесь сначала разберём, зачем нужен каждый.",
+      "theory": ""
+    },
+    "EN": {
+      "title": "Graphs: from a familiar situation to a solution",
+      "story": "One campus plan, three tasks: install cables, schedule work and plan a delivery. Switch the objective and see why the answers differ.",
+      "steps": [
+        "Identify the objects: rooms, tasks or program states. These are vertices.",
+        "Identify the links: cables, dependencies or transitions. These are edges.",
+        "State the objective: connect everything, respect an order or find a best route."
+      ],
+      "transfer": "In practice, start with the question and constraints, then choose an algorithm. A cheap cable layout and a shortest delivery route ask for different answers. The assignment requires six methods; first understand what each is for.",
+      "theory": ""
+    },
+    "lab": "overview",
+    "quiz": {
+      "RU": {
+        "question": "Что нужно изменить в первую очередь, если цель задачи поменялась?",
+        "options": [
+          "Формулировку результата и выбор алгоритма",
+          "Только названия переменных",
+          "Только цвет рисунка"
+        ],
+        "feedback": "Одного и того же графа недостаточно: цель определяет, какой ответ считать правильным."
+      },
+      "EN": {
+        "question": "What should you reconsider first when the goal changes?",
+        "options": [
+          "The required result and algorithm",
+          "Only variable names",
+          "Only the diagram colours"
+        ],
+        "feedback": "A graph alone is insufficient: the objective determines which answer is correct."
+      },
+      "answer": 0
+    },
+    "code": "",
+    "book": null,
+    "videos": []
+  },
+  {
+    "id": "model",
+    "RU": {
+      "title": "Как читать граф и хранить его в программе",
+      "story": "На схеме комнаты обозначены числами. Линия означает доступный переход, стрелка — переход только в одну сторону, число на ребре — его стоимость. Переключите вид графа и проговорите, что изменилось в модели.",
+      "steps": [
+        "Список рёбер отвечает на вопрос «какие связи существуют?».",
+        "Список смежности отвечает на вопрос «куда можно перейти из этой вершины?».",
+        "ID ребра сохраняет связь между исходной строкой входа и результатом алгоритма."
+      ],
+      "transfer": "В программе навигации из комнаты нужно быстро получить соседние комнаты, поэтому удобен список смежности. В задании сохраняйте номер исходной строки edges[i], даже если позже сортируете рёбра. Учебный BFS-пример ниже демонстрирует работу со списком; он не реализует шесть требуемых методов.",
+      "theory": "\n<p class=\"lead\">Сначала определите направление рёбер, смысл веса и состав ответа. Эти решения должны быть видны в структурах данных.</p>\n<p>Вершины задания имеют номера от 0 до n−1. Строка <code>edges[i]</code> задаёт ребро с исходным ID i. Этот ID не меняется при сортировке, помещении в очередь или построении обратного графа. Для взвешенного ребра храните <code>from</code>, <code>to</code>, <code>weight</code> и <code>id</code>.</p>\n<h2>Список смежности</h2><p>Для каждого v храните исходящие рёбра. В ориентированном графе добавляется одна запись. В неориентированном графе добавляются две ориентированные записи с одним ID: u→v и v→u. Это две записи одного ребра, а не два выбранных ребра леса. Петля не может попасть в остов. Параллельные рёбра сохраняйте отдельно.</p>\n<p>Список смежности занимает O(n+m) памяти. Матрица смежности занимает O(n²): для 100000 вершин она не подходит. Обход соседей в списках даёт O(n+m), если каждое ребро просматривается ограниченное число раз.</p>\n<h2>Ограничения задания</h2><p>0 ≤ n ≤ 100000; для dag требуется n ≥ 1. Число рёбер или операций DSU не превышает 250000. Вес: от −1000000000 до 1000000000. Концы рёбер и source корректны; для n=0 рёбра и операции пусты. Обрабатывать повреждённый JSON в алгоритмах не требуется.</p><h2>Типы и сравнения</h2><p>Номер вершины и отдельный вес в пределах задания помещаются в int, а сумма весов может выйти за его пределы. Например, три ребра по 1000000000 дают 3000000000. В Java используйте long для стоимости и Long[] для расстояний с null. Сравнивайте веса через Long.compare, а не вычитанием. Правило сравнения при равных весах использует ID только для воспроизводимости: задание допускает другие корректные оптимумы.</p>\n<p>Метод <code>edges(rows)</code> создаёт новые объекты с исходными ID. Краскал сортирует копию списка: исходный порядок остаётся доступен для восстановления пути. Метод <code>digraph</code> использует первые два столбца и подходит также для проверки ацикличности взвешенного графа.</p>\n"
+    },
+    "EN": {
+      "title": "Reading a graph and storing it in a program",
+      "story": "Rooms are numbered on the diagram. A line represents an available link, an arrow makes it one-way, and a number gives its cost. Switch the graph model and describe what changed.",
+      "steps": [
+        "An edge list answers “which links exist?”.",
+        "An adjacency list answers “where can I go from this vertex?”.",
+        "An edge ID connects an original input row to the algorithm’s result."
+      ],
+      "transfer": "A navigation program needs quick access to a room’s neighbours, so an adjacency list is useful. Preserve the original row number edges[i] even after sorting. The BFS example below demonstrates list traversal; it does not implement the six required methods.",
+      "theory": "\n<p class=\"lead\">Decide the edge direction, the meaning of the weight and the required output before choosing data structures.</p>\n<p>Assignment vertices are 0..n−1. The row <code>edges[i]</code> has original edge ID i. Sorting, queue insertion and transposition must not change it. A weighted edge stores <code>from</code>, <code>to</code>, <code>weight</code> and <code>id</code>.</p>\n<h2>Adjacency lists</h2><p>Store outgoing edges for each vertex. A directed edge contributes one entry. An undirected edge contributes entries u→v and v→u with the same original ID. These are two representations of one edge, not two selected forest edges. A self-loop cannot belong to a forest. Keep parallel edges as separate candidates.</p>\n<p>Adjacency lists use O(n+m) memory. An adjacency matrix uses O(n²), which is unsuitable for 100000 vertices. Traversal is O(n+m) when each stored edge is examined a bounded number of times.</p>\n<h2>Assignment limits</h2><p>0 ≤ n ≤ 100000; dag requires n ≥ 1. There are at most 250000 edges or DSU operations. Weights range from −1000000000 to 1000000000. Endpoints and source are valid; edges and operations are empty for n=0. Algorithm implementations need not handle malformed JSON.</p><h2>Numeric types and comparisons</h2><p>A vertex index and a single permitted weight fit int; a total may not. Three edges of weight 1000000000 sum to 3000000000. Use long for Java totals and Long[] for nullable distances. Compare weights using Long.compare rather than subtraction. Our tie-break by ID makes examples reproducible; it is not an assignment requirement.</p>\n<p>The <code>edges(rows)</code> method creates edge objects with original IDs. Kruskal sorts a copy of the list, leaving original order available for route reconstruction. The <code>digraph</code> helper reads the first two columns and can therefore also check a weighted graph for cycles.</p>\n"
+    },
+    "lab": "model",
+    "quiz": {
+      "RU": {
+        "question": "Ребро было третьим во входе, а после сортировки стало первым. Какой у него ID?",
+        "options": [
+          "2",
+          "0",
+          "Его нужно создать заново"
+        ],
+        "feedback": "Нумерация начинается с нуля. ID относится к исходной строке, а не к позиции после сортировки."
+      },
+      "EN": {
+        "question": "An edge was third in the input and first after sorting. What is its ID?",
+        "options": [
+          "2",
+          "0",
+          "Assign a new one"
+        ],
+        "feedback": "IDs are zero-based original row numbers, not sorted positions."
+      },
+      "answer": 0
+    },
+    "code": "List<List<Integer>> neighbours = new ArrayList<>();\nfor (int v = 0; v < n; v++) neighbours.add(new ArrayList<>());\nneighbours.get(0).add(2); // a directed link 0 -> 2\n// For an undirected link, also add 0 to neighbours.get(2).",
+    "book": [
+      "20.1",
+      549,
+      571,
+      "40graphs"
+    ],
+    "videos": [
+      {
+        "id": "7fujbpJ0LB4",
+        "title": "Depth First Search Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/7fujbpJ0LB4/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "dsu",
+    "RU": {
+      "title": "DSU: какие группы уже связаны?",
+      "story": "В учебной группе создаются команды. Сначала каждый работает отдельно. Затем две команды объединяются для совместного проекта. Важно быстро узнать, находятся ли два человека уже в одной команде. Выберите две вершины и объедините их; затем повторите ту же связь.",
+      "steps": [
+        "При объединении разных групп их число уменьшается на один.",
+        "Повторная связь внутри одной группы ничего не меняет.",
+        "DSU хранит представителя группы; сжатие пути ускоряет последующие поиски."
+      ],
+      "transfer": "Так отслеживают связность сети при добавлении соединений, объединяют эквивалентные объекты и проверяют кандидатов в Краскале. В задании после каждой операции нужны число компонент и размер наибольшей. Сама схема показывает состав групп; способ эффективного хранения через parent и size вы реализуете самостоятельно.",
+      "theory": "\n<p class=\"lead\">DSU поддерживает разбиение вершин на непересекающиеся множества. find(v) возвращает представителя множества; union(a,b) объединяет два множества.</p>\n<p>В начале каждая вершина является своим корнем: parent[v]=v, size[v]=1. Количество компонент равно n; наибольшая имеет размер 1, а при n=0 - 0. Размер имеет смысл у корня. Вызов union сначала находит оба корня. Если они совпадают, ничего менять не нужно: это относится и к повторной связи, и к объединению вершины с собой.</p>\n<h2>Сжатие пути и объединение по размеру</h2><p>find сначала доходит до корня, затем повторно проходит тот же путь и перенаправляет посещённые вершины прямо к корню. Переменная next сохраняет старого родителя до изменения parent[v]. При объединении подвесьте меньший корень к большему, прибавьте размер меньшей компоненты и уменьшите счётчик ровно на один. Не считайте rank размером, если выберете объединение по рангу.</p>\n\n<h2>Почему это корректно</h2><p>Инвариант: деревья parent задают текущее разбиение на компоненты; size[root] равен числу вершин компоненты. Сжатие меняет форму дерева, но не его корень и не состав множества. Объединение разных корней соединяет ровно две компоненты и не затрагивает остальные. Поэтому после каждой операции сохранённые components и largest описывают текущий граф.</p>\n<p><strong>Сложность:</strong> O(n+q α(n)) амортизированного времени со сжатием пути и балансировкой. Память DSU O(n), а вместе с массивом всех q ответов - O(n+q). Это не обещание константного времени для каждого отдельного find. Обычный DSU не поддерживает удаление произвольного ребра: для такой задачи нужна другая организация вычислений.</p>\n<p>В задании верните массив состояний после операций, без начального состояния. Сохраняйте два числа в каждой строке ответа, а не ссылку на один постоянно изменяемый массив.</p>\n"
+    },
+    "EN": {
+      "title": "DSU: which groups are already connected?",
+      "story": "Students form project teams. Initially everyone works alone; later, two teams merge. You need to tell whether two people already belong to the same team. Select two vertices and merge their teams, then repeat the same link.",
+      "steps": [
+        "Merging two different groups reduces their count by one.",
+        "A repeated link within one group changes nothing.",
+        "DSU stores a representative; path compression speeds up later searches."
+      ],
+      "transfer": "This supports growing-network connectivity, equivalence groups and Kruskal’s cycle checks. The assignment asks for the component count and largest size after every operation. The diagram shows group membership; implement the efficient parent/size representation yourself.",
+      "theory": "\n<p class=\"lead\">DSU maintains a partition of vertices into disjoint sets. find(v) returns the representative of a set; union(a,b) merges two sets.</p>\n<p>Initially each vertex is its own root: parent[v]=v and size[v]=1. There are n components; largest is 1, or 0 when n=0. Component size is meaningful at a root. Union first finds both roots. If they coincide, nothing changes; this covers repeated links and self-unions.</p>\n<h2>Path compression and union by size</h2><p>Find walks to the root, then walks back through the same path and points each visited vertex directly at the root. The variable next saves the old parent before overwriting parent[v]. Union attaches the smaller root to the larger one, adds the smaller size and reduces the component count exactly once. If you use rank instead, maintain sizes separately.</p>\n\n<h2>Correctness</h2><p>Invariant: parent trees represent the current components and size[root] counts their vertices. Compression changes the tree shape without changing its root or membership. Merging different roots joins exactly two components and leaves every other component unchanged. Thus components and largest describe the graph after each operation.</p>\n<p><strong>Complexity:</strong> O(n+q α(n)) amortised time with compression and balancing. DSU storage is O(n); including q returned states it is O(n+q). This does not claim constant worst-case time for every individual find. Ordinary DSU does not support arbitrary edge deletion.</p>\n<p>For the assignment, return a state after each operation, without an initial state. Store a new pair of numbers for each answer, rather than repeatedly storing a reference to one mutable array.</p>\n"
+    },
+    "lab": "dsu",
+    "quiz": {
+      "RU": {
+        "question": "После связей 0–1 и 1–2 добавляем 0–2. Число групп уменьшится?",
+        "options": [
+          "Нет",
+          "Да, на один",
+          "Все группы исчезнут"
+        ],
+        "feedback": "0 и 2 уже связаны через 1. Новое ребро не объединяет разные компоненты."
+      },
+      "EN": {
+        "question": "After links 0–1 and 1–2, does adding 0–2 reduce the group count?",
+        "options": [
+          "No",
+          "Yes, by one",
+          "All groups disappear"
+        ],
+        "feedback": "0 and 2 are already connected through 1, so no distinct components merge."
+      },
+      "answer": 0
+    },
+    "code": "int next = parent[v]; // keep the old link before overwriting it\nparent[v] = root;\nv = next;\n// This illustrates one compression step, not a complete find/union implementation.",
+    "book": [
+      "19.3–19.4",
+      527,
+      549,
+      "15uf"
+    ],
+    "videos": [
+      {
+        "id": "ibjEGG7ylHk",
+        "title": "Union Find Introduction",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/ibjEGG7ylHk/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "0jNmHPfA_yE",
+        "title": "Union Find - Union and Find Operations",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/0jNmHPfA_yE/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "VHRhJWacxis",
+        "title": "Union Find Path Compression",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/VHRhJWacxis/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "mst",
+    "RU": {
+      "title": "Остов или маршрут: какую стоимость уменьшаем?",
+      "story": "Нужно соединить пять комнат кабелем. За каждое проложенное ребро вы платите один раз. Другая задача — пройти из комнаты 0 в комнату 4 с наименьшей стоимостью. Сравните выделенные связи: одинаковые веса не означают одинаковую задачу.",
+      "steps": [
+        "Остов соединяет все вершины компоненты без циклов.",
+        "Маршрут соединяет выбранные начало и конец.",
+        "Краскал и Прим решают первую задачу; кратчайшие пути — вторую."
+      ],
+      "transfer": "В инфраструктурном проекте остов даёт минимальную стоимость связей в принятой модели. Для маршрутов курьера этой гарантии недостаточно. В несвязном графе нужен остовный лес: отдельное дерево для каждой компоненты, включая изолированные вершины.",
+      "theory": "\n<p class=\"lead\">Выберите рёбра минимальной суммарной стоимости так, чтобы внутри каждой компоненты исходного неориентированного графа все вершины были соединены без циклов.</p>\n<p>Для связного графа результат является деревом. Для несвязного - лесом, включая изолированные вершины. При c компонентах лес содержит n−c рёбер. Для n=0 стоимость и число компонент равны нулю. Отрицательный вес допустим: он означает снижение общей стоимости. Даже петлю с отрицательным весом нельзя включать в остов, поскольку она не соединяет разные вершины и образует цикл.</p>\n<h2>Свойство разреза</h2><p>Разрез делит вершины на две части. Если он не пересекает уже выбранные рёбра, одно из самых лёгких рёбер через этот разрез можно безопасно добавить к некоторому оптимальному остову, содержащему текущие выбранные рёбра. При равных весах безопасное ребро не обязано входить во все оптимальные остовы.</p>\n<p>Обоснование заменой: возьмите оптимальный остов без выбранного лёгкого ребра e. Добавление e создаёт цикл. В этом цикле есть другое ребро f через тот же разрез; его вес не меньше веса e. Замените f на e: связность сохранится, стоимость не вырастет. Для леса рассуждение применяется отдельно к каждой исходной компоненте.</p>\n<h2>Почему нужны два алгоритма</h2><p>Краскал выбирает рёбра глобально по весу и отсеивает циклы через DSU. Прим расширяет одно построенное дерево через минимальное ребро его границы. Они могут выбрать разные ID, но должны вернуть одинаковую оптимальную стоимость и одинаковое количество компонент.</p>\n<p>Не путайте стоимость сети со стоимостью пути. Остов может вынуждать длинный обход между двумя вершинами, хотя в исходном графе есть более короткая прямая связь. В задаче маршрутов нужен алгоритм кратчайшего пути.</p>\n"
+    },
+    "EN": {
+      "title": "Spanning tree or route: which cost are we minimising?",
+      "story": "You must connect five rooms with cables and pay for each installed link once. A different task is to travel from room 0 to room 4 as cheaply as possible. Compare the highlighted links: the same weights do not imply the same objective.",
+      "steps": [
+        "A spanning tree connects every vertex of a component without cycles.",
+        "A route connects a chosen source and target.",
+        "Kruskal and Prim solve the first problem; shortest-path algorithms solve the second."
+      ],
+      "transfer": "For infrastructure planning, a spanning tree minimises installation cost under the chosen model. That guarantee is insufficient for courier routes. A disconnected graph needs a spanning forest: one tree per component, including isolated vertices.",
+      "theory": "\n<p class=\"lead\">Select edges of minimum total cost so that every original connected component remains connected without cycles.</p>\n<p>A connected graph produces a tree; a disconnected graph produces a forest, including isolated vertices. With c components the forest has n−c edges. For n=0, both cost and component count are zero. Negative weights are valid discounts. Even a negative self-loop cannot be selected: it connects no distinct vertices and forms a cycle.</p>\n<h2>The cut property</h2><p>A cut partitions the vertices into two sets. If the cut respects the selected edges, a lightest edge crossing it is safe for some optimum containing those selected edges. When weights tie, a safe edge need not belong to every optimum.</p>\n<p>Exchange argument: take an optimum without the light edge e. Adding e creates a cycle. That cycle contains another edge f crossing the same cut, with weight at least that of e. Replace f by e; connectivity remains and cost does not increase. For a forest, apply the argument within each original connected component.</p>\n<h2>Why implement both methods?</h2><p>Kruskal examines globally sorted edges and uses DSU to reject cycles. Prim grows one tree using its cheapest boundary edge. Selected IDs may differ, but optimum costs and component counts must agree.</p>\n<p>Network cost is not path cost. A spanning tree may force a long detour between two vertices even when the original graph has a shorter direct connection. Routing requires a shortest-path objective.</p>\n"
+    },
+    "lab": "overview",
+    "quiz": {
+      "RU": {
+        "question": "Почему нельзя использовать сумму весов остова как расстояние от 0 до 4?",
+        "options": [
+          "Остов оплачивает связи всей компоненты",
+          "У остова всегда нулевая стоимость",
+          "Веса нельзя складывать"
+        ],
+        "feedback": "У этих задач разные объекты оптимизации: вся сеть и один путь."
+      },
+      "EN": {
+        "question": "Why is a forest’s total weight not the distance from 0 to 4?",
+        "options": [
+          "It pays for links spanning the whole component",
+          "A tree always costs zero",
+          "Weights cannot be added"
+        ],
+        "feedback": "The optimised objects differ: the entire network versus one route."
+      },
+      "answer": 0
+    },
+    "code": "",
+    "book": [
+      "21.1",
+      586,
+      608,
+      "43mst"
+    ],
+    "videos": []
+  },
+  {
+    "id": "kruskal",
+    "RU": {
+      "title": "Краскал: покупаем дешёвые связи без циклов",
+      "story": "Для пяти комнат подготовили несколько вариантов кабеля. Рассматривайте предложения от дешёвых к дорогим. Перед покупкой ответьте: это ребро действительно соединит две разные части сети или только замкнёт уже существующий путь?",
+      "steps": [
+        "Упорядочьте кандидаты по весу.",
+        "Если концы в разных компонентах, связь полезна: примите её и объедините компоненты.",
+        "Если концы уже связаны, ребро создаст цикл: пропустите его."
+      ],
+      "transfer": "В задаче проектирования сети это последовательный выбор наиболее выгодных допустимых соединений. В задании для проверки компонент используйте собственный DSU и сохраните исходные ID. Попробуйте специально неверное решение на схеме: обратная связь объяснит причину.",
+      "theory": "\n<p class=\"lead\">Рассматривайте рёбра в неубывающем порядке веса. Принимайте ребро только тогда, когда его концы принадлежат разным деревьям текущего леса.</p>\n<p>Создайте отдельный DSU для этого вызова и пустой список выбранных ID. После сортировки исходные ID должны остаться у рёбер. Успешный union означает, что ребро соединяет разные компоненты и не создаёт цикл. При неуспешном union ребро пропускается. Не останавливайтесь после n−1 попыток: часть рёбер будет отвергнута, а исходный граф может быть несвязным.</p>\n\n<h2>Разбор примера</h2><p>В графе шесть вершин; вершина 5 изолирована. Петля ID 7 с весом −8 рассматривается первой, но отвергается. Далее принимаются ID 5, 1, 2, 4: стоимость −1+2+3+4=8. Оставшиеся рёбра соединяют уже связанные вершины. Ответ содержит четыре ребра и две компоненты: 6−2=4.</p>\n<h2>Инвариант и сложность</h2><p>Выбранные рёбра образуют лес, расширяемый до оптимального остовного леса. Перед добавлением ребра компонента DSU задаёт допустимый разрез, а рассматриваемое ребро имеет минимальный доступный вес через него. Свойство разреза сохраняет оптимальность. После обработки всех рёбер вершины каждой исходной компоненты соединены.</p>\n<p>Сортировка O(m log(m+1)), инициализация O(n), операции DSU амортизированно O(m α(n)). Итоговая граница задания O(n+m log(m+1)); память O(n+m). Возвращайте cost как long, edge_ids как исходные ID, components как число исходных компонент, совпадающее с конечным счётчиком DSU.</p>\n"
+    },
+    "EN": {
+      "title": "Kruskal: buy cheap links without forming cycles",
+      "story": "Several cable links are available for five rooms. Examine offers from cheapest to most expensive. Before buying one, decide whether it joins two separate network parts or merely closes an existing path.",
+      "steps": [
+        "Order candidate edges by weight.",
+        "If endpoints belong to different components, accept the link and merge the components.",
+        "If the endpoints are already connected, skip the cycle-forming edge."
+      ],
+      "transfer": "In network design, this selects the cheapest admissible connections. In the assignment, use your own DSU for component checks and preserve original IDs. Try an incorrect decision in the diagram: feedback explains why it fails.",
+      "theory": "\n<p class=\"lead\">Examine edges in nondecreasing weight order. Accept an edge only if its endpoints belong to different trees of the current forest.</p>\n<p>Create a fresh DSU and an empty selected-ID list. Sorting must preserve the IDs stored in edge objects. A successful union means the edge connects distinct components without creating a cycle. A failed union rejects the edge. Do not stop after n−1 examined candidates: some are rejected and the graph may be disconnected.</p>\n\n<h2>Worked example</h2><p>The graph has six vertices, with vertex 5 isolated. Self-loop ID 7 of weight −8 is examined first but rejected. IDs 5, 1, 2 and 4 are accepted, costing −1+2+3+4=8. The remaining edges join vertices already connected. The answer has four edges and two components: 6−2=4.</p>\n<h2>Invariant and complexity</h2><p>The selected forest can be extended to an optimum. Before an accepted edge is added, a DSU component defines a cut respected by the forest; the examined edge is a lightest available crossing edge. The cut property preserves optimality. After all edges have been examined, every original component is spanned.</p>\n<p>Sorting costs O(m log(m+1)), initialisation O(n), and DSU operations O(m α(n)) amortised. The assignment bound is O(n+m log(m+1)) time and O(n+m) memory. Return long cost, original edge_ids and components, which equals the final DSU count.</p>\n"
+    },
+    "lab": "kruskal",
+    "quiz": {
+      "RU": {
+        "question": "Самое дешёвое оставшееся ребро замыкает цикл. Что делать?",
+        "options": [
+          "Пропустить",
+          "Взять, потому что оно дешёвое",
+          "Начать сортировку заново"
+        ],
+        "feedback": "Дешевизна не отменяет условие леса. Уже связанные вершины не нужно соединять повторно."
+      },
+      "EN": {
+        "question": "The cheapest remaining edge closes a cycle. What should happen?",
+        "options": [
+          "Skip it",
+          "Take it because it is cheap",
+          "Restart sorting"
+        ],
+        "feedback": "Low cost does not override the forest constraint; connected vertices need no additional link."
+      },
+      "answer": 0
+    },
+    "code": "// Preserve original IDs before sorting a COPY of the edge list.\n// Compare weights with Long.compare(aWeight, bWeight), not subtraction.\n// Decide acceptance using your own connectivity structure.",
+    "book": [
+      "21.2",
+      591,
+      613,
+      "43mst"
+    ],
+    "videos": [
+      {
+        "id": "JZBQLXgSGfs",
+        "title": "Union Find Kruskal's Algorithm",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/JZBQLXgSGfs/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "prim",
+    "RU": {
+      "title": "Прим: расширяем уже подключённую часть",
+      "story": "Представьте, что электричество уже подведено к комнате 0. Теперь нужно постепенно подключить остальные комнаты. Смотреть на все рёбра сразу не обязательно: интересуют связи от уже подключённой части к новым вершинам. Выберите следующую связь.",
+      "steps": [
+        "Отметьте уже подключённые вершины.",
+        "Найдите самое дешёвое ребро их границы.",
+        "Подключите новую вершину и обновите список кандидатов."
+      ],
+      "transfer": "Это удобно, когда сеть строится расширением от стартовой точки. Очередь с приоритетом помогает выбирать минимального кандидата. В задании не забудьте начать заново для каждой ещё не посещённой компоненты. Короткий пример ниже показывает только работу очереди, а не реализацию Прима.",
+      "theory": "\n<p class=\"lead\">Начните с одной вершины и каждый раз присоединяйте новую вершину через самое дешёвое ребро границы уже построенного дерева.</p>\n<p>Для каждой исходной компоненты нужен новый старт. Отметьте стартовую вершину, увеличьте components и добавьте её исходящие рёбра в очередь с приоритетом. Извлекая ребро, проверьте его конечную вершину: если она уже посещена, кандидат устарел. Иначе примите ребро, отметьте новую вершину и добавьте её исходящие рёбра к непосещённым вершинам.</p>\n\n<h2>Почему нужна проверка после извлечения</h2><p>Одну вершину могут предлагать несколько рёбер. После принятия лучшего остальные записи остаются в очереди. Удалять их заранее необязательно: достаточно пропускать записи с уже посещённым концом. Поэтому эта версия называется ленивой. Посещённость нужно проверять при извлечении, а не только при добавлении.</p>\n<p>В примере со старта 0 принимаются ID 1, 2, 4, 5. Промежуточные стоимости: 2, 5, 9, 8. Стоимость может уменьшиться из-за отрицательного веса; это не ошибка. После опустошения очереди внешний цикл находит изолированную вершину 5 и увеличивает число компонент, не добавляя ребра.</p>\n<h2>Корректность и сложность</h2><p>Инвариант: принятые рёбра образуют дерево посещённых вершин текущей компоненты и расширяемы до оптимума. После удаления устаревших записей минимальный кандидат является лёгким ребром разреза «посещённые / непосещённые» этой компоненты. Свойство разреза обосновывает выбор.</p>\n<p>Ленивая очередь может хранить O(m) записей, поэтому время O(n+m log(m+1)), память O(n+m). Граница O((n+m) log(n+1)) относится к варианту с индексируемой очередью и одной актуальной записью на вершину; для этого варианта используйте границу ленивой версии. Прим должен иметь свою реализацию, а не вызывать Краскала.</p>\n"
+    },
+    "EN": {
+      "title": "Prim: extend the connected part",
+      "story": "Room 0 already has power. Extend the connected area to the remaining rooms. You need not inspect every edge equally: consider links from the connected part to new vertices. Choose the next link.",
+      "steps": [
+        "Mark the connected vertices.",
+        "Choose the cheapest edge on their boundary.",
+        "Connect its new endpoint and update the candidates."
+      ],
+      "transfer": "This suits a network grown from an initial site. A priority queue selects minimum candidates. In the assignment, restart for every unvisited component. The short code example demonstrates the queue only, not Prim’s implementation.",
+      "theory": "\n<p class=\"lead\">Start from one vertex and repeatedly attach an unvisited vertex through the cheapest edge leaving the current tree.</p>\n<p>Restart for every original connected component. Mark the start, increment components and add its outgoing edges to a priority queue. When removing an edge, inspect its destination: if already visited, the candidate is stale. Otherwise accept the edge, mark the new vertex and enqueue its edges to unvisited destinations.</p>\n\n<h2>Why check again on removal?</h2><p>Several edges may offer the same vertex. After its best candidate is accepted, other entries remain in the heap. You need not remove them immediately: skip entries whose destination is already visited. This is the lazy version. Checking only when inserting an edge is insufficient.</p>\n<p>Starting at 0 in the example selects IDs 1, 2, 4 and 5. Intermediate costs are 2, 5, 9 and 8. A negative weight can reduce the running cost. After the heap empties, the outer loop finds isolated vertex 5 and increments components without selecting an edge.</p>\n<h2>Correctness and complexity</h2><p>Invariant: accepted edges form a tree spanning the currently visited portion of this component and extend to an optimum. After stale entries are removed, the minimum candidate is a light edge of the visited/unvisited cut. The cut property justifies accepting it.</p>\n<p>A lazy heap may hold O(m) entries: time is O(n+m log(m+1)) and memory O(n+m). The O((n+m) log(n+1)) bound describes an indexed heap with one active entry per vertex. Use the lazy bound for this variant. Prim must have a separate implementation rather than calling Kruskal.</p>\n"
+    },
+    "lab": "prim",
+    "quiz": {
+      "RU": {
+        "question": "Ребро дешёвое, но оба конца уже подключены. Нужно ли его добавлять?",
+        "options": [
+          "Нет, новая вершина не появится",
+          "Да, любое дешёвое ребро полезно",
+          "Только если его ID чётный"
+        ],
+        "feedback": "Такой кандидат устарел. Прим расширяет дерево, а не накапливает все дешёвые рёбра."
+      },
+      "EN": {
+        "question": "An edge is cheap, but both endpoints are already connected. Add it?",
+        "options": [
+          "No; it adds no new vertex",
+          "Yes; every cheap edge helps",
+          "Only if its ID is even"
+        ],
+        "feedback": "That candidate is stale. Prim grows a tree rather than accumulating every cheap edge."
+      },
+      "answer": 0
+    },
+    "code": "PriorityQueue<Long> offers = new PriorityQueue<>();\noffers.add(9L);\noffers.add(3L);\noffers.add(7L);\nSystem.out.println(offers.remove()); // 3: the minimum offer",
+    "book": [
+      "21.2",
+      591,
+      613,
+      "43mst"
+    ],
+    "videos": [
+      {
+        "id": "jsmMtJpPnhU",
+        "title": "Prim's Minimum Spanning Tree Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/jsmMtJpPnhU/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "dfs",
+    "RU": {
+      "title": "DFS: пройти ветку и вернуться к незавершённому",
+      "story": "Вы проверяете зависимости программы. Дойдите по одной цепочке до конца, затем вернитесь к месту, где остались непроверенные связи. Смотрите на стек: он показывает, какую работу обход ещё не закончил.",
+      "steps": [
+        "Обнаружить вершину — ещё не значит завершить её.",
+        "Завершение наступает после обработки всех её исходящих связей.",
+        "Для глубокого графа храните вершину и позицию следующего соседа в явном стеке."
+      ],
+      "transfer": "Так обходят структуры каталогов и графы зависимостей; похожий порядок нужен для SCC и топологической сортировки. В задании важно не перепутать порядок обнаружения с порядком завершения. В отдельном учебном BFS-примере очередь устроена иначе — сравните поведение двух структур.",
+      "theory": "\n<p class=\"lead\">Для Косарайю и топологической сортировки важен момент завершения вершины. Стек должен сохранять незаконченный обход, а не только список найденных вершин.</p>\n<p>Рекурсивный DFS запоминает в стеке вызовов вершину и позицию следующего соседа. На цепочке из 100000 вершин это может переполнить стек. В явной реализации вершины находятся в ArrayDeque, а cursor[v] хранит номер следующего ещё не просмотренного соседа. У вершины три состояния: 0 - не посещена; 1 - активна и находится в текущем стеке; 2 - завершена.</p>\n<h2>Одна итерация</h2><ol><li>Посмотрите вершину на вершине стека, не удаляя её.</li><li>Если все соседи обработаны, удалите вершину, пометьте её завершённой и добавьте в finish.</li><li>Иначе получите следующего соседа и сразу увеличьте cursor.</li><li>Соседа в состоянии 0 активируйте и положите в стек. Ребро в состояние 1 отмечает цикл. Состояние 2 не требует повторного обхода.</li></ol>\n<p>Без cursor повторное начало списка соседей может увеличить время до квадратичного. Если помечать вершину завершённой сразу после добавления соседей в стек, активный путь будет потерян: такой код не имитирует нужный DFS.</p>\n<h2>Смысл finish</h2><p>На цепочке 0→1→2 сначала завершается 2, затем 1, затем 0. finish=[2,1,0]. Порядок обнаружения [0,1,2] и порядок завершения - разные последовательности. В Косарайю нужен именно второй. В топологической сортировке при отсутствии циклов нужен его разворот.</p>\n<p>Внешний цикл запускает обход из каждой ещё не посещённой вершины. Поэтому изоляты и компоненты, недостижимые из первой вершины, не теряются. Время O(n+m), память O(n+m) вместе со списками смежности; дополнительное состояние обхода O(n). Проверка циклов не мешает использовать finish в первом проходе Косарайю: исходный граф там вправе иметь циклы.</p>\n"
+    },
+    "EN": {
+      "title": "DFS: follow a branch and return to unfinished work",
+      "story": "You are inspecting program dependencies. Follow one chain to its end, then return to where unexplored links remain. Watch the stack: it records traversal work that is still unfinished.",
+      "steps": [
+        "Discovering a vertex does not finish it.",
+        "It finishes after all outgoing links have been processed.",
+        "On deep graphs, explicitly store both the vertex and its next-neighbour position."
+      ],
+      "transfer": "This pattern appears in directory traversal and dependency analysis, and supports SCC and topological ordering. Do not confuse discovery and finish order. The separate BFS example uses a queue instead; compare how the two structures behave.",
+      "theory": "\n<p class=\"lead\">Kosaraju and topological ordering need finish events. An explicit stack must preserve suspended traversal progress, not merely discovered vertices.</p>\n<p>Recursive DFS remembers a vertex and the position of its next neighbour in the call stack. A chain of 100000 vertices may overflow that stack. Here ArrayDeque stores active vertices and cursor[v] stores the next adjacency-list position. States are 0 = unvisited, 1 = active on the current stack and 2 = finished.</p>\n<h2>One iteration</h2><ol><li>Inspect the stack top without removing it.</li><li>If all neighbours are processed, pop the vertex, mark it finished and append it to finish.</li><li>Otherwise read the next neighbour and advance cursor immediately.</li><li>Push a state-0 neighbour after activating it. An edge to state 1 marks a cycle. State 2 needs no further traversal.</li></ol>\n<p>Without cursor, restarting a neighbour scan can make the algorithm quadratic. Marking a vertex finished as soon as its neighbours are pushed loses the active path and does not simulate the required DFS.</p>\n<h2>What finish records</h2><p>On 0→1→2, vertex 2 finishes first, then 1, then 0: finish=[2,1,0]. Discovery order [0,1,2] is a different sequence. Kosaraju needs finish order; topological ordering reverses it when no cycle exists.</p>\n<p>The outer loop starts from every unvisited vertex, preserving isolates and components unreachable from the first start. Time is O(n+m); memory including adjacency lists is O(n+m), with O(n) additional traversal state. Recording a cycle does not prevent using finish in Kosaraju's first pass: its original graph may contain cycles.</p>\n"
+    },
+    "lab": "dfs",
+    "quiz": {
+      "RU": {
+        "question": "На цепочке 0→1→2 какая вершина завершится первой?",
+        "options": [
+          "2",
+          "0",
+          "Все одновременно"
+        ],
+        "feedback": "У 2 нет следующего непроверенного соседа; только после неё могут завершиться 1 и 0."
+      },
+      "EN": {
+        "question": "On 0→1→2, which vertex finishes first?",
+        "options": [
+          "2",
+          "0",
+          "All at once"
+        ],
+        "feedback": "Vertex 2 has no unexplored neighbour; only then can 1 and 0 finish."
+      },
+      "answer": 0
+    },
+    "code": "ArrayDeque<Integer> pending = new ArrayDeque<>();\npending.push(4);\npending.push(7);\nSystem.out.println(pending.pop()); // 7: last in, first out\n// A real DFS frame must also retain traversal progress.",
+    "book": [
+      "20.3",
+      563,
+      585,
+      "42digraph"
+    ],
+    "videos": [
+      {
+        "id": "7fujbpJ0LB4",
+        "title": "Depth First Search Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/7fujbpJ0LB4/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "scc",
+    "RU": {
+      "title": "SCC: можно ли вернуться обратно?",
+      "story": "Между модулями программы есть направленные зависимости. Из A можно попасть в B, но есть ли путь назад? Выберите вершину: одним цветом выделятся только те вершины, между которыми есть пути в обе стороны. Затем сожмите каждую такую группу.",
+      "steps": [
+        "Проверьте достижимость в обе стороны.",
+        "Объедините максимальные взаимно достижимые группы.",
+        "Сохраните связи между группами, убрав внутренние рёбра и повторы."
+      ],
+      "transfer": "При анализе модулей SCC показывает циклически взаимозависимые части. После сжатия легче увидеть общую структуру зависимостей, но внутреннюю проблему группы всё равно нужно решать. В задании найдите группы именно алгоритмом Косарайю; интерактивный пример сначала объясняет смысл результата.",
+      "theory": "\n<p class=\"lead\">SCC - максимальное множество вершин, в котором из любой вершины можно попасть в любую другую по направленным путям.</p>\n<p>Обычная связность без учёта направления не подходит. Ребро A→B не доказывает возможность вернуться из B в A. Косарайю использует два полных прохода: сначала DFS исходного графа с записью завершений; затем обход транспонированного графа в порядке убывания времени завершения первого прохода. Можно поменять графы местами, но второй обязан быть транспонированным относительно первого.</p>\n<h2>Пример</h2><p>Рёбра: 0→1, 1→2, 2→0, 2→3, 1→3, 3→4, 4→3, 4→5, 5→5; вершина 6 изолирована. Компоненты: A={0,1,2}, B={3,4}, C={5}, D={6}. Конденсация: A→B, B→C. Два исходных ребра между A и B дают только одну пару. Петля внутри C в конденсацию не попадает.</p>\n<h2>Почему второй проход выделяет ровно одну SCC</h2><p>Сожмите SCC в вершины: получится DAG. Если в нём есть дуга A→B, максимальное время завершения в A больше максимального времени завершения в B. Во втором проходе по транспонированному графу компонента с наибольшим оставшимся завершением не имеет исходящего пути в другую ещё не отмеченную компоненту. Поэтому обход не выйдет из неё, но достигнет всех её вершин.</p>\n<h2>Конденсация в коде</h2><p>Метки можно выбрать компактными: 0..k−1. Сгруппируйте вершины по метке и просмотрите исходящие рёбра каждой группы. Массив seenFrom[target] запоминает, из какой исходной компоненты уже добавлена пара в target. Проверка target!=from исключает внутренние рёбра. Это удаляет дубликаты за детерминированное O(n+m) без сортировки пар. Альтернатива - хеш-множество пар с ожидаемым O(n+m).</p>\n<p>Оба обхода, транспонирование и конденсация занимают O(n+m) времени и памяти. Для n=0 оба массива ответа пусты. В задании метки могут быть любыми неотрицательными числами, если они задают правильное разбиение. Не сравнивайте label-массивы двух решений буквально. В анализе зависимостей SCC обнаруживает взаимозависимую группу; сжатие группы не устраняет её внутренний конфликт расписания.</p>\n"
+    },
+    "EN": {
+      "title": "SCC: can you get back?",
+      "story": "Program modules have directed dependencies. A path leads from A to B, but can you get back? Select a vertex to highlight exactly the vertices mutually reachable with it, then contract each group.",
+      "steps": [
+        "Check reachability in both directions.",
+        "Identify maximal mutually reachable groups.",
+        "Keep links between groups, removing internal edges and duplicate pairs."
+      ],
+      "transfer": "SCCs expose mutually dependent module groups. Condensation clarifies the overall dependency structure but does not resolve internal cycles. The assignment specifically requires Kosaraju; this interaction first explains what its result means.",
+      "theory": "\n<p class=\"lead\">An SCC is a maximal set in which every vertex can reach every other vertex using directed paths.</p>\n<p>Undirected connectivity is insufficient: A→B does not imply a return path. Kosaraju first runs DFS on the original graph and records finish events. It then traverses the transpose in decreasing first-pass finish order. Starting on the transpose is also valid if the second pass uses the original graph.</p>\n<h2>Example</h2><p>Edges are 0→1, 1→2, 2→0, 2→3, 1→3, 3→4, 4→3, 4→5 and 5→5; vertex 6 is isolated. SCCs are A={0,1,2}, B={3,4}, C={5} and D={6}. Condensation contains A→B and B→C. Two original A-to-B edges produce one pair. The internal loop in C produces none.</p>\n<h2>Why the second pass isolates one SCC</h2><p>Contract the SCCs into a DAG. For a condensation edge A→B, the largest finish time in A exceeds the largest finish time in B. In the transpose, the remaining component with largest finish time has no outgoing path into another unassigned component. The next traversal therefore stays inside it and reaches all of its vertices.</p>\n<h2>Building condensation</h2><p>A possible implementation uses compact labels 0..k−1. Group vertices by label and scan outgoing edges for each group. The array seenFrom[target] records which source component has already emitted a pair to target. The condition target!=from excludes internal edges. This removes duplicates in deterministic O(n+m) time without sorting pairs. A hash set of pairs is an alternative with expected O(n+m) time.</p>\n<p>The traversals, transpose and condensation use O(n+m) time and memory. For n=0 both output arrays are empty. Assignment labels may be any nonnegative integers defining the correct partition; do not compare two label arrays literally. In dependency analysis, an SCC identifies a mutually dependent group; contracting it does not resolve its internal scheduling conflict.</p>\n"
+    },
+    "lab": "scc",
+    "quiz": {
+      "RU": {
+        "question": "Есть путь A→B, но нет пути B→A. Это одна SCC?",
+        "options": [
+          "Нет",
+          "Да",
+          "Только при равных ID"
+        ],
+        "feedback": "Внутри SCC достижимость должна быть взаимной, а не только односторонней."
+      },
+      "EN": {
+        "question": "A reaches B, but B cannot reach A. Are they in one SCC?",
+        "options": [
+          "No",
+          "Yes",
+          "Only if IDs match"
+        ],
+        "feedback": "SCC membership requires mutual, not one-way, reachability."
+      },
+      "answer": 0
+    },
+    "code": "int[] region = {0, 0, 0, 1, 1, 2}; // example labels, already given\nboolean sameRegion = region[0] == region[2];\n// Computing these labels with Kosaraju is your implementation task.",
+    "book": [
+      "20.5",
+      576,
+      598,
+      "42digraph"
+    ],
+    "videos": [
+      {
+        "id": "RpgcYiky7uw",
+        "title": "Strongly Connected Components Kosaraju's Algorithm Graph Algorithm",
+        "author": "Tushar Roy - Coding Made Simple",
+        "thumbnail": "https://i.ytimg.com/vi/RpgcYiky7uw/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "topo",
+    "RU": {
+      "title": "Зависимости: что можно сделать следующим?",
+      "story": "Чтобы выпустить приложение, сначала подготовьте данные, затем API и интерфейс, после них тесты и релиз. Выберите следующую работу так, чтобы все её предпосылки уже были выполнены. Потом добавьте циклическую зависимость и попробуйте построить порядок снова.",
+      "steps": [
+        "Ребро u→v означает: u должно быть раньше v.",
+        "Не существует единственного правильного порядка: независимые работы можно переставлять.",
+        "Цикл делает полный порядок невозможным; DFS обнаруживает его через активную вершину."
+      ],
+      "transfer": "Так устроены зависимости сборки и последовательности обработки данных. Схема тренирует смысл допустимого порядка, а не подменяет требуемый алгоритм: в задании используйте DFS с тремя состояниями и разворотом завершений.",
+      "theory": "\n<p class=\"lead\">Для каждого ребра u→v вершина u должна стоять раньше v. Такой порядок существует тогда и только тогда, когда направленный граф ацикличен.</p>\n<p>Если DFS видит ребро v→u в активную вершину u, в текущем стеке уже есть путь u→…→v. Новое ребро замыкает направленный цикл. Напротив, ребро в завершённую вершину само по себе цикла не доказывает. Например, для рёбер 0→1, 0→2, 2→1 вершина 1 может быть завершена к моменту просмотра 2→1; граф остаётся DAG.</p>\n<h2>Разворот завершений</h2><p>При отсутствии циклов для каждого ребра u→v вершина v завершится раньше u: либо DFS обойдёт её из u, либо она уже была завершена. Поэтому в развёрнутом finish вершина u стоит раньше v. Добавляйте каждую вершину ровно один раз, включая изоляты.</p>\n<p>Для цепочки 0→1→2 finish=[2,1,0], ответ [0,1,2]. Для 0→1, 1→0 результат acyclic=false и order=[]. Петля тоже цикл. Для пустого графа верните acyclic=true и пустой order. Используйте явный DFS с сохранением позиции следующего соседа.</p>\n<h2>Применение и границы модели</h2><p>В системе сборки u→v означает, что v зависит от u. Топологический порядок задаёт допустимую последовательность сборки. Он не определяет оптимальное расписание нескольких исполнителей и не учитывает длительности задач. Для этого потребуются дополнительные данные и алгоритмы.</p>\n<p>Время O(n+m), память O(n+m). Проверяйте все компоненты: цикл в отдельной части графа делает невозможным порядок всего графа. В задании требуется DFS с тремя состояниями. Алгоритм Кана полезен как независимая проверка в тестах, но не заменяет требуемую реализацию.</p>\n"
+    },
+    "EN": {
+      "title": "Dependencies: what can happen next?",
+      "story": "To release an application, prepare data, then API and interface, followed by tests and release. Choose the next task only after its prerequisites are done. Then introduce a circular dependency and try again.",
+      "steps": [
+        "An edge u→v requires u before v.",
+        "Independent tasks may be reordered, so valid orders need not be unique.",
+        "A cycle prevents a full order; DFS detects it through an active vertex."
+      ],
+      "transfer": "Build systems and data pipelines use dependency ordering. This activity teaches order validity; it does not replace the required method. Implement three-state DFS and reverse finish order in the assignment.",
+      "theory": "\n<p class=\"lead\">For each edge u→v, u must precede v. Such an ordering exists exactly when the directed graph is acyclic.</p>\n<p>An edge v→u to an active vertex u closes a cycle because the current DFS stack already contains a path u→…→v. An edge to a finished vertex alone proves no cycle. In the graph 0→1, 0→2, 2→1, vertex 1 may already be finished when 2→1 is examined; the graph is still acyclic.</p>\n<h2>Reverse finish order</h2><p>Without cycles, every edge u→v has v finishing before u: DFS either explores v from u, or v has already finished. Reversing finish therefore places u before v. Include each vertex once, including isolates.</p>\n<p>For 0→1→2, finish=[2,1,0] and the order is [0,1,2]. For 0→1 and 1→0, return acyclic=false and order=[]. A self-loop is also a cycle. The empty graph returns acyclic=true and an empty order. Use explicit DFS with a saved next-neighbour position.</p>\n<h2>Applications and model limits</h2><p>In a build system, u→v means that v depends on u. A topological order is a valid build sequence. It does not optimise a schedule for several workers or account for task durations; those require additional data and algorithms.</p>\n<p>Time and memory are O(n+m). Check every component: a cycle in a separate part still prevents an order for the whole graph. The assignment requires three-state DFS. Kahn's algorithm is useful as an independent test oracle, but does not replace the required implementation.</p>\n"
+    },
+    "lab": "topo",
+    "quiz": {
+      "RU": {
+        "question": "Две работы не зависят друг от друга. Можно ли поменять их местами?",
+        "options": [
+          "Да, если остальные зависимости соблюдены",
+          "Никогда",
+          "Только при одинаковой длительности"
+        ],
+        "feedback": "Топологический порядок может быть неоднозначным. Проверяйте все рёбра, а не совпадение с образцом."
+      },
+      "EN": {
+        "question": "Two tasks are independent. May their order be swapped?",
+        "options": [
+          "Yes, if other dependencies remain satisfied",
+          "Never",
+          "Only if durations match"
+        ],
+        "feedback": "Topological orders may be non-unique. Check every edge rather than matching a reference sequence."
+      },
+      "answer": 0
+    },
+    "code": "int[] position = {0, 2, 1, 3, 4}; // positions in a proposed order\nboolean oneDependencyIsValid = position[1] < position[3];\n// This checks one relation; it does not construct a topological order.",
+    "book": [
+      "20.4",
+      573,
+      595,
+      "42digraph"
+    ],
+    "videos": [
+      {
+        "id": "eL-KzMXSXXI",
+        "title": "Topological Sort Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/eL-KzMXSXXI/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "dag",
+    "RU": {
+      "title": "DAG: выбираем выгодный маршрут по этапам",
+      "story": "Заказ проходит несколько этапов обработки. Каждый переход имеет стоимость; возвратов к пройденным этапам нет. Пройдите расчёт по шагам. Затем включите скидку на одном переходе: посмотрите, почему маршрут с более дорогим первым шагом может стать выгоднее.",
+      "steps": [
+        "Начальная стоимость источника — 0; неизвестные расстояния обозначайте null.",
+        "В топологическом порядке сравнивайте стоимость уже известного пути с новым кандидатом.",
+        "При улучшении запоминайте ребро, чтобы затем восстановить маршрут."
+      ],
+      "transfer": "Это динамическое программирование по зависимостям: логистика с этапами, обработка данных и другие ациклические процессы. Для произвольной дорожной сети с циклами нужен другой алгоритм. В задании проверьте весь граф на циклы, включая недостижимую часть.",
+      "theory": "\n<p class=\"lead\">Найдите минимальную стоимость пути из source до каждой вершины. Обработка в топологическом порядке позволяет учесть и отрицательные веса.</p>\n<p>Сначала проверьте весь граф на циклы. В задании даже цикл, недостижимый из source, требует acyclic=false и пустых distance/parent_edge. Если граф ацикличен, задайте distance[source]=0; остальные расстояния - null, родители - −1. Просматривайте вершины в топологическом порядке и пропускайте недостижимые.</p>\n<h2>Релаксация</h2><p>Для ребра u→v веса w посчитайте candidate=distance[u]+w. Если v ещё недостижима или candidate меньше текущего расстояния, обновите distance[v] и parent_edge[v]. В parent_edge храните исходный ID ребра, не номер u. При равенстве можно оставить прежнее ребро: обе кратчайшие трассы допустимы.</p>\n\n<p>В примере 0→1 весит 5, 0→2 - 2, 1→3 - −4, 2→3 - 2, 3→4 - 3, 2→4 - 8. До 3 выгоднее идти через 1: 5−4=1, хотя расстояние до самой вершины 1 больше, чем до 2. Итог distance=[0,5,2,1,4,null]. Вершина 5 недостижима.</p>\n<h2>Почему одного прохода достаточно</h2><p>Перед обработкой v уже обработаны все возможные предшественники v в топологическом порядке. Следовательно, все пути из источника в v уже рассмотрены через последние рёбра. Минимальное значение distance[v] окончательно. Знак веса на это рассуждение не влияет, а отсутствие циклов не даёт вернуться к уже обработанному предшественнику.</p>\n<p>Время O(n+m), память O(n+m). Не используйте Дейкстру при разрешённых отрицательных весах. Число −1 может быть правильным расстоянием; недостижимость обозначается только null. Для конечных сумм используйте long; при данных ограничениях полный простой путь помещается в 64 бита. В приложениях с поэтапными состояниями такой проход является динамическим программированием по графу зависимостей.</p>\n"
+    },
+    "EN": {
+      "title": "DAG: choose a low-cost route through stages",
+      "story": "An order passes through processing stages. Each transition costs something, and transitions cannot return to earlier stages. Step through the calculation, then enable a discount and see why a more expensive first step can lead to a cheaper route.",
+      "steps": [
+        "The source distance is 0; use null for unreachable vertices.",
+        "In topological order, compare the current distance with each new candidate.",
+        "When improving a distance, retain its edge for route reconstruction."
+      ],
+      "transfer": "This is dynamic programming over dependencies, useful for staged logistics and processing workflows. Arbitrary cyclic road networks require another algorithm. In the assignment, check the whole graph for cycles, including unreachable parts.",
+      "theory": "\n<p class=\"lead\">Find a minimum-cost path from source to every vertex. Topological processing supports negative edge weights.</p>\n<p>Check the entire graph for cycles first. Even a cycle unreachable from source requires acyclic=false and empty distance/parent_edge arrays in this assignment. Otherwise set distance[source]=0; all other distances are null and parents are −1. Process vertices in topological order, skipping unreachable ones.</p>\n<h2>Relaxation</h2><p>For edge u→v of weight w, compute candidate=distance[u]+w. If v is unreachable or candidate is smaller, update distance[v] and parent_edge[v]. Store the original edge ID, not vertex u. On a tie you may retain the previous parent: both shortest witnesses are acceptable.</p>\n\n<p>The example has weights 0→1:5, 0→2:2, 1→3:−4, 2→3:2, 3→4:3 and 2→4:8. Vertex 3 is cheaper via 1, costing 5−4=1, even though reaching 1 costs more than reaching 2. Final distance=[0,5,2,1,4,null]. Vertex 5 is unreachable.</p>\n<h2>Why one pass is sufficient</h2><p>Before v is processed, all its possible predecessors have already been processed. Every source-to-v path has therefore been considered through its final edge. The minimum distance[v] is final. Weight signs do not affect this argument; acyclicity prevents returning to an already processed predecessor.</p>\n<p>Time and memory are O(n+m). Do not use Dijkstra when negative weights are permitted. −1 may be a valid distance; only null represents unreachable. Use long for finite sums; the published bounds keep a simple path's total within 64 bits. In applications with staged states, this is dynamic programming over a dependency graph.</p>\n"
+    },
+    "lab": "dag",
+    "quiz": {
+      "RU": {
+        "question": "Текущее расстояние 6, новый кандидат 5+(−4)=1. Какое оставить?",
+        "options": [
+          "1",
+          "6",
+          "null"
+        ],
+        "feedback": "Сравнивайте полную стоимость пути. Отрицательные веса допустимы в DAG."
+      },
+      "EN": {
+        "question": "The current distance is 6; a new candidate is 5+(−4)=1. Which should remain?",
+        "options": [
+          "1",
+          "6",
+          "null"
+        ],
+        "feedback": "Compare total path costs. Negative weights are valid in a DAG."
+      },
+      "answer": 0
+    },
+    "code": "Long current = 6L;\nlong candidate = 5L + (-4L);\nif (current == null || candidate < current) current = candidate;\n// One relaxation decision, not the full graph algorithm.",
+    "book": [
+      "22.2",
+      616,
+      638,
+      "44sp"
+    ],
+    "videos": [
+      {
+        "id": "TXkDpqjDMHA",
+        "title": "Shortest/Longest path on a Directed Acyclic Graph (DAG)  | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/TXkDpqjDMHA/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  },
+  {
+    "id": "route",
+    "RU": {
+      "title": "От стоимости к самому маршруту",
+      "story": "Число «4» не объясняет курьеру, куда идти. Нужна последовательность переходов. Пройдите расчёт в предыдущем разделе до конца и включите скидку: родительские рёбра выделят маршрут. Сравните его с маршрутом без скидки.",
+      "steps": [
+        "Вспомните последнее ребро пути к цели.",
+        "Перейдите к его началу и повторяйте, пока не дойдёте до источника.",
+        "Разверните собранную последовательность: вы шли от цели назад."
+      ],
+      "transfer": "В навигации результат должен быть объяснимым: путь, направление и сумма весов. Для параллельных рёбер нужен ID конкретного ребра. В задании вы сами реализуете функцию восстановления и проверите источник, достижимую и недостижимую цели.",
+      "theory": "<h3>Что проверить в своей функции</h3><p>Родительское ребро должно заканчиваться в текущей вершине, а цепочка вести к source. Проверьте границы ID, направление, отсутствие зацикливания и совпадение суммы весов с distance. Для source маршрут [source]; для недостижимой цели выберите и опишите результат, например []. Не используйте −1 как недостижимое расстояние: это допустимая стоимость.</p><p>Восстановление пути из L вершин занимает O(L), если ребро находится по исходному ID за O(1). Проверьте достижимую цель, источник, недостижимую цель и равные/параллельные рёбра. Код этой функции вы пишете самостоятельно.</p>"
+    },
+    "EN": {
+      "title": "From a cost to the actual route",
+      "story": "A cost of “4” does not tell a courier where to go. You also need a sequence of transitions. Finish the preceding example and enable the discount: highlighted parent edges reveal the route. Compare it against the undiscounted route.",
+      "steps": [
+        "Read the final edge of the route to the target.",
+        "Move to its origin and repeat until the source.",
+        "Reverse the collected sequence, because the walk went backwards."
+      ],
+      "transfer": "Navigation needs an explainable result: route, direction and total cost. Parallel links require the specific edge ID. Implement your own route helper and test the source, a reachable target and an unreachable target.",
+      "theory": "<h3>Check your helper</h3><p>Each parent edge must end at the current vertex and the chain must lead to source. Check ID bounds, direction, termination and agreement between the weight sum and distance. The source route is [source]. Choose and document a no-route result such as [] for an unreachable target. Do not use −1 for unreachable distance; it may be a valid cost.</p><p>A route containing L vertices takes O(L) to reconstruct with O(1) original-ID edge lookup. Test a reachable target, the source, an unreachable target and tied/parallel edges. Write the route helper yourself.</p>"
+    },
+    "lab": "dag",
+    "quiz": {
+      "RU": {
+        "question": "parent_edge[v] хранит число 2. Что это означает?",
+        "options": [
+          "ID исходного входящего ребра",
+          "Всегда вершину 2",
+          "Расстояние 2"
+        ],
+        "feedback": "По ID нужно найти исходное ребро и перейти к его началу."
+      },
+      "EN": {
+        "question": "parent_edge[v] is 2. What does it mean?",
+        "options": [
+          "The original incoming edge ID",
+          "Always vertex 2",
+          "Distance 2"
+        ],
+        "feedback": "Look up the original edge by ID and move to its origin."
+      },
+      "answer": 0
+    },
+    "code": "int[][] links = {{0, 1, 3}, {1, 2, 4}};\nint selectedEdgeId = 1;\nint previousVertex = links[selectedEdgeId][0]; // 1\n// This illustrates one backward step; write the route loop yourself.",
+    "book": [
+      "22.2",
+      616,
+      638,
+      "44sp"
+    ],
+    "videos": []
+  },
+  {
+    "id": "assignment",
+    "RU": {
+      "title": "Переходим от примера к заданию",
+      "story": "Теперь схема должна превратиться в вашу программу. Готовый шаблон уже читает JSON и получает числа и массивы. Ваша часть — структуры данных, алгоритм, проверка его результата и объяснение. Начните с одного метода и одного маленького теста.",
+      "steps": [
+        "Прочитайте поля входа и сохраните исходные ID.",
+        "Напишите свой алгоритм и проверьте его отдельно.",
+        "Оформите только требуемые поля ответа и запустите смешанные запросы."
+      ],
+      "transfer": "В текущем шаблоне graphs Java-код находится в src/Java/Algorithms.java; Input.java уже готов. В старом festival путь Java/source/Algorithms.java и ввод представлен через Map/List. Условия и правила сдачи берите из README своей копии. Ниже оставлен каркас ввода/вывода без готовых тел шести алгоритмов.",
+      "theory": "<h3>Поля результата</h3><p>dsu: states. kruskal/prim: cost, edge_ids, components. scc: component, condensation. topo: acyclic, order. dag: acyclic, distance, parent_edge.</p><p>Состояние принадлежит одному запросу: не сохраняйте visited, DSU, очереди и расстояния между строками. В stdout должен быть только JSON-ответ. В graphs инструменты читают tests/, а в festival собственные материалы размещаются в tests/student/; точные требования смотрите в своей копии.</p><pre>python tools/run.py --setup\npython tools/run.py --check\npython tools/run.py --input tests/my_cases.jsonl</pre><p>Последняя команда показывает фактический ответ, но сама не сравнивает его с ожидаемым.</p>"
+    },
+    "EN": {
+      "title": "From the example to your assignment",
+      "story": "Now turn the diagram into your program. The template already parses JSON into numbers and arrays. Your work is the data structures, algorithm, verification and explanation. Start with one method and one small test.",
+      "steps": [
+        "Read the inputs and preserve original edge IDs.",
+        "Implement and test your algorithm separately.",
+        "Return the required fields and test mixed requests."
+      ],
+      "transfer": "The current graphs template uses src/Java/Algorithms.java and supplies Input.java. The older festival template uses Java/source/Algorithms.java with Map/List input. Follow your own copy’s README. The fragment below is an input/output scaffold, without completed bodies of the six algorithms.",
+      "theory": "<h3>Result fields</h3><p>dsu: states. kruskal/prim: cost, edge_ids, components. scc: component, condensation. topo: acyclic, order. dag: acyclic, distance, parent_edge.</p><p>State belongs to one request: do not retain visited flags, a DSU, queues or distances between lines. Standard output contains JSON results only. The graphs template uses tests/; festival uses tests/student/ for your test materials. Follow your own copy’s instructions.</p><pre>python tools/run.py --setup\npython tools/run.py --check\npython tools/run.py --input tests/my_cases.jsonl</pre><p>The last command prints actual output but does not compare it against expected results.</p>"
+    },
+    "lab": null,
+    "quiz": null,
+    "code": "int n = Input.vertexCount(input);\nint[][] edges = Input.edges(input);\n\n// TODO: your data structures, algorithm and result validation.\n\nMap<String, Object> result = new java.util.LinkedHashMap<>();\n// TODO: add exactly the output fields required for this task.\nreturn result;",
+    "book": null,
+    "videos": []
+  },
+  {
+    "id": "tests",
+    "RU": {
+      "title": "Как убедиться, что решение работает?",
+      "story": "Один удачный пример легко скрывает ошибку. Представьте, что решение принимает красивый, но неправильный маршрут: расстояние верное, а выбранное ребро ведёт не в ту вершину. Проверьте не только число, но и то, чем оно подтверждается.",
+      "steps": [
+        "Сначала проверьте небольшой пример с объяснимым ответом.",
+        "Затем добавьте границы: петлю, изолят, повтор, равные веса и недостижимость.",
+        "После этого проверьте большие входы, глубокую цепочку и повторные запросы."
+      ],
+      "transfer": "Для неоднозначного ответа важна допустимость, а не буквальное совпадение. Сохраните вход, ожидаемый смысл ответа, фактический вывод и команду. Public checks помогает находить ошибки, но не доказывает выполнение всех требований.",
+      "theory": "\n<p class=\"lead\">Успешный запуск не доказывает правильность алгоритма. Проверяйте численный результат, допустимость возвращённых объектов и поведение на границах.</p>\n<h2>Проверки по задачам</h2><ul><li><strong>DSU:</strong> для малого графа пересчитайте компоненты обходом после каждого добавления. Сравните число компонент и максимальный размер.</li><li><strong>MST:</strong> проверьте уникальность и границы ID, отсутствие петель и циклов, n−c рёбер, связность каждой исходной компоненты и сумму весов. Для малого m переберите все подмножества и найдите истинный минимум. Одного совпадения Краскала и Прима недостаточно: ошибки могут быть общими.</li><li><strong>SCC:</strong> на малом графе вычислите достижимость между всеми парами. Метки совпадают тогда и только тогда, когда достижимость взаимная. Затем независимо постройте множество межкомпонентных пар.</li><li><strong>Topo:</strong> проверьте перестановку вершин и position[u]&lt;position[v] для всех рёбер. Наличие цикла можно независимо проверить алгоритмом Кана.</li><li><strong>DAG:</strong> сравните расстояния с независимой релаксацией на малых графах. Проверьте все родительские пути, направление и стоимость. Отдельно добавьте цикл, недостижимый из source.</li></ul>\n<h2>Граничные случаи</h2><p>Пустые графы там, где разрешены; одна вершина; изоляты; несвязность; повторные объединения; петли; дубликаты и параллельные рёбра; равные оптимумы; отрицательные веса; суммы за пределами int. Для DAG используйте source, отличный от 0, и недостижимые вершины. Для DFS - цепочку из 100000 вершин. Для сброса состояния - смешанные запросы в одном процессе.</p>\n<h2>Команды</h2><pre>python tools/run.py --setup\npython tools/run.py --check\npython tools/run.py --input tests/my_cases.jsonl</pre><p>Установите Python и среду выбранного языка. Создайте my_cases.jsonl сами. Последняя команда только печатает фактические ответы: она не сравнивает их с ожидаемыми. Public checks проверяет опубликованные случаи, но не заменяет полные ограничения. Сохраните входы, ожидаемые и фактические ответы и команды в tests/.</p>\n\n"
+    },
+    "EN": {
+      "title": "How do you know the solution works?",
+      "story": "One successful example can hide a bug. Imagine a correct distance paired with an edge that points to the wrong vertex. Check both the value and the witness supporting it.",
+      "steps": [
+        "Start with a small example whose answer you can justify.",
+        "Add boundaries: loops, isolates, repeats, ties and unreachable vertices.",
+        "Then test large inputs, deep chains and repeated requests."
+      ],
+      "transfer": "Non-unique outputs need validity checks rather than literal matching. Preserve inputs, justified expectations, actual outputs and commands. Public checks help detect errors, but do not establish every requirement.",
+      "theory": "\n<p class=\"lead\">A successful launch does not prove algorithm correctness. Check numerical results, returned witnesses and boundary behaviour.</p>\n<h2>Checks by task</h2><ul><li><strong>DSU:</strong> on small graphs, recompute components by traversal after each insertion and compare counts and largest sizes.</li><li><strong>MST:</strong> check unique valid IDs, no loops or cycles, n−c selected edges, original-component connectivity and the weight sum. For small m, enumerate subsets to obtain the actual optimum. Agreement between Kruskal and Prim alone is insufficient: they may share a defect.</li><li><strong>SCC:</strong> compute all-pairs reachability on small graphs. Labels coincide exactly when reachability is mutual. Independently construct the set of cross-component pairs.</li><li><strong>Topo:</strong> check a vertex permutation and position[u]&lt;position[v] for every edge. Kahn's algorithm independently checks cycle existence.</li><li><strong>DAG:</strong> compare distances with independent relaxation on small graphs. Check every parent route, its direction and cost. Add a cycle unreachable from source.</li></ul>\n<h2>Boundary cases</h2><p>Include empty graphs where allowed, one vertex, isolates, disconnected graphs, repeated unions, loops, duplicates, parallel edges, ties, negative weights and totals beyond int. Use a nonzero source and unreachable vertices. Test a 100000-vertex DFS chain and mixed requests in one process to check state reset.</p>\n<h2>Commands</h2><pre>python tools/run.py --setup\npython tools/run.py --check\npython tools/run.py --input tests/my_cases.jsonl</pre><p>Install Python and the chosen language runtime. Create my_cases.jsonl yourself. The final command prints actual answers without comparing expected results. Public checks cover published cases, not all limits. Preserve inputs, justified expected answers, actual outputs and commands under tests/.</p>\n\n"
+    },
+    "lab": null,
+    "quiz": {
+      "RU": {
+        "question": "Два решения вернули разные ID рёбер, но оба леса допустимы и оптимальны. Это ошибка?",
+        "options": [
+          "Нет",
+          "Да, ID обязаны совпасть",
+          "Да, если порядок рёбер другой"
+        ],
+        "feedback": "При равных оптимумах принимаются разные корректные свидетельства."
+      },
+      "EN": {
+        "question": "Two solutions return different edge IDs, but both forests are feasible and optimal. Is that an error?",
+        "options": [
+          "No",
+          "Yes; IDs must match",
+          "Yes, if the order differs"
+        ],
+        "feedback": "Different valid witnesses are accepted when optima tie."
+      },
+      "answer": 0
+    },
+    "code": "",
+    "book": null,
+    "videos": []
+  },
+  {
+    "id": "analysis",
+    "RU": {
+      "title": "Объяснить решение и честно измерить время",
+      "story": "Два алгоритма дают одинаковую стоимость, но один оказался быстрее на вашем графе. Что именно вы измерили: алгоритм, чтение JSON, построение списков или запуск JVM? Сравнение имеет смысл только при одинаковых условиях.",
+      "steps": [
+        "Сначала объясните, почему результат корректен.",
+        "Отдельно оцените зависимость времени и памяти от n и m.",
+        "Затем измерьте обе реализации на одинаковых графах и обсудите ограничения эксперимента."
+      ],
+      "transfer": "В ANALYSIS.md нужны ваши инварианты, граничные случаи и реальные результаты. Для Краскала и Прима сравните три размера графов, минимум три замера каждого метода и медианы. Не превращайте одну таблицу времени в доказательство асимптотики.",
+      "theory": "\n<p class=\"lead\">В ANALYSIS.md объясните, почему решение правильно и какие ресурсы оно требует. Измерения времени отвечают на другой вопрос: как ведёт себя ваша реализация на выбранных данных.</p>\n<h2>Структура объяснения</h2><p>Для каждого метода запишите цель, структуры данных, инвариант, инициализацию, сохранение инварианта и вывод при завершении. Затем разберите границы и время/память, включая возвращаемый результат. Сошлитесь на конкретные строки или функции своего кода. Для DFS объясните cursor и отсутствие зависимости от глубины стека вызовов; для DAG - проверку всех компонент и запрет релаксации из null.</p>\n<table><tr><th>Метод</th><th>Время</th><th>Память с результатом</th></tr><tr><td>DSU</td><td>O(n+q α(n)), амортизированно</td><td>O(n+q)</td></tr><tr><td>Краскал</td><td>O(n+m log(m+1))</td><td>O(n+m)</td></tr><tr><td>Прим, ленивый</td><td>O(n+m log(m+1))</td><td>O(n+m)</td></tr><tr><td>Косарайю</td><td>O(n+m); для хеш-дедупликации - ожидаемо</td><td>O(n+m)</td></tr><tr><td>Topo / DAG</td><td>O(n+m)</td><td>O(n+m)</td></tr><tr><td>Восстановление пути</td><td>O(L)</td><td>O(L), результат</td></tr></table>\n<h2>Сравнение Краскала и Прима</h2><p>Возьмите три размера графа. Для каждого используйте одни и те же рёбра, веса и среду для обоих методов; сначала подтвердите оптимальные стоимости и допустимость лесов. Проведите минимум три замера каждого метода и вычислите медиану. Укажите n, m, генератор/seed либо сохранённые входы, команды, версию среды, оборудование, таймер и прогрев.</p>\n<p>Исключите компиляцию. Заранее определите границы: например, от готового int[][] до готового результата, включая создание списков и очереди. Если включаете разбор JSON или вывод, включайте одинаково у обоих методов и сообщите об этом. Не сравнивайте прогретый метод с единственным первым запуском другого. В Java пригоден System.nanoTime; в Python - time.perf_counter.</p>\n<p>Одна серия на трёх размерах не доказывает асимптотику. На результат влияют плотность графа, порядок рёбер, структура компонент, выделение памяти и прогрев JVM. Отделите наблюдения от доказанной оценки сложности. Приводите только реальные измерения. Отчёт напишите на английском, укажите источники, помощь инструментов и собственную проверку по силлабусу.</p>\n"
+    },
+    "EN": {
+      "title": "Explain the solution and measure it fairly",
+      "story": "Two algorithms produce the same cost, but one is faster on your graph. Did you measure the algorithm, JSON parsing, adjacency construction or JVM startup? A comparison needs matching conditions.",
+      "steps": [
+        "Explain correctness first.",
+        "Analyse how time and memory depend on n and m.",
+        "Then measure both implementations on identical graphs and discuss experimental limits."
+      ],
+      "transfer": "ANALYSIS.md needs your invariants, boundary cases and actual results. Compare Kruskal and Prim at three sizes, with at least three timings per method and medians. A timing table is not a proof of asymptotic complexity.",
+      "theory": "\n<p class=\"lead\">ANALYSIS.md explains why the solution is correct and what resources it requires. Timings answer a separate question: how your implementation behaves on selected inputs.</p>\n<h2>Structure of the argument</h2><p>For each method, state the objective, data structures, invariant, initialisation, preservation and termination argument. Then discuss boundaries and time/memory, including returned output. Refer to your own functions or lines. For DFS, explain cursor and independence from call-stack depth; for DAG, explain whole-graph cycle detection and skipping null distances.</p>\n<table><tr><th>Method</th><th>Time</th><th>Memory including output</th></tr><tr><td>DSU</td><td>O(n+q α(n)), amortised</td><td>O(n+q)</td></tr><tr><td>Kruskal</td><td>O(n+m log(m+1))</td><td>O(n+m)</td></tr><tr><td>Lazy Prim</td><td>O(n+m log(m+1))</td><td>O(n+m)</td></tr><tr><td>Kosaraju</td><td>O(n+m); expected with hash deduplication</td><td>O(n+m)</td></tr><tr><td>Topo / DAG</td><td>O(n+m)</td><td>O(n+m)</td></tr><tr><td>Route reconstruction</td><td>O(L)</td><td>O(L) output</td></tr></table>\n<h2>Kruskal–Prim benchmark</h2><p>Use three graph sizes. For each size, supply identical edges, weights and environment to both algorithms. Verify optimum costs and forest feasibility before measuring. Record at least three timings per method and their median. State n, m, the generator/seed or saved inputs, commands, runtime version, hardware, timer and warm-up.</p>\n<p>Exclude compilation. Define a timing boundary beforehand: for example, from a ready int[][] to the returned result, including adjacency-list and heap construction. If JSON parsing or output is included, include it equally and say so. Do not compare a warmed method against only the first invocation of the other. System.nanoTime is suitable in Java; time.perf_counter in Python.</p>\n<p>One experiment at three sizes does not prove asymptotic complexity. Density, edge order, component structure, allocation and JVM warm-up affect timings. Separate observations from the proven complexity bound. Report actual measurements only. Write the analysis in English and acknowledge sources, tool assistance and your verification according to the syllabus.</p>\n"
+    },
+    "lab": null,
+    "quiz": null,
+    "code": "",
+    "book": null,
+    "videos": []
+  },
+  {
+    "id": "reading",
+    "RU": {
+      "title": "Книги курса: открыть нужный раздел",
+      "story": "К учебнику стоит обращаться с конкретным вопросом: почему выбор безопасен, что означает завершение DFS, откуда берётся оценка времени? Ниже можно сразу открыть PDF из материалов курса на нужной странице.",
+      "steps": [
+        "Выберите тему, которую сейчас разбираете.",
+        "Откройте нужную страницу и сопоставьте обозначения со схемой.",
+        "После чтения объясните один ключевой шаг своими словами."
+      ],
+      "transfer": "По силлабусу основные книги — CLRS, 4-е издание (2022), и Sedgewick & Wayne, 4-е издание (2011). Skiena, 3-е издание (2020), — дополнительная. Ниже доступны PDF этих изданий и переходы к разделам, связанным с темой урока.",
+      "theory": ""
+    },
+    "EN": {
+      "title": "Course books: open the relevant section",
+      "story": "Go to the textbook with a specific question: why is a choice safe, what does DFS finishing mean, or where does a complexity bound come from? Open the supplied course PDF directly at the relevant page below.",
+      "steps": [
+        "Choose the topic you are studying.",
+        "Open its page and connect the notation to the diagram.",
+        "After reading, explain one important step in your own words."
+      ],
+      "transfer": "The syllabus lists CLRS, fourth edition (2022), and Sedgewick & Wayne, fourth edition (2011), as main textbooks; Skiena, third edition (2020), is additional. Open these editions below at the sections related to the lesson.",
+      "theory": ""
+    },
+    "lab": null,
+    "quiz": null,
+    "code": "",
+    "book": null,
+    "videos": []
+  },
+  {
+    "id": "video",
+    "RU": {
+      "title": "Смотреть по теме: видео и учебный пример",
+      "story": "Выберите одно видео по текущему вопросу, а не длинный курс целиком. Перед просмотром решите, что хотите увидеть: изменение групп, выбор ребра, завершение DFS или обновление стоимости. После видео вернитесь к схеме и повторите пример без подсказки.",
+      "steps": [
+        "Для введения начните с DSU или DFS.",
+        "Для конкретного алгоритма выберите тематическую карточку.",
+        "Для общего повторения оставлен наш видеоурок на 28 минут."
+      ],
+      "transfer": "Внешние видео объясняют алгоритмы, но не определяют JSON-контракт или правила сдачи. В DAG-видео часть о longest path дополнительная. Для SCC нужен Косарайю, для topo — DFS: Tarjan, Kahn и Dijkstra не заменяют требуемые методы. Учебный Java-файл ниже решает другую задачу — достижимость через BFS.",
+      "theory": "<div class=\"lessonVideo\"></div><h3>Запустите похожий учебный пример</h3><p>ReachabilityDemo.java использует список смежности, очередь и visited, чтобы найти достижимые комнаты. Он не содержит DSU, Краскала, Прима, Косарайю, топологической сортировки или кратчайших путей DAG. Сравните очередь BFS с активным стеком DFS; не подставляйте BFS вместо требуемого алгоритма.</p><p><a href=\"code/ReachabilityDemo.java\" download>Скачать ReachabilityDemo.java</a></p><pre>javac --release 17 -encoding UTF-8 ReachabilityDemo.java\njava ReachabilityDemo</pre><p>Ожидаемый вывод: Reachable from 0: [0, 1, 2, 3]; vertex 4 reachable: false.</p>"
+    },
+    "EN": {
+      "title": "Watch by topic: videos and a learning example",
+      "story": "Choose one video for your current question rather than an entire course. Decide what to watch for: changing groups, edge choices, DFS finishing or distance updates. Then return to the diagram and repeat the example without hints.",
+      "steps": [
+        "Start with DSU or DFS for foundations.",
+        "Choose a topic card for a particular algorithm.",
+        "Use the 28-minute course video for a full review."
+      ],
+      "transfer": "External videos explain algorithms rather than defining JSON contracts or submission rules. The DAG video’s longest-path part is optional. SCC requires Kosaraju and topo requires DFS; Tarjan, Kahn and Dijkstra are not substitutes. The Java file below solves a different problem: reachability using BFS.",
+      "theory": "<div class=\"lessonVideo\"></div><h3>Run a related learning example</h3><p>ReachabilityDemo.java uses adjacency lists, a queue and visited flags to find reachable rooms. It contains none of the six assignment algorithms. Compare its BFS queue with an active DFS stack; do not substitute BFS for a required method.</p><p><a href=\"code/ReachabilityDemo.java\" download>Download ReachabilityDemo.java</a></p><pre>javac --release 17 -encoding UTF-8 ReachabilityDemo.java\njava ReachabilityDemo</pre><p>Expected output: Reachable from 0: [0, 1, 2, 3]; vertex 4 reachable: false.</p>"
+    },
+    "lab": null,
+    "quiz": null,
+    "code": "",
+    "book": null,
+    "videos": [
+      {
+        "id": "ibjEGG7ylHk",
+        "title": "Union Find Introduction",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/ibjEGG7ylHk/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "0jNmHPfA_yE",
+        "title": "Union Find - Union and Find Operations",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/0jNmHPfA_yE/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "VHRhJWacxis",
+        "title": "Union Find Path Compression",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/VHRhJWacxis/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "JZBQLXgSGfs",
+        "title": "Union Find Kruskal's Algorithm",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/JZBQLXgSGfs/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "jsmMtJpPnhU",
+        "title": "Prim's Minimum Spanning Tree Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/jsmMtJpPnhU/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "RpgcYiky7uw",
+        "title": "Strongly Connected Components Kosaraju's Algorithm Graph Algorithm",
+        "author": "Tushar Roy - Coding Made Simple",
+        "thumbnail": "https://i.ytimg.com/vi/RpgcYiky7uw/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "eL-KzMXSXXI",
+        "title": "Topological Sort Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/eL-KzMXSXXI/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "TXkDpqjDMHA",
+        "title": "Shortest/Longest path on a Directed Acyclic Graph (DAG)  | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/TXkDpqjDMHA/hqdefault.jpg",
+        "verified": "2026-10-19"
+      },
+      {
+        "id": "7fujbpJ0LB4",
+        "title": "Depth First Search Algorithm | Graph Theory",
+        "author": "WilliamFiset",
+        "thumbnail": "https://i.ytimg.com/vi/7fujbpJ0LB4/hqdefault.jpg",
+        "verified": "2026-10-19"
+      }
+    ]
+  }
+]
