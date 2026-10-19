@@ -1,797 +1,797 @@
 WEBVTT
 
-00:00:00.709 --> 00:00:06.442
+00:00:00.709 --> 00:00:06.442 line:85% position:50% align:center
 A campus needs cables a preparation schedule and
 a delivery route These are three
 
-00:00:06.442 --> 00:00:11.793
+00:00:06.442 --> 00:00:11.793 line:85% position:50% align:center
 different questions Before choosing an algorithm
 decide what the answer must describe
 
-00:00:12.230 --> 00:00:15.747
+00:00:12.230 --> 00:00:15.747 line:85% position:50% align:center
 an entire network an order or one path
 
-00:00:26.042 --> 00:00:31.572
+00:00:26.042 --> 00:00:31.572 line:85% position:50% align:center
 Vertices are numbered from zero A line connects
 two vertices an arrow
 
-00:00:31.572 --> 00:00:37.061
+00:00:31.572 --> 00:00:37.061 line:85% position:50% align:center
 permits only its direction A weight gives the
 cost Here original
 
-00:00:37.061 --> 00:00:42.439
+00:00:37.061 --> 00:00:42.439 line:85% position:50% align:center
 edge identifier one means the second input row
 even after sorting
 
-00:00:52.598 --> 00:00:57.843
+00:00:52.598 --> 00:00:57.843 line:85% position:50% align:center
 An adjacency list gives each vertex its outgoing
 connections An
 
-00:00:57.843 --> 00:01:02.897
+00:00:57.843 --> 00:01:02.897 line:85% position:50% align:center
 undirected edge needs entries at both ends with
 the same original
 
-00:01:02.897 --> 00:01:08.345
+00:01:02.897 --> 00:01:08.345 line:85% position:50% align:center
 identifier This representation lets us visit
 neighbours without scanning the
 
-00:01:08.345 --> 00:01:10.504
+00:01:08.345 --> 00:01:10.504 line:85% position:50% align:center
 entire input each time
 
-00:01:20.709 --> 00:01:26.497
+00:01:20.709 --> 00:01:26.497 line:85% position:50% align:center
 Disjoint-set union tracks groups as connections
 arrive Each vertex initially
 
-00:01:26.497 --> 00:01:32.271
+00:01:26.497 --> 00:01:32.271 line:85% position:50% align:center
 represents itself Parent points to the same
 vertex size is one and there
 
-00:01:32.271 --> 00:01:37.717
+00:01:32.271 --> 00:01:37.717 line:85% position:50% align:center
 are five components Only a root stores the
 authoritative size of its group
 
-00:01:39.459 --> 00:01:44.864
+00:01:39.459 --> 00:01:44.864 line:85% position:50% align:center
 Add the link zero to one Their roots differ so
 two groups merge
 
-00:01:45.179 --> 00:01:50.518
+00:01:45.179 --> 00:01:50.518 line:85% position:50% align:center
 Attach the smaller tree to the larger one on
 equal sizes either
 
-00:01:50.518 --> 00:01:56.035
+00:01:50.518 --> 00:01:56.035 line:85% position:50% align:center
 consistent choice works Here root one joins root
 zero Components
 
-00:01:56.035 --> 00:01:59.225
+00:01:56.035 --> 00:01:59.225 line:85% position:50% align:center
 becomes four and largest becomes two
 
-00:02:01.042 --> 00:02:06.749
+00:02:01.042 --> 00:02:06.749 line:85% position:50% align:center
 Next join two and three This creates a second
 group of size two Now join one and
 
-00:02:06.749 --> 00:02:12.208
+00:02:06.749 --> 00:02:12.208 line:85% position:50% align:center
 three Find first follows each argument to its
 root Roots zero and
 
-00:02:12.251 --> 00:02:17.466
+00:02:12.251 --> 00:02:17.466 line:85% position:50% align:center
 two have size two so merge them Four vertices
 share a group
 
-00:02:17.808 --> 00:02:19.790
+00:02:17.808 --> 00:02:19.790 line:85% position:50% align:center
 vertex four remains separate
 
-00:02:21.445 --> 00:02:27.097
+00:02:21.445 --> 00:02:27.097 line:85% position:50% align:center
 Now add zero to two then four to itself Both
 operations have equal
 
-00:02:27.097 --> 00:02:32.736
+00:02:27.097 --> 00:02:32.736 line:85% position:50% align:center
 endpoint roots Do not decrease components or add
 sizes again Record a
 
-00:02:32.736 --> 00:02:38.442
+00:02:32.736 --> 00:02:38.442 line:85% position:50% align:center
 state after every operation including unchanged
 states The last two
 
-00:02:38.442 --> 00:02:41.864
+00:02:38.442 --> 00:02:41.864 line:85% position:50% align:center
 answers are both two components largest four
 
-00:02:43.596 --> 00:02:49.328
+00:02:43.596 --> 00:02:49.328 line:85% position:50% align:center
 Finding vertex three follows three two zero Zero
 is the root
 
-00:02:49.670 --> 00:02:55.172
+00:02:49.670 --> 00:02:55.172 line:85% position:50% align:center
 Path compression can redirect three straight to
 zero The group still contains the
 
-00:02:55.172 --> 00:03:00.743
+00:02:55.172 --> 00:03:00.743 line:85% position:50% align:center
 same four vertices This parent link is internal
 bookkeeping not a
 
-00:03:00.743 --> 00:03:02.888
+00:03:00.743 --> 00:03:02.888 line:85% position:50% align:center
 new cable in the input graph
 
-00:03:04.625 --> 00:03:10.520
+00:03:04.625 --> 00:03:10.520 line:85% position:50% align:center
 Try one compression step yourself The root is
 already known Save the current parent
 
-00:03:10.903 --> 00:03:16.691
+00:03:10.903 --> 00:03:16.691 line:85% position:50% align:center
 redirect this vertex to the root then continue
 through the saved link Pause for
 
-00:03:16.691 --> 00:03:21.987
+00:03:16.691 --> 00:03:21.987 line:85% position:50% align:center
 up to five minutes When ready compare your three
 lines with this fragment
 
-00:03:23.709 --> 00:03:29.291
+00:03:23.709 --> 00:03:29.291 line:85% position:50% align:center
 Balancing prevents avoidably tall trees while
 compression shortens searches
 
-00:03:29.605 --> 00:03:35.092
+00:03:29.605 --> 00:03:35.092 line:85% position:50% align:center
 Rank is not group size With both heuristics the
 total time for q operations
 
-00:03:35.285 --> 00:03:40.921
+00:03:35.285 --> 00:03:40.921 line:85% position:50% align:center
 is order n plus q times inverse Ackermann of n
 amortized
 
-00:03:41.249 --> 00:03:46.562
+00:03:41.249 --> 00:03:46.562 line:85% position:50% align:center
 Output storage adds order q Ordinary DSU does
 not support
 
-00:03:46.562 --> 00:03:48.000
+00:03:46.562 --> 00:03:48.000 line:85% position:50% align:center
 arbitrary deletions
 
-00:03:49.722 --> 00:03:55.402
+00:03:49.722 --> 00:03:55.402 line:85% position:50% align:center
 The highlighted forest connects all five
 buildings for total cost ten But delivery
 
-00:03:55.402 --> 00:04:00.712
+00:03:55.402 --> 00:04:00.712 line:85% position:50% align:center
 from zero to four uses zero two four for cost
 eight These totals
 
-00:04:00.728 --> 00:04:06.421
+00:04:00.728 --> 00:04:06.421 line:85% position:50% align:center
 optimize different objects A spanning tree need
 not preserve every shortest
 
-00:04:06.421 --> 00:04:06.948
+00:04:06.421 --> 00:04:06.948 line:85% position:50% align:center
 route
 
-00:04:08.959 --> 00:04:14.502
+00:04:08.959 --> 00:04:14.502 line:85% position:50% align:center
 If vertex five is isolated no legal cable can
 connect it It is a separate
 
-00:04:14.502 --> 00:04:20.369
+00:04:14.502 --> 00:04:20.369 line:85% position:50% align:center
 component A spanning forest on n vertices and c
 components contains
 
-00:04:20.413 --> 00:04:26.078
+00:04:20.413 --> 00:04:26.078 line:85% position:50% align:center
 n minus c edges A tree also has no redundant
 links reliability
 
-00:04:26.078 --> 00:04:28.780
+00:04:26.078 --> 00:04:28.780 line:85% position:50% align:center
 requirements need a richer network model
 
-00:04:30.709 --> 00:04:36.157
+00:04:30.709 --> 00:04:36.157 line:85% position:50% align:center
 Kruskal considers edges by increasing weight The
 original identifiers remain
 
-00:04:36.157 --> 00:04:41.359
+00:04:36.157 --> 00:04:41.359 line:85% position:50% align:center
 attached to them Here the examination order is
 two one six
 
-00:04:41.456 --> 00:04:46.701
+00:04:41.456 --> 00:04:46.701 line:85% position:50% align:center
 zero three five four Start a fresh disjoint-set
 
-00:04:46.701 --> 00:04:49.823
+00:04:46.701 --> 00:04:49.823 line:85% position:50% align:center
 structure to represent the forest being built
 
-00:04:51.528 --> 00:04:57.219
+00:04:51.528 --> 00:04:57.219 line:85% position:50% align:center
 Edge two joins one and two for cost one Their
 roots differ so accept it
 
-00:04:57.534 --> 00:05:03.442
+00:04:57.534 --> 00:05:03.442 line:85% position:50% align:center
 Edge one then connects zero to that group for
 cost two Every accepted edge
 
-00:05:03.471 --> 00:05:07.260
+00:05:03.471 --> 00:05:07.260 line:85% position:50% align:center
 joins two trees instead of creating a cycle
 
-00:05:08.862 --> 00:05:14.213
+00:05:08.862 --> 00:05:14.213 line:85% position:50% align:center
 Edge six joins three and four for cost two We
 now have two trees
 
-00:05:14.541 --> 00:05:20.044
+00:05:14.541 --> 00:05:20.044 line:85% position:50% align:center
 zero one two and three four A forest can contain
 several
 
-00:05:20.044 --> 00:05:25.411
+00:05:20.044 --> 00:05:25.411 line:85% position:50% align:center
 growing pieces Its running cost is five and it
 is still extendable to an
 
-00:05:25.411 --> 00:05:26.033
+00:05:25.411 --> 00:05:26.033 line:85% position:50% align:center
 optimum
 
-00:05:27.612 --> 00:05:33.194
+00:05:27.612 --> 00:05:33.194 line:85% position:50% align:center
 Should edge zero now be accepted Its endpoints
 already have the path zero
 
-00:05:33.318 --> 00:05:39.079
+00:05:33.318 --> 00:05:39.079 line:85% position:50% align:center
 two one Adding zero to one would close a cycle
 Skip it although
 
-00:05:39.079 --> 00:05:44.473
+00:05:39.079 --> 00:05:44.473 line:85% position:50% align:center
 its weight is smaller than the next accepted
 edge Eligibility matters as well as
 
-00:05:44.473 --> 00:05:45.381
+00:05:44.473 --> 00:05:45.381 line:85% position:50% align:center
 price
 
-00:05:47.028 --> 00:05:52.735
+00:05:47.028 --> 00:05:52.735 line:85% position:50% align:center
 Edge three connects the two remaining groups for
 cost five Total cost becomes
 
-00:05:52.735 --> 00:05:58.523
+00:05:52.735 --> 00:05:58.523 line:85% position:50% align:center
 ten The last two edges would create cycles The
 answer has four original
 
-00:05:58.523 --> 00:06:04.186
+00:05:58.523 --> 00:06:04.186 line:85% position:50% align:center
 edge identifiers and one component On a
 disconnected graph process
 
-00:06:04.230 --> 00:06:08.616
+00:06:04.230 --> 00:06:08.616 line:85% position:50% align:center
 every component rather than assuming a single
 tree exists
 
-00:06:10.209 --> 00:06:15.886
+00:06:10.209 --> 00:06:15.886 line:85% position:50% align:center
 A cut separates a current component from the
 rest A lightest crossing edge is safe
 
-00:06:15.956 --> 00:06:21.377
+00:06:15.956 --> 00:06:21.377 line:85% position:50% align:center
 for some optimum containing the current forest
 If an optimum lacks it an
 
-00:06:21.377 --> 00:06:26.796
+00:06:21.377 --> 00:06:26.796 line:85% position:50% align:center
 exchange along the resulting cycle replaces an
 edge of no smaller weight
 
-00:06:27.111 --> 00:06:30.057
+00:06:27.111 --> 00:06:30.057 line:85% position:50% align:center
 Equal weights can allow different valid optima
 
-00:06:31.709 --> 00:06:37.211
+00:06:31.709 --> 00:06:37.211 line:85% position:50% align:center
 Prim solves the same objective with different
 state Start at vertex zero Its
 
-00:06:37.211 --> 00:06:42.741
+00:06:37.211 --> 00:06:42.741 line:85% position:50% align:center
 boundary offers edge zero at cost four and edge
 one at cost two Choose
 
-00:06:42.741 --> 00:06:47.984
+00:06:42.741 --> 00:06:47.984 line:85% position:50% align:center
 edge one to bring in vertex two A heap candidate
 must retain destination
 
-00:06:48.271 --> 00:06:51.706
+00:06:48.271 --> 00:06:51.706 line:85% position:50% align:center
 weight and original edge identifier
 
-00:06:54.875 --> 00:07:00.541
+00:06:54.875 --> 00:07:00.541 line:85% position:50% align:center
 Vertex two exposes an edge to one costing one It
 is now the cheapest
 
-00:07:00.541 --> 00:07:06.449
+00:07:00.541 --> 00:07:06.449 line:85% position:50% align:center
 boundary edge so take it The accepted weights
 are two then one Prim
 
-00:07:06.506 --> 00:07:12.212
+00:07:06.506 --> 00:07:12.212 line:85% position:50% align:center
 is not scanning a globally sorted edge list its
 available choices depend
 
-00:07:12.212 --> 00:07:13.419
+00:07:12.212 --> 00:07:13.419 line:85% position:50% align:center
 on the visited region
 
-00:07:16.542 --> 00:07:22.208
+00:07:16.542 --> 00:07:22.208 line:85% position:50% align:center
 The old offer from zero to one still exists in a
 lazy queue but one is already
 
-00:07:22.208 --> 00:07:27.507
+00:07:22.208 --> 00:07:27.507 line:85% position:50% align:center
 visited Discard that offer when removed Checking
 only at insertion is not
 
-00:07:27.507 --> 00:07:31.689
+00:07:27.507 --> 00:07:31.689 line:85% position:50% align:center
 enough because the tree can change while an
 entry waits in the queue
 
-00:07:34.806 --> 00:07:40.526
+00:07:34.806 --> 00:07:40.526 line:85% position:50% align:center
 The cheapest eligible offer now is edge three
 reaching vertex three for
 
-00:07:40.526 --> 00:07:45.591
+00:07:40.526 --> 00:07:45.591 line:85% position:50% align:center
 five Then edge six reaches four for two Running
 totals are two
 
-00:07:45.784 --> 00:07:51.572
+00:07:45.784 --> 00:07:51.572 line:85% position:50% align:center
 three eight ten Kruskal and Prim agree on
 optimum cost although
 
-00:07:51.572 --> 00:07:53.920
+00:07:51.572 --> 00:07:53.920 line:85% position:50% align:center
 their selection sequences differ
 
-00:07:57.028 --> 00:08:02.667
+00:07:57.028 --> 00:08:02.667 line:85% position:50% align:center
 When the queue is empty scan for another
 unvisited vertex An isolated
 
-00:08:02.667 --> 00:08:08.401
+00:08:02.667 --> 00:08:08.401 line:85% position:50% align:center
 vertex starts a new component and contributes no
 edge A lazy heap may
 
-00:08:08.401 --> 00:08:14.175
+00:08:08.401 --> 00:08:14.175 line:85% position:50% align:center
 contain order m entries giving order n plus m
 log of m
 
-00:08:14.175 --> 00:08:17.678
+00:08:14.175 --> 00:08:17.678 line:85% position:50% align:center
 plus one time and order n plus m memory
 
-00:08:20.709 --> 00:08:26.239
+00:08:20.709 --> 00:08:26.239 line:85% position:50% align:center
 Now use directed dependencies Depth-first search
 follows one unfinished
 
-00:08:26.239 --> 00:08:31.578
+00:08:26.239 --> 00:08:31.578 line:85% position:50% align:center
 branch then returns to work it suspended A
 recursive call remembers both the
 
-00:08:31.578 --> 00:08:37.353
+00:08:31.578 --> 00:08:37.353 line:85% position:50% align:center
 vertex and where to resume its neighbour list An
 explicit stack must preserve
 
-00:08:37.353 --> 00:08:38.532
+00:08:37.353 --> 00:08:38.532 line:85% position:50% align:center
 that progress too
 
-00:08:42.612 --> 00:08:47.979
+00:08:42.612 --> 00:08:47.979 line:85% position:50% align:center
 Unvisited means the search has not entered a
 vertex Active means it is on the
 
-00:08:47.979 --> 00:08:53.305
+00:08:47.979 --> 00:08:53.305 line:85% position:50% align:center
 current depth-first path Finished means every
 outgoing edge has been
 
-00:08:53.305 --> 00:08:58.998
+00:08:53.305 --> 00:08:58.998 line:85% position:50% align:center
 examined Here the active stack is zero one three
 four A
 
-00:08:58.998 --> 00:09:03.058
+00:08:58.998 --> 00:09:03.058 line:85% position:50% align:center
 visited Boolean alone cannot express these
 distinctions
 
-00:09:07.125 --> 00:09:12.843
+00:09:07.125 --> 00:09:12.843 line:85% position:50% align:center
 Vertex four has no outgoing work so finish it
 and pop its frame Then
 
-00:09:12.900 --> 00:09:18.511
+00:09:12.900 --> 00:09:18.511 line:85% position:50% align:center
 three finishes followed by one Zero still has
 another neighbour Notice that
 
-00:09:18.511 --> 00:09:24.204
+00:09:18.511 --> 00:09:24.204 line:85% position:50% align:center
 finish records completion not discovery This
 distinction is essential for
 
-00:09:24.204 --> 00:09:27.612
+00:09:24.204 --> 00:09:27.612 line:85% position:50% align:center
 both Kosaraju and topological ordering
 
-00:09:31.625 --> 00:09:37.305
+00:09:31.625 --> 00:09:37.305 line:85% position:50% align:center
 Enter two Its edge reaches three which has
 already finished This is not a directed
 
-00:09:37.305 --> 00:09:43.145
+00:09:37.305 --> 00:09:43.145 line:85% position:50% align:center
 cycle Continue until two and zero finish For
 this adjacency order
 
-00:09:43.432 --> 00:09:49.220
+00:09:43.432 --> 00:09:49.220 line:85% position:50% align:center
 the finish list is four three one two zero Other
 traversal
 
-00:09:49.220 --> 00:09:52.194
+00:09:49.220 --> 00:09:52.194 line:85% position:50% align:center
 orders may produce different valid lists
 
-00:09:56.209 --> 00:10:01.861
+00:09:56.209 --> 00:10:01.861 line:85% position:50% align:center
 At one hundred thousand vertices relying on a
 small call stack can fail Store the
 
-00:10:01.861 --> 00:10:07.619
+00:10:01.861 --> 00:10:07.619 line:85% position:50% align:center
 next-neighbour index explicitly Advance it
 before descending and finish
 
-00:10:07.649 --> 00:10:13.097
+00:10:07.649 --> 00:10:13.097 line:85% position:50% align:center
 only when no neighbour remains Every vertex
 enters and exits
 
-00:10:13.097 --> 00:10:16.696
+00:10:13.097 --> 00:10:16.696 line:85% position:50% align:center
 once each edge is inspected once
 
-00:10:20.695 --> 00:10:26.347
+00:10:20.695 --> 00:10:26.347 line:85% position:50% align:center
 In this graph zero one and two reach one another
 Three and four
 
-00:10:26.347 --> 00:10:32.135
+00:10:26.347 --> 00:10:32.135 line:85% position:50% align:center
 form another mutually reachable group Vertex
 five is isolated The
 
-00:10:32.135 --> 00:10:37.853
+00:10:32.135 --> 00:10:37.853 line:85% position:50% align:center
 arrow from two to three does not merge the
 groups because there is no return path
 
-00:10:40.209 --> 00:10:45.820
+00:10:40.209 --> 00:10:45.820 line:85% position:50% align:center
 Kosaraju first runs depth-first search on the
 original graph Cycles are
 
-00:10:45.820 --> 00:10:51.228
+00:10:45.820 --> 00:10:51.228 line:85% position:50% align:center
 allowed here finish the pass rather than
 rejecting them Use the displayed neighbour
 
-00:10:51.228 --> 00:10:56.798
+00:10:51.228 --> 00:10:56.798 line:85% position:50% align:center
 order Finishing from zero gives four three two
 one zero Then
 
-00:10:56.798 --> 00:11:02.505
+00:10:56.798 --> 00:11:02.505 line:85% position:50% align:center
 isolated five finishes Include it even though it
 was never reachable from
 
-00:11:02.505 --> 00:11:03.291
+00:11:02.505 --> 00:11:03.291 line:85% position:50% align:center
 zero
 
-00:11:05.598 --> 00:11:11.359
+00:11:05.598 --> 00:11:11.359 line:85% position:50% align:center
 Reverse every directed edge keeping vertex
 identities fixed Clear the
 
-00:11:11.359 --> 00:11:17.147
+00:11:11.359 --> 00:11:17.147 line:85% position:50% align:center
 visited state before the second pass Use
 decreasing first-pass finish order for
 
-00:11:17.147 --> 00:11:22.813
+00:11:17.147 --> 00:11:22.813 line:85% position:50% align:center
 the next seeds The second graph must be the
 transpose of the first rather than a
 
-00:11:22.813 --> 00:11:25.379
+00:11:22.813 --> 00:11:25.379 line:85% position:50% align:center
 second traversal in the same direction
 
-00:11:27.792 --> 00:11:33.594
+00:11:27.792 --> 00:11:33.594 line:85% position:50% align:center
 Seed five finds only five Seed zero then
 collects zero one and
 
-00:11:33.594 --> 00:11:38.985
+00:11:33.594 --> 00:11:38.985 line:85% position:50% align:center
 two in the transpose The later seed two is
 already assigned Seed
 
-00:11:39.069 --> 00:11:44.368
+00:11:39.069 --> 00:11:44.368 line:85% position:50% align:center
 three collects three and four Skip assigned
 vertices Colours name the
 
-00:11:44.368 --> 00:11:49.638
+00:11:44.368 --> 00:11:49.638 line:85% position:50% align:center
 groups numeric component labels need not match
 this presentation order
 
-00:11:52.056 --> 00:11:57.749
+00:11:52.056 --> 00:11:57.749 line:85% position:50% align:center
 Think of each strongly connected group as one
 vertex Their condensation has
 
-00:11:57.749 --> 00:12:03.278
+00:11:57.749 --> 00:12:03.278 line:85% position:50% align:center
 no directed cycle The remaining group with
 greatest first-pass finish time has
 
-00:12:03.278 --> 00:12:08.713
+00:12:03.278 --> 00:12:08.713 line:85% position:50% align:center
 no outgoing path to another unassigned group in
 the transpose The search stays
 
-00:12:08.713 --> 00:12:11.496
+00:12:08.713 --> 00:12:11.496 line:85% position:50% align:center
 inside that group and reaches all of it
 
-00:12:13.848 --> 00:12:19.378
+00:12:13.848 --> 00:12:19.378 line:85% position:50% align:center
 Return to the original directions Internal edges
 disappear when groups are
 
-00:12:19.378 --> 00:12:24.867
+00:12:19.378 --> 00:12:24.867 line:85% position:50% align:center
 contracted The edge from two to three becomes A
 to B If we add another
 
-00:12:24.867 --> 00:12:30.207
+00:12:24.867 --> 00:12:30.207 line:85% position:50% align:center
 original edge from one to three it produces the
 same pair not a second
 
-00:12:30.207 --> 00:12:34.294
+00:12:30.207 --> 00:12:34.294 line:85% position:50% align:center
 condensation edge The isolated group still
 exists
 
-00:12:36.625 --> 00:12:41.979
+00:12:36.625 --> 00:12:41.979 line:85% position:50% align:center
 Mutually dependent modules may need coordinated
 changes Condensation
 
-00:12:41.979 --> 00:12:47.561
+00:12:41.979 --> 00:12:47.561 line:85% position:50% align:center
 exposes dependencies between groups but does not
 fix their internal cycles
 
-00:12:47.875 --> 00:12:53.498
+00:12:47.875 --> 00:12:53.498 line:85% position:50% align:center
 Two passes the transpose and condensation need
 linear work
 
-00:12:53.935 --> 00:12:58.417
+00:12:53.935 --> 00:12:58.417 line:85% position:50% align:center
 hash-based removal of duplicate pairs gives an
 expected linear time bound
 
-00:13:00.695 --> 00:13:06.429
+00:13:00.695 --> 00:13:06.429 line:85% position:50% align:center
 Return to the acyclic task graph An arrow means
 its source must happen before
 
-00:13:06.429 --> 00:13:12.011
+00:13:06.429 --> 00:13:12.011 line:85% position:50% align:center
 its target Reverse the DFS finish list to obtain
 zero two one
 
-00:13:12.162 --> 00:13:17.733
+00:13:12.162 --> 00:13:17.733 line:85% position:50% align:center
 three four This order respects every dependency
 Independent tasks
 
-00:13:17.733 --> 00:13:23.125
+00:13:17.733 --> 00:13:23.125 line:85% position:50% align:center
 can sometimes exchange places so a valid answer
 need not be unique
 
-00:13:30.625 --> 00:13:36.085
+00:13:30.625 --> 00:13:36.085 line:85% position:50% align:center
 Build each vertex position in the proposed order
 For edge one to three
 
-00:13:36.278 --> 00:13:41.576
+00:13:36.278 --> 00:13:41.576 line:85% position:50% align:center
 position one is two and position three is three
 the inequality
 
-00:13:41.576 --> 00:13:47.201
+00:13:41.576 --> 00:13:47.201 line:85% position:50% align:center
 holds Check every edge and verify that every
 vertex occurs
 
-00:13:47.201 --> 00:13:52.854
+00:13:47.201 --> 00:13:52.854 line:85% position:50% align:center
 exactly once This is useful for build
 dependencies but does not optimize
 
-00:13:52.854 --> 00:13:53.897
+00:13:52.854 --> 00:13:53.897 line:85% position:50% align:center
 task duration
 
-00:14:01.445 --> 00:14:07.122
+00:14:01.445 --> 00:14:07.122 line:85% position:50% align:center
 Now add four to zero During the active path zero
 one three
 
-00:14:07.328 --> 00:14:12.817
+00:14:07.328 --> 00:14:12.817 line:85% position:50% align:center
 four this edge returns to active zero No
 complete order can respect that
 
-00:14:12.817 --> 00:14:18.551
+00:14:12.817 --> 00:14:18.551 line:85% position:50% align:center
 cycle Return acyclic false and an empty order A
 cycle anywhere
 
-00:14:18.551 --> 00:14:23.182
+00:14:18.551 --> 00:14:23.182 line:85% position:50% align:center
 in the graph including a disconnected part
 invalidates the answer
 
-00:14:30.682 --> 00:14:36.331
+00:14:30.682 --> 00:14:36.331 line:85% position:50% align:center
 A workpiece can take alternative processing
 routes Vertices are stages reached
 
-00:14:36.741 --> 00:14:42.502
+00:14:36.741 --> 00:14:42.502 line:85% position:50% align:center
 arrows are allowed next transitions weights are
 costs We seek the cheapest route
 
-00:14:42.502 --> 00:14:48.288
+00:14:42.502 --> 00:14:48.288 line:85% position:50% align:center
 from source zero These alternatives are not a
 list of mandatory tasks that must
 
-00:14:48.304 --> 00:14:49.456
+00:14:48.304 --> 00:14:49.456 line:85% position:50% align:center
 all be performed
 
-00:14:52.125 --> 00:14:57.938
+00:14:52.125 --> 00:14:57.938 line:85% position:50% align:center
 Only the source cost is known initially Null
 means no route has yet been discovered
 
-00:14:58.253 --> 00:15:04.080
+00:14:58.253 --> 00:15:04.080 line:85% position:50% align:center
 Process vertices in a topological order and
 never relax from a null distance
 
-00:15:04.408 --> 00:15:10.074
+00:15:04.408 --> 00:15:10.074 line:85% position:50% align:center
 After processing zero costs to one and two are
 five and two with original
 
-00:15:10.074 --> 00:15:11.756
+00:15:10.074 --> 00:15:11.756 line:85% position:50% align:center
 parent edges zero and one
 
-00:15:14.472 --> 00:15:19.850
+00:15:14.472 --> 00:15:19.850 line:85% position:50% align:center
 Without a discount processing one first offers
 seven to vertex three
 
-00:15:20.179 --> 00:15:25.845
+00:15:20.179 --> 00:15:25.845 line:85% position:50% align:center
 Processing two improves that to six and offers
 eleven to four Then three
 
-00:15:25.845 --> 00:15:31.402
+00:15:25.845 --> 00:15:31.402 line:85% position:50% align:center
 improves four to nine The route zero two three
 four costs two
 
-00:15:31.402 --> 00:15:34.049
+00:15:31.402 --> 00:15:34.049 line:85% position:50% align:center
 plus four plus three which is nine
 
-00:15:36.709 --> 00:15:42.291
+00:15:36.709 --> 00:15:42.291 line:85% position:50% align:center
 Now change only edge one to three to minus four
 representing a discount
 
-00:15:42.646 --> 00:15:48.095
+00:15:42.646 --> 00:15:48.095 line:85% position:50% align:center
 and restart the calculation Negative weights are
 valid in a DAG After
 
-00:15:48.095 --> 00:15:54.003
+00:15:48.095 --> 00:15:54.003 line:85% position:50% align:center
 zero is processed again the cost to three is
 still null We have not processed
 
-00:15:54.304 --> 00:15:56.258
+00:15:54.304 --> 00:15:56.258 line:85% position:50% align:center
 its incoming alternatives yet
 
-00:15:58.862 --> 00:16:04.555
+00:15:58.862 --> 00:16:04.555 line:85% position:50% align:center
 At vertex one the candidate is five plus minus
 four giving one Three
 
-00:16:04.555 --> 00:16:10.207
+00:16:04.555 --> 00:16:10.207 line:85% position:50% align:center
 has no known cost so store one and original edge
 identifier two The
 
-00:16:10.207 --> 00:16:15.886
+00:16:10.207 --> 00:16:15.886 line:85% position:50% align:center
 parent is an edge identifier not vertex one
 Updating the number without its
 
-00:16:15.886 --> 00:16:18.778
+00:16:15.886 --> 00:16:18.778 line:85% position:50% align:center
 witness would leave an inconsistent result
 
-00:16:21.459 --> 00:16:26.837
+00:16:21.459 --> 00:16:26.837 line:85% position:50% align:center
 Vertex two later offers six to three Six is
 worse than one
 
-00:16:27.152 --> 00:16:32.503
+00:16:27.152 --> 00:16:32.503 line:85% position:50% align:center
 so retain the existing distance and parent It
 also offers eleven to four
 
-00:16:32.831 --> 00:16:38.522
+00:16:32.831 --> 00:16:38.522 line:85% position:50% align:center
 Vertex three then offers four to vertex four The
 final route
 
-00:16:38.524 --> 00:16:44.418
+00:16:38.524 --> 00:16:44.418 line:85% position:50% align:center
 is zero one three four with total five minus
 four plus three
 
-00:16:44.801 --> 00:16:45.655
+00:16:44.801 --> 00:16:45.655 line:85% position:50% align:center
 equal to four
 
-00:16:48.278 --> 00:16:53.863
+00:16:48.278 --> 00:16:53.863 line:85% position:50% align:center
 An added isolated vertex five finishes with null
 distance and parent
 
-00:16:53.863 --> 00:16:59.270
+00:16:53.863 --> 00:16:59.270 line:85% position:50% align:center
 minus one A finite distance can itself be minus
 one Also reject a
 
-00:16:59.270 --> 00:17:04.825
+00:16:59.270 --> 00:17:04.825 line:85% position:50% align:center
 directed cycle anywhere in the input even if
 source zero cannot reach it
 
-00:17:05.167 --> 00:17:08.099
+00:17:05.167 --> 00:17:08.099 line:85% position:50% align:center
 That is a whole-graph requirement of this
 assignment
 
-00:17:10.695 --> 00:17:16.046
+00:17:10.695 --> 00:17:16.046 line:85% position:50% align:center
 To reconstruct the route to four its parent edge
 is identifier four
 
-00:17:16.374 --> 00:17:21.562
+00:17:16.374 --> 00:17:21.562 line:85% position:50% align:center
 three to four Move to three Parent edge two
 leads from one to three
 
-00:17:21.864 --> 00:17:27.665
+00:17:21.864 --> 00:17:27.665 line:85% position:50% align:center
 Parent edge zero leads from zero to one Reverse
 the collected vertices to obtain
 
-00:17:27.665 --> 00:17:31.005
+00:17:27.665 --> 00:17:31.005 line:85% position:50% align:center
 zero one three four
 
-00:17:33.028 --> 00:17:38.923
+00:17:33.028 --> 00:17:38.923 line:85% position:50% align:center
 Try the backward step yourself Original edge
 four is the row three four
 
-00:17:39.020 --> 00:17:44.686
+00:17:39.020 --> 00:17:44.686 line:85% position:50% align:center
 three Which column gives the previous vertex
 Pause if needed It is column
 
-00:17:44.686 --> 00:17:50.297
+00:17:44.686 --> 00:17:50.297 line:85% position:50% align:center
 zero vertex three Column two gives the last edge
 weight not the
 
-00:17:50.297 --> 00:17:51.613
+00:17:50.297 --> 00:17:51.613 line:85% position:50% align:center
 total route cost
 
-00:17:53.695 --> 00:17:59.603
+00:17:53.695 --> 00:17:59.603 line:85% position:50% align:center
 A correct sum is not enough Check forest
 identifiers connectivity and
 
-00:17:59.768 --> 00:18:05.489
+00:17:59.768 --> 00:18:05.489 line:85% position:50% align:center
 edge count For components verify mutual
 reachability and deduplicated
 
-00:18:05.489 --> 00:18:10.758
+00:18:05.489 --> 00:18:10.758 line:85% position:50% align:center
 condensation For an order check every edge
 position For routes
 
-00:18:10.937 --> 00:18:16.127
+00:18:10.937 --> 00:18:16.127 line:85% position:50% align:center
 verify parent direction and total weight
 Alternative valid witnesses should be
 
-00:18:16.127 --> 00:18:16.926
+00:18:16.127 --> 00:18:16.926 line:85% position:50% align:center
 accepted
 
-00:18:18.625 --> 00:18:24.003
+00:18:18.625 --> 00:18:24.003 line:85% position:50% align:center
 Include empty graphs where allowed isolates
 repeated unions
 
-00:18:24.155 --> 00:18:29.561
+00:18:24.155 --> 00:18:29.561 line:85% position:50% align:center
 loops parallel edges negative weights and totals
 beyond integer range
 
-00:18:29.875 --> 00:18:35.337
+00:18:29.875 --> 00:18:35.337 line:85% position:50% align:center
 Test deep chains and mixed requests in one
 process Benchmark Kruskal and
 
-00:18:35.337 --> 00:18:40.417
+00:18:35.337 --> 00:18:40.417 line:85% position:50% align:center
 Prim on the same graphs three sizes at least
 three runs
 
-00:18:40.718 --> 00:18:44.887
+00:18:40.718 --> 00:18:44.887 line:85% position:50% align:center
 median compilation excluded and documented
 warm-up
 
-00:18:46.639 --> 00:18:52.085
+00:18:46.639 --> 00:18:52.085 line:85% position:50% align:center
 Here n counts vertices m input edges and q
 unions
 
-00:18:52.413 --> 00:18:57.873
+00:18:52.413 --> 00:18:57.873 line:85% position:50% align:center
 DSU is amortized almost linear Kruskal and lazy
 Prim
 
-00:18:57.916 --> 00:19:03.471
+00:18:57.916 --> 00:19:03.471 line:85% position:50% align:center
 include sorting or heap work Kosaraju
 topological ordering
 
-00:19:03.650 --> 00:19:09.503
+00:19:03.650 --> 00:19:09.503 line:85% position:50% align:center
 and DAG relaxation are linear hash deduplication
 is expected linear
 
-00:19:09.805 --> 00:19:13.974
+00:19:09.805 --> 00:19:13.974 line:85% position:50% align:center
 A reconstructed route takes time proportional to
 its length
 
-00:19:15.709 --> 00:19:21.320
+00:19:15.709 --> 00:19:21.320 line:85% position:50% align:center
 Use the graphs template Its adapters handle JSON
 input and output Write the
 
-00:19:21.320 --> 00:19:26.741
+00:19:21.320 --> 00:19:26.741 line:85% position:50% align:center
 six required algorithms and your route helper in
 your chosen language Keep
 
-00:19:26.741 --> 00:19:32.067
+00:19:26.741 --> 00:19:32.067 line:85% position:50% align:center
 original edge identifiers reset state per
 request use wide
 
-00:19:32.067 --> 00:19:36.318
+00:19:32.067 --> 00:19:36.318 line:85% position:50% align:center
 totals and send only result JSON to standard
 output
 
-00:19:38.125 --> 00:19:43.911
+00:19:38.125 --> 00:19:43.911 line:85% position:50% align:center
 Save your tests and English analysis Public
 checks report pass or fail
 
-00:19:44.267 --> 00:19:49.212
+00:19:44.267 --> 00:19:49.212 line:85% position:50% align:center
 they do not calculate the practical grade or
 transfer marks to Moodle Submit the
 
-00:19:49.212 --> 00:19:54.987
+00:19:49.212 --> 00:19:54.987 line:85% position:50% align:center
 exact commit link An Actions link may support it
 Follow the current README
 
-00:19:54.987 --> 00:19:58.911
+00:19:54.987 --> 00:19:58.911 line:85% position:50% align:center
 and Moodle for the rubric dates and submission
 details
