@@ -15,12 +15,12 @@ Vertices are numbered from zero. A line connects two vertices; an arrow permits 
 An adjacency list gives each vertex its outgoing connections. An undirected edge needs entries at both ends, with the same original identifier. This representation lets us visit neighbours without scanning the entire input each time.
 
 
-## 01:20 Disjoint-set union
+## 01:17 Disjoint-set union
 
 Disjoint-set union tracks groups as connections arrive. Each vertex initially represents itself. Parent points to the same vertex, size is one, and there are five components. Only a root stores the authoritative size of its group.
 
 
-Add the link zero to one. Their roots differ, so two groups merge. Attach the smaller tree to the larger one; on equal sizes, either consistent choice works. Here, root one joins root zero. Components becomes four, and largest becomes two.
+Add the link zero to one. Their roots differ, so two groups merge. Attach the smaller tree to the larger one; on equal sizes, either consistent choice works. Here, root one joins root zero. The number of components drops to four; the largest group now has two vertices.
 
 
 Next join two and three. This creates a second group of size two. Now join one and three. Find first follows each argument to its root. Roots zero and two have size two, so merge them. Four vertices share a group; vertex four remains separate.
@@ -32,7 +32,7 @@ Now add zero to two, then four to itself. Both operations have equal endpoint ro
 Finding vertex three follows three, two, zero. Zero is the root. Path compression can redirect three straight to zero. The group still contains the same four vertices. This parent link is internal bookkeeping, not a new cable in the input graph.
 
 
-Try one compression step yourself. The root is already known. Save the current parent, redirect this vertex to the root, then continue through the saved link. Pause for up to five minutes. When ready, compare your three lines with this fragment.
+Return to the state before compression. Try one compression step yourself. The root is already known. Save the current parent, redirect this vertex to the root, then continue through the saved link. Pause for up to five minutes. When ready, compare your three lines with this fragment.
 
 
 Balancing prevents avoidably tall trees, while compression shortens searches. Rank is not group size. With both heuristics, the total time for q operations is order n plus q times inverse Ackermann of n, amortized. Output storage adds order q. Ordinary DSU does not support arbitrary deletions.
@@ -131,7 +131,7 @@ Return to the acyclic task graph. An arrow means its source must happen before i
 Build each vertex position in the proposed order. For edge one to three, position one is two and position three is three: the inequality holds. Check every edge and verify that every vertex occurs exactly once. This is useful for build dependencies, but does not optimize task duration.
 
 
-Now add four to zero. During the active path zero, one, three, four, this edge returns to active zero. No complete order can respect that cycle. Return acyclic false and an empty order. A cycle anywhere in the graph, including a disconnected part, invalidates the answer.
+Now add four to zero. During the active path zero, one, three, four, this edge returns to active zero. No complete order can respect that cycle. Return acyclic false and an empty order. A cycle anywhere in the graph, including a disconnected part, makes a complete topological order impossible.
 
 
 ## 14:30 DAG shortest paths
@@ -157,7 +157,7 @@ Vertex two later offers six to three. Six is worse than one, so retain the exist
 An added isolated vertex five finishes with null distance and parent minus one. A finite distance can itself be minus one. Also reject a directed cycle anywhere in the input, even if source zero cannot reach it. That is a whole-graph requirement of this assignment.
 
 
-## 17:10 Reconstruct a route
+## 17:06 Reconstruct a route
 
 To reconstruct the route to four, its parent edge is identifier four: three to four. Move to three. Parent edge two leads from one to three. Parent edge zero leads from zero to one. Reverse the collected vertices to obtain zero, one, three, four.
 
@@ -165,12 +165,12 @@ To reconstruct the route to four, its parent edge is identifier four: three to f
 Try the backward step yourself. Original edge four is the row three, four, three. Which column gives the previous vertex? Pause if needed. It is column zero: vertex three. Column two gives the last edge weight, not the total route cost.
 
 
-## 17:53 Test and measure
+## 17:49 Test and measure
 
 A correct sum is not enough. Check forest identifiers, connectivity, and edge count. For components, verify mutual reachability and deduplicated condensation. For an order, check every edge position. For routes, verify parent direction and total weight. Alternative valid witnesses should be accepted.
 
 
-Include empty graphs where allowed, isolates, repeated unions, loops, parallel edges, negative weights, and totals beyond integer range. Test deep chains and mixed requests in one process. Benchmark Kruskal and Prim on the same graphs: three sizes, at least three runs, median, compilation excluded, and documented warm-up.
+Include empty graphs where allowed, isolates, repeated unions, loops, parallel edges, negative weights, and totals beyond the signed thirty-two-bit range. Test deep chains and mixed requests in one process. Benchmark Kruskal and Prim on the same graphs at three sizes. At each size, run each method at least three times and report its median. Exclude compilation and document warm-up.
 
 
 Here n counts vertices, m input edges, and q unions. DSU is amortized almost linear. Kruskal and lazy Prim include sorting or heap work. Kosaraju, topological ordering, and DAG relaxation are linear; hash deduplication is expected linear. A reconstructed route takes time proportional to its length.

@@ -14,167 +14,170 @@ answer must describe: an entire
 00:00:12.774 --> 00:00:15.747 line:78% position:50% align:center
 network, an order, or one path.
 
-00:00:26.042 --> 00:00:28.254 line:78% position:50% align:center
+00:00:25.042 --> 00:00:27.254 line:78% position:50% align:center
 Vertices are numbered from zero.
 
-00:00:28.569 --> 00:00:33.594 line:78% position:50% align:center
+00:00:27.569 --> 00:00:32.594 line:78% position:50% align:center
 A line connects two vertices; an arrow permits
 only its direction.
 
-00:00:33.922 --> 00:00:35.483 line:78% position:50% align:center
+00:00:32.922 --> 00:00:34.483 line:78% position:50% align:center
 A weight gives the cost.
 
-00:00:35.811 --> 00:00:41.572 line:78% position:50% align:center
+00:00:34.811 --> 00:00:40.572 line:78% position:50% align:center
 Here, original edge identifier one means the
 second input row, even
 
-00:00:41.572 --> 00:00:42.439 line:78% position:50% align:center
+00:00:40.572 --> 00:00:41.439 line:78% position:50% align:center
 after sorting.
 
-00:00:52.598 --> 00:00:57.406 line:78% position:50% align:center
+00:00:50.598 --> 00:00:55.406 line:78% position:50% align:center
 An adjacency list gives each vertex its outgoing
 connections.
 
-00:00:57.720 --> 00:01:02.897 line:78% position:50% align:center
+00:00:55.720 --> 00:01:00.897 line:78% position:50% align:center
 An undirected edge needs entries at both ends,
 with the same original
 
-00:01:02.897 --> 00:01:03.805 line:78% position:50% align:center
+00:01:00.897 --> 00:01:01.805 line:78% position:50% align:center
 identifier.
 
-00:01:04.133 --> 00:01:09.661 line:78% position:50% align:center
+00:01:02.133 --> 00:01:07.661 line:78% position:50% align:center
 This representation lets us visit neighbours
 without scanning the entire input
 
-00:01:09.718 --> 00:01:10.504 line:78% position:50% align:center
+00:01:07.718 --> 00:01:08.504 line:78% position:50% align:center
 each time.
 
-00:01:20.709 --> 00:01:24.416 line:78% position:50% align:center
+00:01:17.709 --> 00:01:21.416 line:78% position:50% align:center
 Disjoint-set union tracks groups as connections
 arrive.
 
-00:01:24.730 --> 00:01:28.003 line:78% position:50% align:center
+00:01:21.730 --> 00:01:25.003 line:78% position:50% align:center
 Each vertex initially represents itself.
 
-00:01:28.317 --> 00:01:33.723 line:78% position:50% align:center
+00:01:25.317 --> 00:01:30.723 line:78% position:50% align:center
 Parent points to the same vertex, size is one,
 and there are five components.
 
-00:01:34.038 --> 00:01:37.717 line:78% position:50% align:center
+00:01:31.038 --> 00:01:34.717 line:78% position:50% align:center
 Only a root stores the authoritative size of its
 group.
 
-00:01:39.459 --> 00:01:41.196 line:78% position:50% align:center
+00:01:36.375 --> 00:01:37.936 line:78% position:50% align:center
 Add the link zero to one.
 
-00:01:41.524 --> 00:01:44.864 line:78% position:50% align:center
+00:01:38.264 --> 00:01:41.495 line:78% position:50% align:center
 Their roots differ, so two groups merge.
 
-00:01:45.179 --> 00:01:50.518 line:78% position:50% align:center
+00:01:41.824 --> 00:01:47.231 line:78% position:50% align:center
 Attach the smaller tree to the larger one; on
 equal sizes, either
 
-00:01:50.518 --> 00:01:52.187 line:78% position:50% align:center
+00:01:47.231 --> 00:01:48.927 line:78% position:50% align:center
 consistent choice works.
 
-00:01:52.529 --> 00:01:55.109 line:78% position:50% align:center
+00:01:49.283 --> 00:01:51.930 line:78% position:50% align:center
 Here, root one joins root zero.
 
-00:01:55.410 --> 00:01:59.225 line:78% position:50% align:center
-Components becomes four, and largest becomes
-two.
+00:01:52.258 --> 00:01:57.827 line:78% position:50% align:center
+The number of components drops to four; the
+largest group now has two vertices.
 
-00:02:01.042 --> 00:02:02.915 line:78% position:50% align:center
+00:01:59.459 --> 00:02:01.331 line:78% position:50% align:center
 Next join two and three.
 
-00:02:03.243 --> 00:02:05.754 line:78% position:50% align:center
+00:02:01.660 --> 00:02:04.171 line:78% position:50% align:center
 This creates a second group of size two.
 
-00:02:06.069 --> 00:02:07.344 line:78% position:50% align:center
+00:02:04.486 --> 00:02:05.761 line:78% position:50% align:center
 Now join one and three.
 
-00:02:07.727 --> 00:02:10.700 line:78% position:50% align:center
+00:02:06.143 --> 00:02:09.117 line:78% position:50% align:center
 Find first follows each argument to its root.
 
-00:02:11.028 --> 00:02:15.048 line:78% position:50% align:center
+00:02:09.445 --> 00:02:13.465 line:78% position:50% align:center
 Roots zero and two have size two, so merge them.
 
-00:02:15.417 --> 00:02:19.790 line:78% position:50% align:center
+00:02:13.834 --> 00:02:18.206 line:78% position:50% align:center
 Four vertices share a group; vertex four remains
 separate.
 
-00:02:21.445 --> 00:02:24.962 line:78% position:50% align:center
+00:02:19.778 --> 00:02:23.295 line:78% position:50% align:center
 Now add zero to two, then four to itself.
 
-00:02:25.277 --> 00:02:28.264 line:78% position:50% align:center
+00:02:23.610 --> 00:02:26.597 line:78% position:50% align:center
 Both operations have equal endpoint roots.
 
-00:02:28.592 --> 00:02:32.013 line:78% position:50% align:center
+00:02:26.925 --> 00:02:30.347 line:78% position:50% align:center
 Do not decrease components or add sizes again.
 
-00:02:32.328 --> 00:02:37.584 line:78% position:50% align:center
+00:02:30.662 --> 00:02:35.917 line:78% position:50% align:center
 Record a state after every operation, including
 unchanged states.
 
-00:02:37.885 --> 00:02:41.864 line:78% position:50% align:center
+00:02:36.219 --> 00:02:40.197 line:78% position:50% align:center
 The last two answers are both two components,
 largest four.
 
-00:02:43.596 --> 00:02:47.901 line:78% position:50% align:center
+00:02:41.846 --> 00:02:46.151 line:78% position:50% align:center
 Finding vertex three follows three, two, zero.
 
-00:02:48.202 --> 00:02:49.328 line:78% position:50% align:center
+00:02:46.452 --> 00:02:47.578 line:78% position:50% align:center
 Zero is the root.
 
-00:02:49.670 --> 00:02:53.485 line:78% position:50% align:center
+00:02:47.920 --> 00:02:51.735 line:78% position:50% align:center
 Path compression can redirect three straight to
 zero.
 
-00:02:53.800 --> 00:02:57.263 line:78% position:50% align:center
+00:02:52.050 --> 00:02:55.513 line:78% position:50% align:center
 The group still contains the same four vertices.
 
-00:02:57.591 --> 00:03:02.888 line:78% position:50% align:center
+00:02:55.841 --> 00:03:01.138 line:78% position:50% align:center
 This parent link is internal bookkeeping, not a
 new cable in the input graph.
 
-00:03:04.625 --> 00:03:06.620 line:78% position:50% align:center
+00:03:02.778 --> 00:03:04.991 line:78% position:50% align:center
+Return to the state before compression.
+
+00:03:05.319 --> 00:03:07.205 line:78% position:50% align:center
 Try one compression step yourself.
 
-00:03:06.935 --> 00:03:08.849 line:78% position:50% align:center
+00:03:07.534 --> 00:03:09.379 line:78% position:50% align:center
 The root is already known.
 
-00:03:09.177 --> 00:03:14.802 line:78% position:50% align:center
+00:03:09.694 --> 00:03:15.306 line:78% position:50% align:center
 Save the current parent, redirect this vertex to
 the root, then continue through
 
-00:03:14.802 --> 00:03:15.887 line:78% position:50% align:center
+00:03:15.306 --> 00:03:16.417 line:78% position:50% align:center
 the saved link.
 
-00:03:16.229 --> 00:03:17.938 line:78% position:50% align:center
+00:03:16.746 --> 00:03:18.428 line:78% position:50% align:center
 Pause for up to five minutes.
 
-00:03:18.253 --> 00:03:21.987 line:78% position:50% align:center
+00:03:18.770 --> 00:03:22.205 line:78% position:50% align:center
 When ready, compare your three lines with this
 fragment.
 
-00:03:23.709 --> 00:03:29.291 line:78% position:50% align:center
+00:03:23.792 --> 00:03:29.374 line:78% position:50% align:center
 Balancing prevents avoidably tall trees, while
 compression shortens searches.
 
-00:03:29.605 --> 00:03:31.125 line:78% position:50% align:center
+00:03:29.689 --> 00:03:31.208 line:78% position:50% align:center
 Rank is not group size.
 
-00:03:31.440 --> 00:03:37.010 line:78% position:50% align:center
+00:03:31.523 --> 00:03:37.094 line:78% position:50% align:center
 With both heuristics, the total time for q
 operations is order n plus
 
-00:03:37.010 --> 00:03:40.921 line:78% position:50% align:center
+00:03:37.094 --> 00:03:41.004 line:78% position:50% align:center
 q times inverse Ackermann of n, amortized.
 
-00:03:41.249 --> 00:03:43.842 line:78% position:50% align:center
+00:03:41.333 --> 00:03:43.926 line:78% position:50% align:center
 Output storage adds order q.
 
-00:03:44.347 --> 00:03:48.000 line:78% position:50% align:center
+00:03:44.431 --> 00:03:48.083 line:78% position:50% align:center
 Ordinary DSU does not support arbitrary
 deletions.
 
@@ -663,50 +666,50 @@ so a valid answer need not
 00:13:22.312 --> 00:13:23.125 line:78% position:50% align:center
 be unique.
 
-00:13:30.625 --> 00:13:33.952 line:78% position:50% align:center
+00:13:30.042 --> 00:13:33.369 line:78% position:50% align:center
 Build each vertex position in the proposed
 order.
 
-00:13:34.307 --> 00:13:39.756 line:78% position:50% align:center
+00:13:33.724 --> 00:13:39.172 line:78% position:50% align:center
 For edge one to three, position one is two and
 position three is
 
-00:13:39.756 --> 00:13:42.294 line:78% position:50% align:center
+00:13:39.172 --> 00:13:41.711 line:78% position:50% align:center
 three: the inequality holds.
 
-00:13:42.623 --> 00:13:47.894 line:78% position:50% align:center
+00:13:42.039 --> 00:13:47.311 line:78% position:50% align:center
 Check every edge and verify that every vertex
 occurs exactly
 
-00:13:47.894 --> 00:13:48.639 line:78% position:50% align:center
+00:13:47.311 --> 00:13:48.056 line:78% position:50% align:center
 once.
 
-00:13:48.954 --> 00:13:53.897 line:78% position:50% align:center
+00:13:48.371 --> 00:13:53.314 line:78% position:50% align:center
 This is useful for build dependencies, but does
 not optimize task duration.
 
-00:14:01.445 --> 00:14:03.304 line:78% position:50% align:center
+00:14:00.278 --> 00:14:02.097 line:78% position:50% align:center
 Now add four to zero.
 
-00:14:03.633 --> 00:14:09.380 line:78% position:50% align:center
+00:14:02.384 --> 00:14:07.602 line:78% position:50% align:center
 During the active path zero, one, three, four,
-this edge returns to
+this edge
 
-00:14:09.380 --> 00:14:10.369 line:78% position:50% align:center
-active zero.
+00:14:07.602 --> 00:14:09.339 line:78% position:50% align:center
+returns to active zero.
 
-00:14:10.684 --> 00:14:13.508 line:78% position:50% align:center
+00:14:09.653 --> 00:14:12.477 line:78% position:50% align:center
 No complete order can respect that cycle.
 
-00:14:13.809 --> 00:14:16.905 line:78% position:50% align:center
+00:14:12.792 --> 00:14:15.806 line:78% position:50% align:center
 Return acyclic false and an empty order.
 
-00:14:17.233 --> 00:14:22.478 line:78% position:50% align:center
+00:14:16.134 --> 00:14:21.460 line:78% position:50% align:center
 A cycle anywhere in the graph, including a
-disconnected part, invalidates the
+disconnected part, makes a complete
 
-00:14:22.478 --> 00:14:23.182 line:78% position:50% align:center
-answer.
+00:14:21.460 --> 00:14:23.822 line:78% position:50% align:center
+topological order impossible.
 
 00:14:30.682 --> 00:14:34.076 line:78% position:50% align:center
 A workpiece can take alternative processing
@@ -726,216 +729,222 @@ We seek the cheapest route from source zero.
 These alternatives are not a list of mandatory
 tasks that must all be performed.
 
-00:14:52.125 --> 00:14:54.949 line:78% position:50% align:center
+00:14:51.542 --> 00:14:54.366 line:78% position:50% align:center
 Only the source cost is known initially.
 
-00:14:55.264 --> 00:14:57.938 line:78% position:50% align:center
+00:14:54.681 --> 00:14:57.355 line:78% position:50% align:center
 Null means no route has yet been discovered.
 
-00:14:58.253 --> 00:15:04.080 line:78% position:50% align:center
+00:14:57.670 --> 00:15:03.496 line:78% position:50% align:center
 Process vertices in a topological order and
 never relax from a null distance.
 
-00:15:04.408 --> 00:15:10.074 line:78% position:50% align:center
+00:15:03.825 --> 00:15:09.490 line:78% position:50% align:center
 After processing zero, costs to one and two are
 five and two, with original
 
-00:15:10.074 --> 00:15:11.756 line:78% position:50% align:center
+00:15:09.490 --> 00:15:11.173 line:78% position:50% align:center
 parent edges zero and one.
 
-00:15:14.472 --> 00:15:19.850 line:78% position:50% align:center
+00:15:13.306 --> 00:15:18.684 line:78% position:50% align:center
 Without a discount, processing one first offers
 seven to vertex three.
 
-00:15:20.179 --> 00:15:24.782 line:78% position:50% align:center
+00:15:19.012 --> 00:15:23.616 line:78% position:50% align:center
 Processing two improves that to six and offers
 eleven to four.
 
-00:15:25.097 --> 00:15:27.500 line:78% position:50% align:center
+00:15:23.931 --> 00:15:26.333 line:78% position:50% align:center
 Then three improves four to nine.
 
-00:15:27.815 --> 00:15:33.535 line:78% position:50% align:center
+00:15:26.648 --> 00:15:32.368 line:78% position:50% align:center
 The route zero, two, three, four costs two plus
 four plus three, which is
 
-00:15:33.535 --> 00:15:34.049 line:78% position:50% align:center
+00:15:32.368 --> 00:15:32.882 line:78% position:50% align:center
 nine.
 
-00:15:36.709 --> 00:15:42.291 line:78% position:50% align:center
+00:15:35.042 --> 00:15:40.624 line:78% position:50% align:center
 Now change only edge one to three to minus four,
 representing a discount,
 
-00:15:42.646 --> 00:15:44.288 line:78% position:50% align:center
+00:15:40.980 --> 00:15:42.621 line:78% position:50% align:center
 and restart the calculation.
 
-00:15:44.616 --> 00:15:47.481 line:78% position:50% align:center
+00:15:42.950 --> 00:15:45.814 line:78% position:50% align:center
 Negative weights are valid in a DAG.
 
-00:15:47.809 --> 00:15:52.331 line:78% position:50% align:center
+00:15:46.143 --> 00:15:50.665 line:78% position:50% align:center
 After zero is processed again, the cost to three
 is still null.
 
-00:15:52.646 --> 00:15:56.258 line:78% position:50% align:center
+00:15:50.980 --> 00:15:54.591 line:78% position:50% align:center
 We have not processed its incoming alternatives
 yet.
 
-00:15:58.862 --> 00:16:04.009 line:78% position:50% align:center
+00:15:56.612 --> 00:16:01.759 line:78% position:50% align:center
 At vertex one, the candidate is five plus minus
 four, giving one.
 
-00:16:04.364 --> 00:16:09.797 line:78% position:50% align:center
+00:16:02.114 --> 00:16:07.547 line:78% position:50% align:center
 Three has no known cost, so store one and
 original edge identifier two.
 
-00:16:10.139 --> 00:16:13.764 line:78% position:50% align:center
+00:16:07.889 --> 00:16:11.514 line:78% position:50% align:center
 The parent is an edge identifier, not vertex
 one.
 
-00:16:14.066 --> 00:16:18.778 line:78% position:50% align:center
+00:16:11.816 --> 00:16:16.528 line:78% position:50% align:center
 Updating the number without its witness would
 leave an inconsistent result.
 
-00:16:21.459 --> 00:16:24.772 line:78% position:50% align:center
+00:16:18.625 --> 00:16:21.938 line:78% position:50% align:center
 Vertex two later offers six to three.
 
-00:16:25.100 --> 00:16:30.261 line:78% position:50% align:center
+00:16:22.267 --> 00:16:27.427 line:78% position:50% align:center
 Six is worse than one, so retain the existing
 distance and parent.
 
-00:16:30.576 --> 00:16:32.503 line:78% position:50% align:center
+00:16:27.742 --> 00:16:29.669 line:78% position:50% align:center
 It also offers eleven to four.
 
-00:16:32.831 --> 00:16:37.258 line:78% position:50% align:center
+00:16:29.998 --> 00:16:34.425 line:78% position:50% align:center
 Vertex three then offers four to vertex four.
 
-00:16:37.586 --> 00:16:43.293 line:78% position:50% align:center
+00:16:34.753 --> 00:16:40.460 line:78% position:50% align:center
 The final route is zero, one, three, four, with
 total five minus
 
-00:16:43.293 --> 00:16:45.655 line:78% position:50% align:center
+00:16:40.460 --> 00:16:42.821 line:78% position:50% align:center
 four plus three, equal to four.
 
-00:16:48.278 --> 00:16:53.863 line:78% position:50% align:center
+00:16:44.862 --> 00:16:50.446 line:78% position:50% align:center
 An added isolated vertex five finishes with null
 distance and parent
 
-00:16:53.863 --> 00:16:54.676 line:78% position:50% align:center
+00:16:50.446 --> 00:16:51.259 line:78% position:50% align:center
 minus one.
 
-00:16:54.977 --> 00:16:58.004 line:78% position:50% align:center
+00:16:51.560 --> 00:16:54.588 line:78% position:50% align:center
 A finite distance can itself be minus one.
 
-00:16:58.333 --> 00:17:03.727 line:78% position:50% align:center
+00:16:54.916 --> 00:17:00.310 line:78% position:50% align:center
 Also reject a directed cycle anywhere in the
 input, even if source zero
 
-00:17:03.727 --> 00:17:04.825 line:78% position:50% align:center
+00:17:00.310 --> 00:17:01.408 line:78% position:50% align:center
 cannot reach it.
 
-00:17:05.167 --> 00:17:08.099 line:78% position:50% align:center
+00:17:01.750 --> 00:17:04.683 line:78% position:50% align:center
 That is a whole-graph requirement of this
 assignment.
 
-00:17:10.695 --> 00:17:16.046 line:78% position:50% align:center
+00:17:06.695 --> 00:17:12.046 line:78% position:50% align:center
 To reconstruct the route to four, its parent
 edge is identifier four:
 
-00:17:16.374 --> 00:17:17.568 line:78% position:50% align:center
+00:17:12.374 --> 00:17:13.568 line:78% position:50% align:center
 three to four.
 
-00:17:17.869 --> 00:17:18.750 line:78% position:50% align:center
+00:17:13.869 --> 00:17:14.750 line:78% position:50% align:center
 Move to three.
 
-00:17:19.078 --> 00:17:21.562 line:78% position:50% align:center
+00:17:15.078 --> 00:17:17.562 line:78% position:50% align:center
 Parent edge two leads from one to three.
 
-00:17:21.864 --> 00:17:24.905 line:78% position:50% align:center
+00:17:17.864 --> 00:17:20.905 line:78% position:50% align:center
 Parent edge zero leads from zero to one.
 
-00:17:25.220 --> 00:17:31.005 line:78% position:50% align:center
+00:17:21.220 --> 00:17:27.005 line:78% position:50% align:center
 Reverse the collected vertices to obtain zero,
 one, three, four.
 
-00:17:33.028 --> 00:17:34.860 line:78% position:50% align:center
+00:17:29.028 --> 00:17:30.860 line:78% position:50% align:center
 Try the backward step yourself.
 
-00:17:35.175 --> 00:17:39.684 line:78% position:50% align:center
+00:17:31.175 --> 00:17:35.684 line:78% position:50% align:center
 Original edge four is the row three, four,
 three.
 
-00:17:39.999 --> 00:17:42.537 line:78% position:50% align:center
+00:17:35.999 --> 00:17:38.537 line:78% position:50% align:center
 Which column gives the previous vertex?
 
-00:17:42.865 --> 00:17:43.746 line:78% position:50% align:center
+00:17:38.865 --> 00:17:39.746 line:78% position:50% align:center
 Pause if needed.
 
-00:17:44.075 --> 00:17:46.966 line:78% position:50% align:center
+00:17:40.075 --> 00:17:42.966 line:78% position:50% align:center
 It is column zero: vertex three.
 
-00:17:47.295 --> 00:17:51.613 line:78% position:50% align:center
+00:17:43.295 --> 00:17:47.613 line:78% position:50% align:center
 Column two gives the last edge weight, not the
 total route cost.
 
-00:17:53.695 --> 00:17:55.649 line:78% position:50% align:center
+00:17:49.695 --> 00:17:51.649 line:78% position:50% align:center
 A correct sum is not enough.
 
-00:17:55.978 --> 00:18:00.622 line:78% position:50% align:center
+00:17:51.978 --> 00:17:56.622 line:78% position:50% align:center
 Check forest identifiers, connectivity, and edge
 count.
 
-00:18:00.964 --> 00:18:06.424 line:78% position:50% align:center
+00:17:56.964 --> 00:18:02.424 line:78% position:50% align:center
 For components, verify mutual reachability and
 deduplicated condensation.
 
-00:18:06.820 --> 00:18:09.549 line:78% position:50% align:center
+00:18:02.820 --> 00:18:05.549 line:78% position:50% align:center
 For an order, check every edge position.
 
-00:18:09.918 --> 00:18:13.652 line:78% position:50% align:center
+00:18:05.918 --> 00:18:09.652 line:78% position:50% align:center
 For routes, verify parent direction and total
 weight.
 
-00:18:13.967 --> 00:18:16.926 line:78% position:50% align:center
+00:18:09.967 --> 00:18:12.926 line:78% position:50% align:center
 Alternative valid witnesses should be accepted.
 
-00:18:18.625 --> 00:18:24.003 line:78% position:50% align:center
+00:18:14.862 --> 00:18:20.050 line:78% position:50% align:center
 Include empty graphs where allowed, isolates,
 repeated unions,
 
-00:18:24.155 --> 00:18:29.561 line:78% position:50% align:center
+00:18:20.174 --> 00:18:25.351 line:78% position:50% align:center
 loops, parallel edges, negative weights, and
-totals beyond integer range.
+totals beyond the signed
 
-00:18:29.875 --> 00:18:33.569 line:78% position:50% align:center
+00:18:25.351 --> 00:18:26.802 line:78% position:50% align:center
+thirty-two-bit range.
+
+00:18:27.117 --> 00:18:30.783 line:78% position:50% align:center
 Test deep chains and mixed requests in one
 process.
 
-00:18:33.897 --> 00:18:39.345 line:78% position:50% align:center
-Benchmark Kruskal and Prim on the same graphs:
-three sizes, at least
+00:18:31.098 --> 00:18:36.286 line:78% position:50% align:center
+Benchmark Kruskal and Prim on the same graphs at
+three sizes.
 
-00:18:39.345 --> 00:18:44.887 line:78% position:50% align:center
-three runs, median, compilation excluded, and
-documented warm-up.
+00:18:36.614 --> 00:18:41.721 line:78% position:50% align:center
+At each size, run each method at least three
+times and report its median.
 
-00:18:46.639 --> 00:18:52.085 line:78% position:50% align:center
+00:18:42.036 --> 00:18:44.615 line:78% position:50% align:center
+Exclude compilation and document warm-up.
+
+00:18:46.472 --> 00:18:51.918 line:78% position:50% align:center
 Here n counts vertices, m input edges, and q
 unions.
 
-00:18:52.413 --> 00:18:55.753 line:78% position:50% align:center
+00:18:52.247 --> 00:18:55.587 line:78% position:50% align:center
 DSU is amortized almost linear.
 
-00:18:56.082 --> 00:19:00.305 line:78% position:50% align:center
+00:18:55.915 --> 00:19:00.138 line:78% position:50% align:center
 Kruskal and lazy Prim include sorting or heap
 work.
 
-00:19:00.620 --> 00:19:06.229 line:78% position:50% align:center
+00:19:00.453 --> 00:19:06.062 line:78% position:50% align:center
 Kosaraju, topological ordering, and DAG
 relaxation are linear;
 
-00:19:06.734 --> 00:19:09.503 line:78% position:50% align:center
+00:19:06.567 --> 00:19:09.337 line:78% position:50% align:center
 hash deduplication is expected linear.
 
-00:19:09.805 --> 00:19:13.974 line:78% position:50% align:center
+00:19:09.638 --> 00:19:13.807 line:78% position:50% align:center
 A reconstructed route takes time proportional to
 its length.
 
