@@ -1,0 +1,1337 @@
+[
+  {
+    "id": "outgoing",
+    "topic": "model",
+    "level": "warmup",
+    "args": [
+      "n",
+      "edges",
+      "vertex"
+    ],
+    "RU": {
+      "title": "01 · Исходящие рёбра по ID",
+      "task": "Дан ориентированный граф. Строка edges[i]=[from,to,weight] имеет исходный ID i. Верните ID всех рёбер, выходящих из vertex, в порядке входа. Петлю включите один раз; параллельные рёбра сохраняйте отдельно.",
+      "limits": "1 ≤ n ≤ 100; 0 ≤ m ≤ 500; вершины и vertex корректны; |weight| ≤ 10⁹.",
+      "hint": "Просмотрите строки по индексам. Сравнивайте первый столбец с vertex.",
+      "explain": [
+        "Номер строки является ID. Вес и конечная вершина не меняют условие отбора.",
+        "Ребро vertex→vertex тоже выходит из vertex. Две одинаковые строки — разные ID."
+      ],
+      "complexity": "O(m) времени; O(k) памяти для k найденных ID.",
+      "use": "Так можно проверить, что при подготовке списка смежности вы сохранили каждую исходную связь."
+    },
+    "EN": {
+      "title": "01 · Outgoing edge IDs",
+      "task": "Given a directed graph, row edges[i]=[from,to,weight] has original ID i. Return every edge ID leaving vertex, in input order. Include a self-loop once and keep parallel edges separately.",
+      "limits": "1 ≤ n ≤ 100; 0 ≤ m ≤ 500; valid vertices and vertex; |weight| ≤ 10⁹.",
+      "hint": "Scan row indices and compare the first column with vertex.",
+      "explain": [
+        "The row index is the ID. Neither the weight nor the destination changes this selection.",
+        "A self-loop leaves vertex too. Identical input rows still have different IDs."
+      ],
+      "complexity": "O(m) time; O(k) output space for k selected IDs.",
+      "use": "Use this to check that adjacency construction preserves each original connection."
+    },
+    "python": "def solve(n, edges, vertex):\n    return [i for i, edge in enumerate(edges) if edge[0] == vertex]\n",
+    "java": "static int[] solve(int n, int[][] edges, int vertex) {\n    List<Integer> ids = new ArrayList<>();\n    for (int i = 0; i < edges.length; i++) {\n        if (edges[i][0] == vertex) ids.add(i);\n    }\n    int[] answer = new int[ids.size()];\n    for (int i = 0; i < answer.length; i++) answer[i] = ids.get(i);\n    return answer;\n}",
+    "tests": [
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              1,
+              7
+            ],
+            [
+              2,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              -2
+            ],
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          0
+        ],
+        "expected": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "args": [
+          1,
+          [],
+          0
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          3,
+          [
+            [
+              2,
+              1,
+              4
+            ]
+          ],
+          0
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          2,
+          [
+            [
+              1,
+              0,
+              -1
+            ],
+            [
+              1,
+              0,
+              -1
+            ]
+          ],
+          1
+        ],
+        "expected": [
+          0,
+          1
+        ]
+      },
+      {
+        "args": [
+          1,
+          [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          0
+        ],
+        "expected": [
+          0
+        ]
+      }
+    ],
+    "notes": [
+      [
+        "ID 1 входит в 0, но не выходит из неё; ID 2 — петля.",
+        "ID 1 enters 0 rather than leaving it; ID 2 is a self-loop."
+      ],
+      [
+        "Без рёбер результат пуст.",
+        "With no edges, the result is empty."
+      ]
+    ],
+    "starter_python": "def solve(n, edges, vertex):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static int[] solve(int n, int[][] edges, int vertex) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice01",
+    "java_file": "code/practice/Practice01.java"
+  },
+  {
+    "id": "sizes",
+    "topic": "dsu",
+    "level": "warmup",
+    "args": [
+      "labels"
+    ],
+    "RU": {
+      "title": "02 · Размеры уже известных групп",
+      "task": "Для каждой вершины дана метка группы labels[v]. Верните массив: на позиции v — число вершин с той же меткой. Метки могут идти с пропусками. Находить группы или выполнять union не нужно.",
+      "limits": "0 ≤ n ≤ 10000; labels содержит n целых меток от 0 до 10⁶.",
+      "hint": "Сначала посчитайте частоту каждой метки, затем пройдите исходный массив ещё раз.",
+      "explain": [
+        "Ключ таблицы — метка, значение — число её появлений.",
+        "Порядок результата совпадает с порядком вершин, а не с порядком ключей таблицы."
+      ],
+      "complexity": "Ожидаемое O(n) времени с хеш-таблицей; O(n) памяти вместе с ответом.",
+      "use": "Проверяйте размер компоненты независимо от её представителя. В DSU rank не заменяет размер."
+    },
+    "EN": {
+      "title": "02 · Sizes of known groups",
+      "task": "Each vertex has a group label labels[v]. Return an array whose entry v counts vertices with that label. Labels need not be consecutive. Do not find groups or perform unions.",
+      "limits": "0 ≤ n ≤ 10000; labels contains n integers from 0 to 10⁶.",
+      "hint": "Count each label first, then scan the original array again.",
+      "explain": [
+        "A map key is a label; its value is the number of occurrences.",
+        "Return entries in vertex order, rather than map-key order."
+      ],
+      "complexity": "Expected O(n) time with a hash map; O(n) space including output.",
+      "use": "Check component sizes independently of representative names. In DSU, rank does not replace size."
+    },
+    "python": "def solve(labels):\n    count = {}\n    for label in labels:\n        count[label] = count.get(label, 0) + 1\n    return [count[label] for label in labels]\n",
+    "java": "static int[] solve(int[] labels) {\n    Map<Integer, Integer> count = new HashMap<>();\n    for (int label : labels) count.put(label, count.getOrDefault(label, 0) + 1);\n    int[] answer = new int[labels.length];\n    for (int v = 0; v < labels.length; v++) answer[v] = count.get(labels[v]);\n    return answer;\n}",
+    "tests": [
+      {
+        "args": [
+          [
+            7,
+            7,
+            2,
+            9,
+            2
+          ]
+        ],
+        "expected": [
+          2,
+          2,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            0
+          ]
+        ],
+        "expected": [
+          1
+        ]
+      },
+      {
+        "args": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "expected": [
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            8,
+            3,
+            6
+          ]
+        ],
+        "expected": [
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "notes": [
+      [
+        "Метки 7 и 2 встречаются по два раза, 9 — один раз.",
+        "Labels 7 and 2 occur twice each; 9 occurs once."
+      ],
+      [
+        "Для нуля вершин массив ответа пуст.",
+        "With zero vertices, the output array is empty."
+      ]
+    ],
+    "starter_python": "def solve(labels):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static int[] solve(int[] labels) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice02",
+    "java_file": "code/practice/Practice02.java"
+  },
+  {
+    "id": "positions",
+    "topic": "dfs",
+    "level": "warmup",
+    "args": [
+      "finish"
+    ],
+    "RU": {
+      "title": "03 · От завершений к позициям",
+      "task": "Дан finish — порядок завершения DFS некоторого DAG. Он гарантированно содержит каждую вершину 0..n−1 ровно один раз. Разверните его в order и верните position[v] — индекс v в order. Не выполняйте DFS и не проверяйте циклы.",
+      "limits": "0 ≤ n ≤ 10000; finish — перестановка 0..n−1.",
+      "hint": "Идите по finish справа налево. Для каждой вершины запишите номер её места.",
+      "explain": [
+        "order[position[v]] равен v. Это связь двух массивов с разным смыслом.",
+        "Не возвращайте order вместо position: в первом примере эти массивы различаются."
+      ],
+      "complexity": "O(n) времени и O(n) памяти.",
+      "use": "Массив позиций позволяет проверить, что зависимость u→v идёт вперёд в предложенном порядке."
+    },
+    "EN": {
+      "title": "03 · From finish order to positions",
+      "task": "finish is a DFS finishing order of a DAG and contains every vertex 0..n−1 exactly once. Reverse it to obtain order, then return position[v], the index of v in order. Do not run DFS or check cycles.",
+      "limits": "0 ≤ n ≤ 10000; finish is a permutation of 0..n−1.",
+      "hint": "Scan finish from right to left and record each vertex position.",
+      "explain": [
+        "order[position[v]] equals v. The arrays describe different mappings.",
+        "Do not return order in place of position: they differ in the first example."
+      ],
+      "complexity": "O(n) time and O(n) space.",
+      "use": "Positions let you check whether a dependency u→v points forward in a proposed order."
+    },
+    "python": "def solve(finish):\n    position = [0] * len(finish)\n    for i, vertex in enumerate(reversed(finish)):\n        position[vertex] = i\n    return position\n",
+    "java": "static int[] solve(int[] finish) {\n    int n = finish.length;\n    int[] position = new int[n];\n    for (int i = 0; i < n; i++) position[finish[n - 1 - i]] = i;\n    return position;\n}",
+    "tests": [
+      {
+        "args": [
+          [
+            3,
+            2,
+            0,
+            1
+          ]
+        ],
+        "expected": [
+          1,
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            2,
+            1,
+            0
+          ]
+        ],
+        "expected": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "expected": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            0,
+            2
+          ]
+        ],
+        "expected": [
+          1,
+          2,
+          0
+        ]
+      }
+    ],
+    "notes": [
+      [
+        "order=[1,0,2,3], поэтому position[0]=1, position[1]=0.",
+        "order=[1,0,2,3], so position[0]=1 and position[1]=0."
+      ],
+      [
+        "У пустого порядка нет позиций.",
+        "An empty order has no positions."
+      ]
+    ],
+    "starter_python": "def solve(finish):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static int[] solve(int[] finish) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice03",
+    "java_file": "code/practice/Practice03.java"
+  },
+  {
+    "id": "relax",
+    "topic": "dag",
+    "level": "warmup",
+    "args": [
+      "current",
+      "from_distance",
+      "weight"
+    ],
+    "RU": {
+      "title": "04 · Одна релаксация",
+      "task": "Даны текущая стоимость current до цели, стоимость from_distance до начала ребра и вес weight. null означает неизвестную стоимость. Если начало недостижимо, оставьте current. Иначе верните меньшую из current и from_distance+weight; при current=null сохраните найденную сумму.",
+      "limits": "Известные стоимости — целые от −10¹² до 10¹²; |weight| ≤ 10⁹. current и from_distance могут быть null.",
+      "hint": "Сначала проверьте from_distance. Только затем складывайте и сравнивайте.",
+      "explain": [
+        "null нельзя заменять числом −1: сумма может законно равняться −1.",
+        "Равный кандидат сохраняет ту же стоимость. Работа с родительским ID рассматривается в тренажёре раздела DAG."
+      ],
+      "complexity": "O(1) времени и памяти.",
+      "use": "Это один переход в расчёте маршрутов. Порядок обработки графа в этой задаче уже не требуется."
+    },
+    "EN": {
+      "title": "04 · One relaxation",
+      "task": "Given current cost to a destination, from_distance to an edge source, and weight, use null for unknown costs. If the source is unreachable, retain current. Otherwise return the smaller of current and from_distance+weight; when current is null, store the candidate.",
+      "limits": "Known costs are integers from −10¹² to 10¹²; |weight| ≤ 10⁹. Both costs may be null.",
+      "hint": "Check from_distance before adding and comparing.",
+      "explain": [
+        "Do not replace null with −1: a valid sum can equal −1.",
+        "An equal candidate leaves the cost unchanged. Parent IDs are covered in the DAG chapter simulator."
+      ],
+      "complexity": "O(1) time and space.",
+      "use": "This is one transition in a route calculation. No graph traversal is required here."
+    },
+    "python": "def solve(current, from_distance, weight):\n    if from_distance is None:\n        return current\n    candidate = from_distance + weight\n    if current is None or candidate < current:\n        return candidate\n    return current\n",
+    "java": "static Long solve(Long current, Long fromDistance, long weight) {\n    if (fromDistance == null) return current;\n    long candidate = fromDistance + weight;\n    if (current == null || candidate < current) return candidate;\n    return current;\n}",
+    "tests": [
+      {
+        "args": [
+          6,
+          5,
+          -4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          null,
+          null,
+          9
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          null,
+          5,
+          -4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          1,
+          2,
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          3,
+          null,
+          -20
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          5,
+          2,
+          3
+        ],
+        "expected": 5
+      },
+      {
+        "args": [
+          null,
+          3000000000,
+          1000000000
+        ],
+        "expected": 4000000000
+      },
+      {
+        "args": [
+          0,
+          4,
+          -5
+        ],
+        "expected": -1
+      }
+    ],
+    "notes": [
+      [
+        "Кандидат 5+(−4)=1 улучшает стоимость 6.",
+        "Candidate 5+(−4)=1 improves cost 6."
+      ],
+      [
+        "Путь к началу ребра неизвестен, поэтому нового кандидата нет.",
+        "The edge source is unreachable, so there is no candidate."
+      ]
+    ],
+    "starter_python": "def solve(current, from_distance, weight):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static Long solve(Long current, Long fromDistance, long weight) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice04",
+    "java_file": "code/practice/Practice04.java"
+  },
+  {
+    "id": "boundary",
+    "topic": "prim",
+    "level": "core",
+    "args": [
+      "edges",
+      "inside"
+    ],
+    "RU": {
+      "title": "05 · Самое дешёвое ребро границы",
+      "task": "Дан неориентированный граф edges[i]=[u,v,weight] и inside[v]: принадлежит ли v уже выбранной области. Верните исходный ID самого дешёвого ребра с ровно одним концом внутри. При равных весах выберите меньший ID. Если кандидата нет, верните −1.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; inside — n логических значений; концы корректны; |weight| ≤ 10⁹.",
+      "hint": "У подходящего ребра inside[u] и inside[v] различаются. Сначала отберите допустимые рёбра, затем сравните вес.",
+      "explain": [
+        "Петля никогда не пересекает границу. Параллельные рёбра имеют собственные ID.",
+        "Просмотр по возрастанию ID с обновлением только при меньшем весе сохраняет меньший ID при ничьей. Это правило этой задачи; основное задание допускает разные оптимумы."
+      ],
+      "complexity": "O(n+m) времени с учётом чтения inside; O(1) дополнительной памяти.",
+      "use": "Так проверяется один выбор на границе дерева. Здесь нет очереди, обхода компонент и полного алгоритма Прима."
+    },
+    "EN": {
+      "title": "05 · Cheapest boundary edge",
+      "task": "Given an undirected graph edges[i]=[u,v,weight] and membership inside[v], return the original ID of the cheapest edge with exactly one endpoint inside. Break weight ties by smaller ID. Return −1 when no candidate exists.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; inside contains n Booleans; valid endpoints; |weight| ≤ 10⁹.",
+      "hint": "A boundary edge has different inside values at its endpoints. Filter by eligibility before comparing weights.",
+      "explain": [
+        "A self-loop never crosses the boundary. Parallel edges keep distinct IDs.",
+        "Scan IDs in ascending order and update only for a lower weight to keep the smaller ID on ties. This exercise has that tie-break; the main assignment accepts alternative optima."
+      ],
+      "complexity": "O(n+m) time including reading inside; O(1) auxiliary space.",
+      "use": "Check one boundary choice. This is not a complete Prim implementation: there is no queue or component traversal."
+    },
+    "python": "def solve(edges, inside):\n    best = -1\n    for i, (u, v, weight) in enumerate(edges):\n        if inside[u] == inside[v]:\n            continue\n        if best == -1 or weight < edges[best][2]:\n            best = i\n    return best\n",
+    "java": "static int solve(int[][] edges, boolean[] inside) {\n    int best = -1;\n    for (int i = 0; i < edges.length; i++) {\n        int u = edges[i][0], v = edges[i][1];\n        if (inside[u] == inside[v]) continue;\n        if (best == -1 || edges[i][2] < edges[best][2]) best = i;\n    }\n    return best;\n}",
+    "tests": [
+      {
+        "args": [
+          [
+            [
+              0,
+              0,
+              -100
+            ],
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              0,
+              1,
+              -2
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              2,
+              3,
+              0
+            ]
+          ],
+          [
+            true,
+            false,
+            false,
+            false
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              0,
+              2,
+              4
+            ],
+            [
+              1,
+              2,
+              -9
+            ]
+          ],
+          [
+            true,
+            false,
+            false
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          [
+            true,
+            false
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              -1
+            ]
+          ],
+          [
+            true,
+            true
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              -1
+            ]
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              7
+            ],
+            [
+              2,
+              1,
+              2
+            ]
+          ],
+          [
+            false,
+            true,
+            false
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": -1
+      }
+    ],
+    "notes": [
+      [
+        "Петля ID 0 дешевле всех, но не пересекает границу. Из двух рёбер 0–1 выбираем ID 2 веса −2.",
+        "Loop ID 0 is cheapest overall but does not cross the boundary. Of the two 0–1 edges, choose ID 2 with weight −2."
+      ],
+      [
+        "ID 0 и 1 имеют вес 4. Условие выбирает меньший ID 0; ребро ID 2 вне границы.",
+        "IDs 0 and 1 both weigh 4. The tie-break selects ID 0; ID 2 is outside the boundary."
+      ]
+    ],
+    "starter_python": "def solve(edges, inside):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static int solve(int[][] edges, boolean[] inside) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice05",
+    "java_file": "code/practice/Practice05.java"
+  },
+  {
+    "id": "order",
+    "topic": "topo",
+    "level": "core",
+    "args": [
+      "n",
+      "edges",
+      "order"
+    ],
+    "RU": {
+      "title": "06 · Проверить порядок зависимостей",
+      "task": "Верните true, если order содержит каждую вершину 0..n−1 ровно один раз и для каждого направленного ребра u→v вершина u стоит раньше v. Иначе верните false. Проверяйте предложенный порядок, не стройте свой.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; концы edges корректны. order содержит от 0 до n+2 целых чисел в диапазоне −1..n; ошибочные кандидаты допустимы.",
+      "hint": "Сначала проверьте перестановку, затем постройте position и сравните позиции концов всех рёбер.",
+      "explain": [
+        "Проверки рёбер недостаточно: пустой граф всё равно требует каждую вершину ровно один раз.",
+        "Петля требует position[v]<position[v], что невозможно. Допустимые порядки могут различаться."
+      ],
+      "complexity": "O(n+m) времени и O(n) дополнительной памяти.",
+      "use": "Перед запуском сборки можно проверить, что заявленная последовательность уважает все зависимости. Длительности работ этот тест не вычисляет."
+    },
+    "EN": {
+      "title": "06 · Validate a dependency order",
+      "task": "Return true if order contains every vertex 0..n−1 exactly once and u precedes v for every directed edge u→v. Otherwise return false. Validate the supplied order rather than constructing one.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; valid edge endpoints. order has 0..n+2 integer entries in −1..n; invalid candidates are allowed.",
+      "hint": "Check the permutation first, then build position and compare every edge.",
+      "explain": [
+        "Edge checks alone are insufficient: even an edgeless graph requires each vertex exactly once.",
+        "A self-loop would require position[v]<position[v], which is impossible. Valid orders need not be unique."
+      ],
+      "complexity": "O(n+m) time and O(n) auxiliary space.",
+      "use": "Before a build, check whether a declared sequence respects all dependencies. This does not calculate task durations."
+    },
+    "python": "def solve(n, edges, order):\n    if len(order) != n:\n        return False\n    position = [-1] * n\n    for i, vertex in enumerate(order):\n        if vertex < 0 or vertex >= n or position[vertex] != -1:\n            return False\n        position[vertex] = i\n    return all(position[u] < position[v] for u, v in edges)\n",
+    "java": "static boolean solve(int n, int[][] edges, int[] order) {\n    if (order.length != n) return false;\n    int[] position = new int[n];\n    Arrays.fill(position, -1);\n    for (int i = 0; i < n; i++) {\n        int v = order[i];\n        if (v < 0 || v >= n || position[v] != -1) return false;\n        position[v] = i;\n    }\n    for (int[] edge : edges) if (position[edge[0]] >= position[edge[1]]) return false;\n    return true;\n}",
+    "tests": [
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            1,
+            0,
+            2,
+            3
+          ]
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            0,
+            2,
+            1,
+            3
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          3,
+          [],
+          [
+            0,
+            0,
+            2
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          3,
+          [],
+          [
+            0,
+            1
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          1,
+          [
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            0
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          0,
+          [],
+          []
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          3,
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          2,
+          [],
+          [
+            0,
+            2
+          ]
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          2,
+          [],
+          [
+            -1,
+            0
+          ]
+        ],
+        "expected": false
+      }
+    ],
+    "notes": [
+      [
+        "Рёбра 0→2, 1→2 и 2→3 идут вперёд. Порядок [0,1,2,3] тоже допустим.",
+        "Edges 0→2, 1→2 and 2→3 all point forward. Order [0,1,2,3] is also valid."
+      ],
+      [
+        "Ребро 1→2 нарушено: вершина 1 стоит после 2.",
+        "Edge 1→2 is violated: vertex 1 appears after 2."
+      ]
+    ],
+    "starter_python": "def solve(n, edges, order):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static boolean solve(int n, int[][] edges, int[] order) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice06",
+    "java_file": "code/practice/Practice06.java"
+  },
+  {
+    "id": "pairs",
+    "topic": "scc",
+    "level": "core",
+    "args": [
+      "labels",
+      "edges"
+    ],
+    "RU": {
+      "title": "07 · Связи между размеченными группами",
+      "task": "Метка labels[v] каждой вершины уже дана. Для каждого направленного ребра u→v между разными метками получите пару [labels[u],labels[v]]. Верните все такие пары без повторов, в любом порядке. Не вычисляйте SCC. Если метки обозначают SCC, результат является рёбрами конденсации.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; метки — целые 0..10⁶; концы edges корректны. Метки могут описывать произвольные группы.",
+      "hint": "Пропускайте внутренние рёбра. Для остальных сохраняйте пару меток в множестве.",
+      "explain": [
+        "Проверяется множество пар, но повторять пару в ответе нельзя.",
+        "Названия меток не требуют перенумерации. В примере Java сортировка служит только для воспроизводимого вывода."
+      ],
+      "complexity": "Ожидаемое O(n+m) времени с хеш-множеством; O(n+m) памяти с результатом. Показанная сортировка ответа добавляет O(k log(k+1)) для k пар.",
+      "use": "Так можно оставить одну зависимость между двумя группами модулей, даже если исходных связей между ними несколько."
+    },
+    "EN": {
+      "title": "07 · Links between labelled groups",
+      "task": "Every vertex already has a label labels[v]. For each directed edge u→v between different labels, form [labels[u],labels[v]]. Return all such pairs without duplicates, in any order. Do not compute SCCs. If labels identify SCCs, these are the condensation edges.",
+      "limits": "0 ≤ n ≤ 100; 0 ≤ m ≤ 500; integer labels in 0..10⁶; valid endpoints. Labels may describe arbitrary groups.",
+      "hint": "Skip internal edges and store other label pairs in a set.",
+      "explain": [
+        "Compare sets of pairs, but repeated pairs in the output are invalid.",
+        "Do not renumber labels. The Java example sorts only for reproducible output."
+      ],
+      "complexity": "Expected O(n+m) time with a hash set; O(n+m) space including output. The displayed output sort adds O(k log(k+1)) for k pairs.",
+      "use": "Retain one dependency between module groups even when multiple original links connect them."
+    },
+    "python": "def solve(labels, edges):\n    pairs = set()\n    for u, v in edges:\n        if labels[u] != labels[v]:\n            pairs.add((labels[u], labels[v]))\n    return [list(pair) for pair in pairs]\n",
+    "java": "static int[][] solve(int[] labels, int[][] edges) {\n    Map<Integer, Set<Integer>> outgoing = new HashMap<>();\n    for (int[] edge : edges) {\n        int a = labels[edge[0]], b = labels[edge[1]];\n        if (a != b) outgoing.computeIfAbsent(a, key -> new HashSet<>()).add(b);\n    }\n    List<int[]> pairs = new ArrayList<>();\n    for (int a : outgoing.keySet()) for (int b : outgoing.get(a)) pairs.add(new int[]{a, b});\n    pairs.sort((a, b) -> a[0] != b[0] ? Integer.compare(a[0], b[0]) : Integer.compare(a[1], b[1]));\n    return pairs.toArray(new int[0][]);\n}",
+    "tests": [
+      {
+        "args": [
+          [
+            5,
+            5,
+            9,
+            3
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            5,
+            9
+          ],
+          [
+            9,
+            3
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            10,
+            10
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            8,
+            2,
+            7
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            2,
+            7
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            7
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            2
+          ],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            0
+          ],
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "notes": [
+      [
+        "Два исходных ребра дают пару [5,9]; сохраняем её один раз. Петля внутри группы 3 исключается.",
+        "Two original edges yield [5,9]; keep it once. The loop within group 3 is excluded."
+      ],
+      [
+        "Все рёбра внутренние, поэтому межгрупповых пар нет.",
+        "Every edge stays within one group, so no cross-group pairs remain."
+      ]
+    ],
+    "starter_python": "def solve(labels, edges):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static int[][] solve(int[] labels, int[][] edges) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice07",
+    "java_file": "code/practice/Practice07.java"
+  },
+  {
+    "id": "walk",
+    "topic": "route",
+    "level": "core",
+    "args": [
+      "n",
+      "edges",
+      "source",
+      "target",
+      "edge_ids"
+    ],
+    "RU": {
+      "title": "08 · Проверить переходы по ID",
+      "task": "В ориентированном графе edges[i]=[from,to,weight] дан список ID предполагаемого маршрута из source в target. Начните в source и проходите рёбра в указанном порядке. Если ID неверен, ребро начинается не в текущей вершине или конец не равен target, верните null. Иначе верните сумму весов. Это проверка переходов, а не поиск кратчайшего пути.",
+      "limits": "1 ≤ n ≤ 100; 0 ≤ m ≤ 500; до 500 ID; ID могут быть от −1 до m; корректные source, target и концы рёбер; |weight| ≤ 10⁹.",
+      "hint": "Держите current_vertex и total. Перед переходом проверьте диапазон ID и первый столбец выбранной строки.",
+      "explain": [
+        "Пустой список даёт 0 только при source=target.",
+        "В этом упражнении повторные вершины и рёбра разрешены: проверяется последовательность переходов. Сумма может быть отрицательной."
+      ],
+      "complexity": "O(L) времени для L ID; O(1) дополнительной памяти.",
+      "use": "Так проверяется присланный маршрут: выбранные переходы действительно стыкуются, а заявленная стоимость равна их сумме."
+    },
+    "EN": {
+      "title": "08 · Validate transitions by ID",
+      "task": "In a directed graph edges[i]=[from,to,weight], edge_ids proposes a route from source to target. Start at source and follow the listed edges in order. Return null for an invalid ID, an edge that starts elsewhere, or a final vertex different from target. Otherwise return the weight sum. This checks transitions; it does not find a shortest path.",
+      "limits": "1 ≤ n ≤ 100; 0 ≤ m ≤ 500; at most 500 IDs in −1..m; valid source, target and endpoints; |weight| ≤ 10⁹.",
+      "hint": "Maintain current_vertex and total. Check the ID range and the selected row source before moving.",
+      "explain": [
+        "An empty list costs 0 only when source=target.",
+        "Repeated vertices and edges are allowed in this exercise: it checks a walk. The total may be negative."
+      ],
+      "complexity": "O(L) time for L IDs; O(1) auxiliary space.",
+      "use": "Check whether a proposed route joins up and whether its cost equals the sum of its transitions."
+    },
+    "python": "def solve(n, edges, source, target, edge_ids):\n    vertex = source\n    total = 0\n    for edge_id in edge_ids:\n        if edge_id < 0 or edge_id >= len(edges):\n            return None\n        u, v, weight = edges[edge_id]\n        if u != vertex:\n            return None\n        vertex = v\n        total += weight\n    return total if vertex == target else None\n",
+    "java": "static Long solve(int n, int[][] edges, int source, int target, int[] edgeIds) {\n    int vertex = source;\n    long total = 0;\n    for (int id : edgeIds) {\n        if (id < 0 || id >= edges.length || edges[id][0] != vertex) return null;\n        vertex = edges[id][1];\n        total += edges[id][2];\n    }\n    return vertex == target ? total : null;\n}",
+    "tests": [
+      {
+        "args": [
+          3,
+          [
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              -1
+            ],
+            [
+              0,
+              2,
+              7
+            ]
+          ],
+          0,
+          2,
+          [
+            1,
+            2
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          3,
+          [
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              -1
+            ],
+            [
+              0,
+              2,
+              7
+            ]
+          ],
+          0,
+          2,
+          [
+            2,
+            1
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          1,
+          [],
+          0,
+          0,
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          2,
+          [],
+          0,
+          1,
+          []
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          1,
+          [
+            [
+              0,
+              0,
+              -2
+            ]
+          ],
+          0,
+          0,
+          [
+            0,
+            0
+          ]
+        ],
+        "expected": -4
+      },
+      {
+        "args": [
+          2,
+          [
+            [
+              0,
+              1,
+              4
+            ]
+          ],
+          0,
+          1,
+          [
+            -1
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          2,
+          [
+            [
+              0,
+              1,
+              4
+            ]
+          ],
+          0,
+          1,
+          [
+            1
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              1,
+              1000000000
+            ],
+            [
+              1,
+              2,
+              1000000000
+            ],
+            [
+              2,
+              3,
+              1000000000
+            ]
+          ],
+          0,
+          3,
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "expected": 3000000000
+      }
+    ],
+    "notes": [
+      [
+        "ID 1 задаёт 0→1 веса 2, ID 2 — 1→2 веса −1. Сумма 1. Это не утверждение о минимальности любого допустимого ответа.",
+        "ID 1 is 0→1 with weight 2; ID 2 is 1→2 with weight −1. Total 1. A valid result alone does not prove optimality."
+      ],
+      [
+        "Первое ребро ID 2 начинается в 1, а текущая вершина — 0.",
+        "First edge ID 2 starts at 1, but the current vertex is 0."
+      ]
+    ],
+    "starter_python": "def solve(n, edges, source, target, edge_ids):\n    # Return the result described above.\n    pass\n",
+    "starter_java": "static Long solve(int n, int[][] edges, int source, int target, int[] edgeIds) {\n    throw new UnsupportedOperationException(\"Implement this method\");\n}",
+    "java_class": "Practice08",
+    "java_file": "code/practice/Practice08.java"
+  }
+]
