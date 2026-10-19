@@ -1,0 +1,1003 @@
+1
+00:00:00,709 --> 00:00:06,442
+A campus needs cables a preparation schedule and
+a delivery route These are three
+
+2
+00:00:06,442 --> 00:00:11,793
+different questions Before choosing an algorithm
+decide what the answer must describe
+
+3
+00:00:12,230 --> 00:00:15,747
+an entire network an order or one path
+
+4
+00:00:26,042 --> 00:00:31,572
+Vertices are numbered from zero A line connects
+two vertices an arrow
+
+5
+00:00:31,572 --> 00:00:37,061
+permits only its direction A weight gives the
+cost Here original
+
+6
+00:00:37,061 --> 00:00:42,439
+edge identifier one means the second input row
+even after sorting
+
+7
+00:00:52,598 --> 00:00:57,843
+An adjacency list gives each vertex its outgoing
+connections An
+
+8
+00:00:57,843 --> 00:01:02,897
+undirected edge needs entries at both ends with
+the same original
+
+9
+00:01:02,897 --> 00:01:08,345
+identifier This representation lets us visit
+neighbours without scanning the
+
+10
+00:01:08,345 --> 00:01:10,504
+entire input each time
+
+11
+00:01:20,709 --> 00:01:26,497
+Disjoint-set union tracks groups as connections
+arrive Each vertex initially
+
+12
+00:01:26,497 --> 00:01:32,271
+represents itself Parent points to the same
+vertex size is one and there
+
+13
+00:01:32,271 --> 00:01:37,717
+are five components Only a root stores the
+authoritative size of its group
+
+14
+00:01:39,459 --> 00:01:44,864
+Add the link zero to one Their roots differ so
+two groups merge
+
+15
+00:01:45,179 --> 00:01:50,518
+Attach the smaller tree to the larger one on
+equal sizes either
+
+16
+00:01:50,518 --> 00:01:56,035
+consistent choice works Here root one joins root
+zero Components
+
+17
+00:01:56,035 --> 00:01:59,225
+becomes four and largest becomes two
+
+18
+00:02:01,042 --> 00:02:06,749
+Next join two and three This creates a second
+group of size two Now join one and
+
+19
+00:02:06,749 --> 00:02:12,208
+three Find first follows each argument to its
+root Roots zero and
+
+20
+00:02:12,251 --> 00:02:17,466
+two have size two so merge them Four vertices
+share a group
+
+21
+00:02:17,808 --> 00:02:19,790
+vertex four remains separate
+
+22
+00:02:21,445 --> 00:02:27,097
+Now add zero to two then four to itself Both
+operations have equal
+
+23
+00:02:27,097 --> 00:02:32,736
+endpoint roots Do not decrease components or add
+sizes again Record a
+
+24
+00:02:32,736 --> 00:02:38,442
+state after every operation including unchanged
+states The last two
+
+25
+00:02:38,442 --> 00:02:41,864
+answers are both two components largest four
+
+26
+00:02:43,596 --> 00:02:49,328
+Finding vertex three follows three two zero Zero
+is the root
+
+27
+00:02:49,670 --> 00:02:55,172
+Path compression can redirect three straight to
+zero The group still contains the
+
+28
+00:02:55,172 --> 00:03:00,743
+same four vertices This parent link is internal
+bookkeeping not a
+
+29
+00:03:00,743 --> 00:03:02,888
+new cable in the input graph
+
+30
+00:03:04,625 --> 00:03:10,520
+Try one compression step yourself The root is
+already known Save the current parent
+
+31
+00:03:10,903 --> 00:03:16,691
+redirect this vertex to the root then continue
+through the saved link Pause for
+
+32
+00:03:16,691 --> 00:03:21,987
+up to five minutes When ready compare your three
+lines with this fragment
+
+33
+00:03:23,709 --> 00:03:29,291
+Balancing prevents avoidably tall trees while
+compression shortens searches
+
+34
+00:03:29,605 --> 00:03:35,092
+Rank is not group size With both heuristics the
+total time for q operations
+
+35
+00:03:35,285 --> 00:03:40,921
+is order n plus q times inverse Ackermann of n
+amortized
+
+36
+00:03:41,249 --> 00:03:46,562
+Output storage adds order q Ordinary DSU does
+not support
+
+37
+00:03:46,562 --> 00:03:48,000
+arbitrary deletions
+
+38
+00:03:49,722 --> 00:03:55,402
+The highlighted forest connects all five
+buildings for total cost ten But delivery
+
+39
+00:03:55,402 --> 00:04:00,712
+from zero to four uses zero two four for cost
+eight These totals
+
+40
+00:04:00,728 --> 00:04:06,421
+optimize different objects A spanning tree need
+not preserve every shortest
+
+41
+00:04:06,421 --> 00:04:06,948
+route
+
+42
+00:04:08,959 --> 00:04:14,502
+If vertex five is isolated no legal cable can
+connect it It is a separate
+
+43
+00:04:14,502 --> 00:04:20,369
+component A spanning forest on n vertices and c
+components contains
+
+44
+00:04:20,413 --> 00:04:26,078
+n minus c edges A tree also has no redundant
+links reliability
+
+45
+00:04:26,078 --> 00:04:28,780
+requirements need a richer network model
+
+46
+00:04:30,709 --> 00:04:36,157
+Kruskal considers edges by increasing weight The
+original identifiers remain
+
+47
+00:04:36,157 --> 00:04:41,359
+attached to them Here the examination order is
+two one six
+
+48
+00:04:41,456 --> 00:04:46,701
+zero three five four Start a fresh disjoint-set
+
+49
+00:04:46,701 --> 00:04:49,823
+structure to represent the forest being built
+
+50
+00:04:51,528 --> 00:04:57,219
+Edge two joins one and two for cost one Their
+roots differ so accept it
+
+51
+00:04:57,534 --> 00:05:03,442
+Edge one then connects zero to that group for
+cost two Every accepted edge
+
+52
+00:05:03,471 --> 00:05:07,260
+joins two trees instead of creating a cycle
+
+53
+00:05:08,862 --> 00:05:14,213
+Edge six joins three and four for cost two We
+now have two trees
+
+54
+00:05:14,541 --> 00:05:20,044
+zero one two and three four A forest can contain
+several
+
+55
+00:05:20,044 --> 00:05:25,411
+growing pieces Its running cost is five and it
+is still extendable to an
+
+56
+00:05:25,411 --> 00:05:26,033
+optimum
+
+57
+00:05:27,612 --> 00:05:33,194
+Should edge zero now be accepted Its endpoints
+already have the path zero
+
+58
+00:05:33,318 --> 00:05:39,079
+two one Adding zero to one would close a cycle
+Skip it although
+
+59
+00:05:39,079 --> 00:05:44,473
+its weight is smaller than the next accepted
+edge Eligibility matters as well as
+
+60
+00:05:44,473 --> 00:05:45,381
+price
+
+61
+00:05:47,028 --> 00:05:52,735
+Edge three connects the two remaining groups for
+cost five Total cost becomes
+
+62
+00:05:52,735 --> 00:05:58,523
+ten The last two edges would create cycles The
+answer has four original
+
+63
+00:05:58,523 --> 00:06:04,186
+edge identifiers and one component On a
+disconnected graph process
+
+64
+00:06:04,230 --> 00:06:08,616
+every component rather than assuming a single
+tree exists
+
+65
+00:06:10,209 --> 00:06:15,886
+A cut separates a current component from the
+rest A lightest crossing edge is safe
+
+66
+00:06:15,956 --> 00:06:21,377
+for some optimum containing the current forest
+If an optimum lacks it an
+
+67
+00:06:21,377 --> 00:06:26,796
+exchange along the resulting cycle replaces an
+edge of no smaller weight
+
+68
+00:06:27,111 --> 00:06:30,057
+Equal weights can allow different valid optima
+
+69
+00:06:31,709 --> 00:06:37,211
+Prim solves the same objective with different
+state Start at vertex zero Its
+
+70
+00:06:37,211 --> 00:06:42,741
+boundary offers edge zero at cost four and edge
+one at cost two Choose
+
+71
+00:06:42,741 --> 00:06:47,984
+edge one to bring in vertex two A heap candidate
+must retain destination
+
+72
+00:06:48,271 --> 00:06:51,706
+weight and original edge identifier
+
+73
+00:06:54,875 --> 00:07:00,541
+Vertex two exposes an edge to one costing one It
+is now the cheapest
+
+74
+00:07:00,541 --> 00:07:06,449
+boundary edge so take it The accepted weights
+are two then one Prim
+
+75
+00:07:06,506 --> 00:07:12,212
+is not scanning a globally sorted edge list its
+available choices depend
+
+76
+00:07:12,212 --> 00:07:13,419
+on the visited region
+
+77
+00:07:16,542 --> 00:07:22,208
+The old offer from zero to one still exists in a
+lazy queue but one is already
+
+78
+00:07:22,208 --> 00:07:27,507
+visited Discard that offer when removed Checking
+only at insertion is not
+
+79
+00:07:27,507 --> 00:07:31,689
+enough because the tree can change while an
+entry waits in the queue
+
+80
+00:07:34,806 --> 00:07:40,526
+The cheapest eligible offer now is edge three
+reaching vertex three for
+
+81
+00:07:40,526 --> 00:07:45,591
+five Then edge six reaches four for two Running
+totals are two
+
+82
+00:07:45,784 --> 00:07:51,572
+three eight ten Kruskal and Prim agree on
+optimum cost although
+
+83
+00:07:51,572 --> 00:07:53,920
+their selection sequences differ
+
+84
+00:07:57,028 --> 00:08:02,667
+When the queue is empty scan for another
+unvisited vertex An isolated
+
+85
+00:08:02,667 --> 00:08:08,401
+vertex starts a new component and contributes no
+edge A lazy heap may
+
+86
+00:08:08,401 --> 00:08:14,175
+contain order m entries giving order n plus m
+log of m
+
+87
+00:08:14,175 --> 00:08:17,678
+plus one time and order n plus m memory
+
+88
+00:08:20,709 --> 00:08:26,239
+Now use directed dependencies Depth-first search
+follows one unfinished
+
+89
+00:08:26,239 --> 00:08:31,578
+branch then returns to work it suspended A
+recursive call remembers both the
+
+90
+00:08:31,578 --> 00:08:37,353
+vertex and where to resume its neighbour list An
+explicit stack must preserve
+
+91
+00:08:37,353 --> 00:08:38,532
+that progress too
+
+92
+00:08:42,612 --> 00:08:47,979
+Unvisited means the search has not entered a
+vertex Active means it is on the
+
+93
+00:08:47,979 --> 00:08:53,305
+current depth-first path Finished means every
+outgoing edge has been
+
+94
+00:08:53,305 --> 00:08:58,998
+examined Here the active stack is zero one three
+four A
+
+95
+00:08:58,998 --> 00:09:03,058
+visited Boolean alone cannot express these
+distinctions
+
+96
+00:09:07,125 --> 00:09:12,843
+Vertex four has no outgoing work so finish it
+and pop its frame Then
+
+97
+00:09:12,900 --> 00:09:18,511
+three finishes followed by one Zero still has
+another neighbour Notice that
+
+98
+00:09:18,511 --> 00:09:24,204
+finish records completion not discovery This
+distinction is essential for
+
+99
+00:09:24,204 --> 00:09:27,612
+both Kosaraju and topological ordering
+
+100
+00:09:31,625 --> 00:09:37,305
+Enter two Its edge reaches three which has
+already finished This is not a directed
+
+101
+00:09:37,305 --> 00:09:43,145
+cycle Continue until two and zero finish For
+this adjacency order
+
+102
+00:09:43,432 --> 00:09:49,220
+the finish list is four three one two zero Other
+traversal
+
+103
+00:09:49,220 --> 00:09:52,194
+orders may produce different valid lists
+
+104
+00:09:56,209 --> 00:10:01,861
+At one hundred thousand vertices relying on a
+small call stack can fail Store the
+
+105
+00:10:01,861 --> 00:10:07,619
+next-neighbour index explicitly Advance it
+before descending and finish
+
+106
+00:10:07,649 --> 00:10:13,097
+only when no neighbour remains Every vertex
+enters and exits
+
+107
+00:10:13,097 --> 00:10:16,696
+once each edge is inspected once
+
+108
+00:10:20,695 --> 00:10:26,347
+In this graph zero one and two reach one another
+Three and four
+
+109
+00:10:26,347 --> 00:10:32,135
+form another mutually reachable group Vertex
+five is isolated The
+
+110
+00:10:32,135 --> 00:10:37,853
+arrow from two to three does not merge the
+groups because there is no return path
+
+111
+00:10:40,209 --> 00:10:45,820
+Kosaraju first runs depth-first search on the
+original graph Cycles are
+
+112
+00:10:45,820 --> 00:10:51,228
+allowed here finish the pass rather than
+rejecting them Use the displayed neighbour
+
+113
+00:10:51,228 --> 00:10:56,798
+order Finishing from zero gives four three two
+one zero Then
+
+114
+00:10:56,798 --> 00:11:02,505
+isolated five finishes Include it even though it
+was never reachable from
+
+115
+00:11:02,505 --> 00:11:03,291
+zero
+
+116
+00:11:05,598 --> 00:11:11,359
+Reverse every directed edge keeping vertex
+identities fixed Clear the
+
+117
+00:11:11,359 --> 00:11:17,147
+visited state before the second pass Use
+decreasing first-pass finish order for
+
+118
+00:11:17,147 --> 00:11:22,813
+the next seeds The second graph must be the
+transpose of the first rather than a
+
+119
+00:11:22,813 --> 00:11:25,379
+second traversal in the same direction
+
+120
+00:11:27,792 --> 00:11:33,594
+Seed five finds only five Seed zero then
+collects zero one and
+
+121
+00:11:33,594 --> 00:11:38,985
+two in the transpose The later seed two is
+already assigned Seed
+
+122
+00:11:39,069 --> 00:11:44,368
+three collects three and four Skip assigned
+vertices Colours name the
+
+123
+00:11:44,368 --> 00:11:49,638
+groups numeric component labels need not match
+this presentation order
+
+124
+00:11:52,056 --> 00:11:57,749
+Think of each strongly connected group as one
+vertex Their condensation has
+
+125
+00:11:57,749 --> 00:12:03,278
+no directed cycle The remaining group with
+greatest first-pass finish time has
+
+126
+00:12:03,278 --> 00:12:08,713
+no outgoing path to another unassigned group in
+the transpose The search stays
+
+127
+00:12:08,713 --> 00:12:11,496
+inside that group and reaches all of it
+
+128
+00:12:13,848 --> 00:12:19,378
+Return to the original directions Internal edges
+disappear when groups are
+
+129
+00:12:19,378 --> 00:12:24,867
+contracted The edge from two to three becomes A
+to B If we add another
+
+130
+00:12:24,867 --> 00:12:30,207
+original edge from one to three it produces the
+same pair not a second
+
+131
+00:12:30,207 --> 00:12:34,294
+condensation edge The isolated group still
+exists
+
+132
+00:12:36,625 --> 00:12:41,979
+Mutually dependent modules may need coordinated
+changes Condensation
+
+133
+00:12:41,979 --> 00:12:47,561
+exposes dependencies between groups but does not
+fix their internal cycles
+
+134
+00:12:47,875 --> 00:12:53,498
+Two passes the transpose and condensation need
+linear work
+
+135
+00:12:53,935 --> 00:12:58,417
+hash-based removal of duplicate pairs gives an
+expected linear time bound
+
+136
+00:13:00,695 --> 00:13:06,429
+Return to the acyclic task graph An arrow means
+its source must happen before
+
+137
+00:13:06,429 --> 00:13:12,011
+its target Reverse the DFS finish list to obtain
+zero two one
+
+138
+00:13:12,162 --> 00:13:17,733
+three four This order respects every dependency
+Independent tasks
+
+139
+00:13:17,733 --> 00:13:23,125
+can sometimes exchange places so a valid answer
+need not be unique
+
+140
+00:13:30,625 --> 00:13:36,085
+Build each vertex position in the proposed order
+For edge one to three
+
+141
+00:13:36,278 --> 00:13:41,576
+position one is two and position three is three
+the inequality
+
+142
+00:13:41,576 --> 00:13:47,201
+holds Check every edge and verify that every
+vertex occurs
+
+143
+00:13:47,201 --> 00:13:52,854
+exactly once This is useful for build
+dependencies but does not optimize
+
+144
+00:13:52,854 --> 00:13:53,897
+task duration
+
+145
+00:14:01,445 --> 00:14:07,122
+Now add four to zero During the active path zero
+one three
+
+146
+00:14:07,328 --> 00:14:12,817
+four this edge returns to active zero No
+complete order can respect that
+
+147
+00:14:12,817 --> 00:14:18,551
+cycle Return acyclic false and an empty order A
+cycle anywhere
+
+148
+00:14:18,551 --> 00:14:23,182
+in the graph including a disconnected part
+invalidates the answer
+
+149
+00:14:30,682 --> 00:14:36,331
+A workpiece can take alternative processing
+routes Vertices are stages reached
+
+150
+00:14:36,741 --> 00:14:42,502
+arrows are allowed next transitions weights are
+costs We seek the cheapest route
+
+151
+00:14:42,502 --> 00:14:48,288
+from source zero These alternatives are not a
+list of mandatory tasks that must
+
+152
+00:14:48,304 --> 00:14:49,456
+all be performed
+
+153
+00:14:52,125 --> 00:14:57,938
+Only the source cost is known initially Null
+means no route has yet been discovered
+
+154
+00:14:58,253 --> 00:15:04,080
+Process vertices in a topological order and
+never relax from a null distance
+
+155
+00:15:04,408 --> 00:15:10,074
+After processing zero costs to one and two are
+five and two with original
+
+156
+00:15:10,074 --> 00:15:11,756
+parent edges zero and one
+
+157
+00:15:14,472 --> 00:15:19,850
+Without a discount processing one first offers
+seven to vertex three
+
+158
+00:15:20,179 --> 00:15:25,845
+Processing two improves that to six and offers
+eleven to four Then three
+
+159
+00:15:25,845 --> 00:15:31,402
+improves four to nine The route zero two three
+four costs two
+
+160
+00:15:31,402 --> 00:15:34,049
+plus four plus three which is nine
+
+161
+00:15:36,709 --> 00:15:42,291
+Now change only edge one to three to minus four
+representing a discount
+
+162
+00:15:42,646 --> 00:15:48,095
+and restart the calculation Negative weights are
+valid in a DAG After
+
+163
+00:15:48,095 --> 00:15:54,003
+zero is processed again the cost to three is
+still null We have not processed
+
+164
+00:15:54,304 --> 00:15:56,258
+its incoming alternatives yet
+
+165
+00:15:58,862 --> 00:16:04,555
+At vertex one the candidate is five plus minus
+four giving one Three
+
+166
+00:16:04,555 --> 00:16:10,207
+has no known cost so store one and original edge
+identifier two The
+
+167
+00:16:10,207 --> 00:16:15,886
+parent is an edge identifier not vertex one
+Updating the number without its
+
+168
+00:16:15,886 --> 00:16:18,778
+witness would leave an inconsistent result
+
+169
+00:16:21,459 --> 00:16:26,837
+Vertex two later offers six to three Six is
+worse than one
+
+170
+00:16:27,152 --> 00:16:32,503
+so retain the existing distance and parent It
+also offers eleven to four
+
+171
+00:16:32,831 --> 00:16:38,522
+Vertex three then offers four to vertex four The
+final route
+
+172
+00:16:38,524 --> 00:16:44,418
+is zero one three four with total five minus
+four plus three
+
+173
+00:16:44,801 --> 00:16:45,655
+equal to four
+
+174
+00:16:48,278 --> 00:16:53,863
+An added isolated vertex five finishes with null
+distance and parent
+
+175
+00:16:53,863 --> 00:16:59,270
+minus one A finite distance can itself be minus
+one Also reject a
+
+176
+00:16:59,270 --> 00:17:04,825
+directed cycle anywhere in the input even if
+source zero cannot reach it
+
+177
+00:17:05,167 --> 00:17:08,099
+That is a whole-graph requirement of this
+assignment
+
+178
+00:17:10,695 --> 00:17:16,046
+To reconstruct the route to four its parent edge
+is identifier four
+
+179
+00:17:16,374 --> 00:17:21,562
+three to four Move to three Parent edge two
+leads from one to three
+
+180
+00:17:21,864 --> 00:17:27,665
+Parent edge zero leads from zero to one Reverse
+the collected vertices to obtain
+
+181
+00:17:27,665 --> 00:17:31,005
+zero one three four
+
+182
+00:17:33,028 --> 00:17:38,923
+Try the backward step yourself Original edge
+four is the row three four
+
+183
+00:17:39,020 --> 00:17:44,686
+three Which column gives the previous vertex
+Pause if needed It is column
+
+184
+00:17:44,686 --> 00:17:50,297
+zero vertex three Column two gives the last edge
+weight not the
+
+185
+00:17:50,297 --> 00:17:51,613
+total route cost
+
+186
+00:17:53,695 --> 00:17:59,603
+A correct sum is not enough Check forest
+identifiers connectivity and
+
+187
+00:17:59,768 --> 00:18:05,489
+edge count For components verify mutual
+reachability and deduplicated
+
+188
+00:18:05,489 --> 00:18:10,758
+condensation For an order check every edge
+position For routes
+
+189
+00:18:10,937 --> 00:18:16,127
+verify parent direction and total weight
+Alternative valid witnesses should be
+
+190
+00:18:16,127 --> 00:18:16,926
+accepted
+
+191
+00:18:18,625 --> 00:18:24,003
+Include empty graphs where allowed isolates
+repeated unions
+
+192
+00:18:24,155 --> 00:18:29,561
+loops parallel edges negative weights and totals
+beyond integer range
+
+193
+00:18:29,875 --> 00:18:35,337
+Test deep chains and mixed requests in one
+process Benchmark Kruskal and
+
+194
+00:18:35,337 --> 00:18:40,417
+Prim on the same graphs three sizes at least
+three runs
+
+195
+00:18:40,718 --> 00:18:44,887
+median compilation excluded and documented
+warm-up
+
+196
+00:18:46,639 --> 00:18:52,085
+Here n counts vertices m input edges and q
+unions
+
+197
+00:18:52,413 --> 00:18:57,873
+DSU is amortized almost linear Kruskal and lazy
+Prim
+
+198
+00:18:57,916 --> 00:19:03,471
+include sorting or heap work Kosaraju
+topological ordering
+
+199
+00:19:03,650 --> 00:19:09,503
+and DAG relaxation are linear hash deduplication
+is expected linear
+
+200
+00:19:09,805 --> 00:19:13,974
+A reconstructed route takes time proportional to
+its length
+
+201
+00:19:15,709 --> 00:19:21,320
+Use the graphs template Its adapters handle JSON
+input and output Write the
+
+202
+00:19:21,320 --> 00:19:26,741
+six required algorithms and your route helper in
+your chosen language Keep
+
+203
+00:19:26,741 --> 00:19:32,067
+original edge identifiers reset state per
+request use wide
+
+204
+00:19:32,067 --> 00:19:36,318
+totals and send only result JSON to standard
+output
+
+205
+00:19:38,125 --> 00:19:43,911
+Save your tests and English analysis Public
+checks report pass or fail
+
+206
+00:19:44,267 --> 00:19:49,212
+they do not calculate the practical grade or
+transfer marks to Moodle Submit the
+
+207
+00:19:49,212 --> 00:19:54,987
+exact commit link An Actions link may support it
+Follow the current README
+
+208
+00:19:54,987 --> 00:19:58,911
+and Moodle for the rubric dates and submission
+details

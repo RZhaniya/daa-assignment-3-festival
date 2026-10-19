@@ -35,7 +35,7 @@ Start with a familiar situation, try a choice on the graph, check your predictio
 
 Implement the six assignment methods and route helper yourself. The downloadable BFS example is a different learning task; the lesson does not provide complete assignment implementations.
 
-[28-minute English video](docs/video/Assignment_3_Explained_EN.mp4) · [YouTube guide](docs/A3_Video_Guide_EN_RU.md) · [Transcript](docs/video/Transcript_EN.md)
+[20-minute English video](docs/video20/index.html) · [YouTube guide](docs/A3_Video_Guide_EN_RU.md) · [Transcript](docs/video20/Transcript_EN.md)
 
 The topic cards link to verified original YouTube videos. Open the supplied syllabus textbooks directly from the lesson: CLRS 4e and Sedgewick–Wayne 4e (main), and Skiena 3e (additional), with links to relevant PDF pages. Offline reading and the course video require the full docs folder; external YouTube videos require internet.
 

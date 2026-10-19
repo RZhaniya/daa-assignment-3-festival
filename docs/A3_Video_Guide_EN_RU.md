@@ -1,5 +1,7 @@
 # Assignment 3 — English video guide / видео на английском
 
+[20-minute course lesson / Видеоурок на 20 минут](video20/index.html) · English narration, EN/RU captions.
+
 These English videos explain the six required A3 algorithms. Watch the short topic sequence rather than unrelated sections of a general algorithms course. The optional DFS introduction helps with Kosaraju and topological ordering.
 
 Эти английские видео объясняют шесть требуемых алгоритмов A3. Смотрите их по темам ниже. Дополнительное введение в DFS помогает перед Косарайю и топологической сортировкой.

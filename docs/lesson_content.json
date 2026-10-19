@@ -1016,7 +1016,7 @@
       "steps": [
         "Для введения начните с DSU или DFS.",
         "Для конкретного алгоритма выберите тематическую карточку.",
-        "Для общего повторения оставлен наш видеоурок на 28 минут."
+        "Для общего повторения оставлен наш видеоурок на 20 минут."
       ],
       "transfer": "Внешние видео объясняют алгоритмы, но не определяют JSON-контракт или правила сдачи. В DAG-видео часть о longest path дополнительная. Для SCC нужен Косарайю, для topo — DFS: Tarjan, Kahn и Dijkstra не заменяют требуемые методы. Учебный Java-файл ниже решает другую задачу — достижимость через BFS.",
       "theory": "<div class=\"lessonVideo\"></div><h3>Запустите похожий учебный пример</h3><p>ReachabilityDemo.java использует список смежности, очередь и visited, чтобы найти достижимые комнаты. Он не содержит DSU, Краскала, Прима, Косарайю, топологической сортировки или кратчайших путей DAG. Сравните очередь BFS с активным стеком DFS; не подставляйте BFS вместо требуемого алгоритма.</p><p><a href=\"code/ReachabilityDemo.java\" download>Скачать ReachabilityDemo.java</a></p><pre>javac --release 17 -encoding UTF-8 ReachabilityDemo.java\njava ReachabilityDemo</pre><p>Ожидаемый вывод: Reachable from 0: [0, 1, 2, 3]; vertex 4 reachable: false.</p>"
@@ -1027,7 +1027,7 @@
       "steps": [
         "Start with DSU or DFS for foundations.",
         "Choose a topic card for a particular algorithm.",
-        "Use the 28-minute course video for a full review."
+        "Use the 20-minute course video for a full review."
       ],
       "transfer": "External videos explain algorithms rather than defining JSON contracts or submission rules. The DAG video’s longest-path part is optional. SCC requires Kosaraju and topo requires DFS; Tarjan, Kahn and Dijkstra are not substitutes. The Java file below solves a different problem: reachability using BFS.",
       "theory": "<div class=\"lessonVideo\"></div><h3>Run a related learning example</h3><p>ReachabilityDemo.java uses adjacency lists, a queue and visited flags to find reachable rooms. It contains none of the six assignment algorithms. Compare its BFS queue with an active DFS stack; do not substitute BFS for a required method.</p><p><a href=\"code/ReachabilityDemo.java\" download>Download ReachabilityDemo.java</a></p><pre>javac --release 17 -encoding UTF-8 ReachabilityDemo.java\njava ReachabilityDemo</pre><p>Expected output: Reachable from 0: [0, 1, 2, 3]; vertex 4 reachable: false.</p>"
