@@ -2,7 +2,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-/** A related BFS example: this does not implement the six assignment methods. */
+/**
+ * Breadth-first traversal of an undirected graph.
+ * Vertices are 0..n-1; require 0 <= source < n and valid link endpoints.
+ * Returns discovery order, which depends on the order of links, not sorted IDs.
+ * The visited mark is set before enqueueing, so each vertex is queued once.
+ * Time: O(n + m); memory including adjacency lists and output: O(n + m).
+ */
 public final class ReachabilityDemo {
     static List<Integer> reachable(int n, int[][] links, int source) {
         List<List<Integer>> neighbours = new ArrayList<>();
