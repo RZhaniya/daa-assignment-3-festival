@@ -1,0 +1,3264 @@
+{
+  "meta": {
+    "cables": {
+      "RU": {
+        "title": "Спланируйте сеть четырёх корпусов",
+        "intro": "У вас есть допустимые трассы и бюджет. Измените цену одной трассы или закройте её, затем проверьте, можно ли соединить все корпуса.",
+        "model": "Вершины — корпуса, рёбра — допустимые кабели, вес — условная стоимость монтажа. В этом примере нет ограничений на длину или пропускную способность.",
+        "state": "Отдельно храните исходные ID трасс, выбранные ID, сумму и число компонент. Цена одной трассы и стоимость всего плана — разные величины.",
+        "use": "Так формулируется задача начального кабельного плана: связать площадки с минимальной суммой затрат. При закрытии трассы меняется вход, и план нужно пересчитать.",
+        "limit": "Дешёвое дерево не обеспечивает резервирование. Здесь можно проверить один выбранный разрыв и подобрать один дополнительный кабель; это не проект защиты от всех возможных аварий."
+      },
+      "EN": {
+        "title": "Plan a network for four buildings",
+        "intro": "You have permitted cable routes and a budget. Change one route price or close it, then check whether every building can be connected.",
+        "model": "Vertices are buildings, edges are permitted cables, and weights are installation costs in arbitrary units. Length and capacity constraints are outside this example.",
+        "state": "Keep original route IDs, selected IDs, the total, and the component count separately. One cable price differs from the cost of the whole plan.",
+        "use": "This models an initial cable layout: connect sites at minimum total cost. Closing a route changes the input, so the plan must be recalculated.",
+        "limit": "A cheapest tree provides no redundancy. Test one selected failure and choose one extra cable here; this does not design protection against every possible failure."
+      }
+    },
+    "connectivity": {
+      "RU": {
+        "title": "Проверьте проход между корпусами",
+        "intro": "Открывайте и закрывайте проходы. Затем выберите два корпуса и предскажите, можно ли добраться из одного в другой.",
+        "model": "Каждая открытая связь допускает движение в обе стороны. Достижимость определяется всей цепочкой проходов, а не только прямой связью.",
+        "state": "Группа хранит множество связанных вершин. Для добавлений DSU позволяет быстро проверять принадлежность одной группе и учитывать её размер.",
+        "use": "Так проверяют, какие участки сети или площадки остаются связанными по доступным переходам. Номер представителя сам по себе не является адресом или длиной маршрута.",
+        "limit": "После закрытия прохода группа может распасться. Демонстрация пересчитывает связность; обычный DSU из задания поддерживает объединения, но не произвольное разделение."
+      },
+      "EN": {
+        "title": "Check access between buildings",
+        "intro": "Open and close walkways. Choose two buildings and predict whether one can be reached from the other.",
+        "model": "Each open link works in both directions. Reachability depends on the full chain of walkways, rather than only a direct edge.",
+        "state": "A group represents connected vertices. For additions, DSU efficiently checks common membership and tracks group size.",
+        "use": "Use this model to find which network regions or sites remain connected through available links. A representative ID is neither an address nor a route length.",
+        "limit": "Closing a walkway can split a group. This demonstration recomputes connectivity; ordinary assignment DSU supports merging, not arbitrary splitting."
+      }
+    },
+    "build": {
+      "RU": {
+        "title": "Спланируйте сборку приложения",
+        "intro": "Запускайте готовые работы и переходите к следующему завершению. Сравните план с одним и двумя исполнителями.",
+        "model": "Стрелка u→v означает: работа u должна завершиться до запуска v. Длительности заданы в условных минутах; номера вершин обозначают работы.",
+        "state": "Планировщику нужны завершённые и работающие задачи, оставшееся время и свободные исполнители. Допустимый порядок не содержит всех этих сведений.",
+        "use": "Так зависимости используются при сборке: данные конфигурации готовят раньше модулей, а пакет собирают после обязательных частей. Независимые работы могут выполняться одновременно.",
+        "limit": "Топологический порядок проверяет зависимости, но сам по себе не минимизирует время при ограниченных исполнителях. Кнопка автозапуска выбирает готовые работы по номеру, без обещания оптимального расписания."
+      },
+      "EN": {
+        "title": "Schedule an application build",
+        "intro": "Start ready tasks and advance to the next completion. Compare plans with one and two workers.",
+        "model": "An arrow u→v means task u must finish before v starts. Durations are in arbitrary minutes; vertex numbers identify tasks.",
+        "state": "A scheduler needs finished and running tasks, remaining times, and free workers. A valid vertex order does not contain all this information.",
+        "use": "Build dependencies work this way: prepare configuration before modules, and assemble the package after required parts. Independent work may run concurrently.",
+        "limit": "Topological order checks dependencies but does not by itself minimize time with limited workers. Auto-start chooses ready tasks by vertex number, without promising an optimal schedule."
+      }
+    },
+    "routes": {
+      "RU": {
+        "title": "Выберите маршрут обработки детали",
+        "intro": "Пройдите от заготовки до готового изделия. Меняйте цену перехода, закрывайте линию и сравнивайте стоимость своего маршрута с другими вариантами.",
+        "model": "Вершины — состояния обработки, стрелки — разрешённые следующие переходы. Линии A и B — альтернативы; проходить обе не требуется.",
+        "state": "Храните полную накопленную стоимость и исходные ID выбранных переходов. Отрицательная цена здесь означает скидку или возврат, а не отрицательную длину.",
+        "use": "Так можно описать выбор между допустимыми технологическими цепочками или переходами между этапами услуги. Сначала нужно проверить, что порядок этапов действительно образует DAG.",
+        "limit": "Минимальная стоимость не учитывает пропускную способность, очередь оборудования или время доставки. Числа в этой модели условные; они не являются измерениями реального производства."
+      },
+      "EN": {
+        "title": "Choose a workpiece processing route",
+        "intro": "Move from raw material to a finished item. Change a transition price, close a line, and compare your route with other options.",
+        "model": "Vertices are processing states and arrows are permitted next transitions. Lines A and B are alternatives; you do not have to visit both.",
+        "state": "Retain the full accumulated cost and original transition IDs. A negative price means a discount or refund here, not a negative physical length.",
+        "use": "This models a choice among permitted processing chains or service stages. First check that the stage dependencies really form a DAG.",
+        "limit": "Minimum cost omits equipment capacity, queues and delivery time. Values in this model are illustrative, not measurements from a factory."
+      }
+    },
+    "modules": {
+      "RU": {
+        "title": "Разберите зависимости модулей",
+        "intro": "Здесь стрелка u→v означает: модуль u вызывает v. Добавьте обратный вызов и проверьте, какие группы объединятся.",
+        "model": "Два модуля находятся в одной SCC, если вызовы позволяют дойти из каждого к другому. Одна направленная зависимость этого не гарантирует.",
+        "state": "Метки component обозначают группы; конденсация хранит уникальные связи между группами. Числовые названия меток можно менять, сохраняя разбиение.",
+        "use": "При изменении модуля полезно проверить его потенциальных вызывающих: модули, из которых к нему существует путь. Взаимные зависимости помогают определить область согласованного изменения.",
+        "limit": "Достижимость обозначает потенциальную зависимость, а не доказанное изменение поведения каждого вызывающего. Конденсация показывает циклические группы, но не исправляет их архитектуру."
+      },
+      "EN": {
+        "title": "Explore module dependencies",
+        "intro": "Here u→v means module u calls v. Add a return call and check which groups merge.",
+        "model": "Two modules share an SCC when call paths exist in both directions. A one-way dependency alone is insufficient.",
+        "state": "component labels name groups; condensation retains unique inter-group links. Numeric labels may change while preserving the partition.",
+        "use": "When a module changes, inspect potential callers: modules with a path to it. Mutual dependencies help identify a region needing coordinated changes.",
+        "limit": "Reachability marks potential dependence, not a proven behaviour change in every caller. Condensation identifies cyclic groups but does not repair the architecture."
+      }
+    },
+    "trace": {
+      "RU": {
+        "title": "Проверьте зависимости шаг за шагом",
+        "intro": "Управляйте проверкой сборочных зависимостей: выбирайте действие до раскрытия следующего состояния стека.",
+        "model": "В активном стеке находятся незавершённые вызовы DFS. Завершённая вершина уже просмотрела всех соседей; переход к ней не является свидетельством цикла.",
+        "state": "Запись стека хранит вершину и индекс следующего соседа. finish пополняется только при завершении, а не при открытии вершины.",
+        "use": "Так можно проследить, почему проверка зависимостей сборки обнаружила замкнутую цепочку. Отдельная недостижимая из 0 часть тоже должна быть проверена.",
+        "limit": "В этом тренажёре DFS проверяет циклы зависимостей. Первый DFS алгоритма Косарайю решает другую задачу и не прекращается из-за найденного цикла."
+      },
+      "EN": {
+        "title": "Inspect dependencies one step at a time",
+        "intro": "Control a build-dependency check: choose an action before revealing the next stack state.",
+        "model": "The active stack contains suspended DFS calls. A finished vertex has examined all its neighbours; an edge to it is not evidence of a cycle.",
+        "state": "A frame stores a vertex and its next-neighbour index. Append to finish only on completion, rather than discovery.",
+        "use": "Trace why a dependency check reported a closed chain. A separate part unreachable from 0 must also be checked.",
+        "limit": "This simulator uses DFS for cycle detection. Kosaraju’s first DFS has a different purpose and must not stop merely because a cycle exists."
+      }
+    },
+    "representation": {
+      "RU": {
+        "title": "Постройте вход для программы",
+        "intro": "Добавляйте рёбра и смотрите, какие записи появляются у выбранной вершины. Добавьте обратное ребро, параллельные рёбра и петлю.",
+        "model": "ID — номер исходной строки. Новая строка получает новый ID, даже если её концы совпадают с другой строкой.",
+        "state": "Список смежности хранит to, weight и id. Для неориентированной связи добавляются записи у обоих концов; исходное ребро при этом остаётся одним.",
+        "use": "Так хранят несколько рейсов между остановками или несколько допустимых соединений между площадками. Разные цены нельзя потерять при объединении одинаковых концов.",
+        "limit": "В этой маленькой схеме до восьми строк и до двух связей одной пары вершин. Ограничение нужно для читаемости рисунка; пределы основного задания значительно больше."
+      },
+      "EN": {
+        "title": "Construct a program input",
+        "intro": "Add edges and inspect the entries stored at a selected vertex. Try a reverse link, parallel edges and a self-loop.",
+        "model": "An ID is an original row index. A new row has a new ID even when its endpoints match an earlier row.",
+        "state": "An adjacency entry stores to, weight and id. An undirected edge adds entries at both ends while remaining one original edge.",
+        "use": "Represent multiple services between stops or multiple permitted site connections this way. Do not lose different prices when endpoints match.",
+        "limit": "This small drawing allows eight rows and two links per vertex pair for readability. The main assignment has much larger limits."
+      }
+    },
+    "scale": {
+      "RU": {
+        "title": "Оцените память до запуска",
+        "intro": "Изменяйте число вершин и рёбер. Сравните матрицу с компактными массивами списка смежности и задайте бюджет памяти.",
+        "model": "Матрица использует n² ячеек по 4 байта. Для списка здесь считаются offsets[n+1] и три int на запись: to, weight, id; неориентированное ребро даёт две записи.",
+        "state": "Умножение должно начинаться с long: (long)n*n. Эти формулы оценивают только указанные массивы, без входа, очереди, ответов и объектных накладных расходов.",
+        "use": "Так можно заранее исключить представление, которое не помещается в ограничения, прежде чем измерять скорость реализации.",
+        "limit": "Это расчёт объёма выбранных массивов, а не измерение Java heap или времени работы. Одна ячейка матрицы также не сохраняет произвольное число параллельных рёбер."
+      },
+      "EN": {
+        "title": "Estimate memory before running",
+        "intro": "Change the vertex and edge counts. Compare a matrix with compact adjacency arrays and set a memory budget.",
+        "model": "The matrix has n² cells of 4 bytes. The list model counts offsets[n+1] and three ints per entry: to, weight and id; an undirected edge uses two entries.",
+        "state": "Start multiplication in long: (long)n*n. These formulas count only the named arrays, excluding input, queues, output and object overhead.",
+        "use": "Rule out representations exceeding the limit before benchmarking an implementation.",
+        "limit": "This calculates selected array sizes rather than measuring Java heap or runtime. One matrix cell also cannot retain arbitrarily many parallel edges."
+      }
+    },
+    "witness": {
+      "RU": {
+        "title": "Проверьте предложенный результат",
+        "intro": "Результат программы может иметь правильную сумму и неверные рёбра. Измените предложенный JSON и найдите конкретную причину принятия или отказа. Это сокращённые учебные свидетельства, а не полные ответы JSON Lines для сдачи.",
+        "model": "Здесь используются небольшие фиксированные графы. Для леса проверяются ID, циклы, охват компонент и оптимальная сумма; для порядка — все вершины и направления зависимостей.",
+        "state": "Для маршрута важны последовательность исходных ID и сумма, для SCC — разбиение и точный набор пар конденсации. Допустимые неоднозначные ответы не сравниваются с одной строкой.",
+        "use": "Так устроены содержательные проверки результата: программа должна подтвердить ответ выбранными связями, порядком или маршрутом, а не только напечатать число.",
+        "limit": "Успех на этих малых примерах не заменяет проверку всей области входов. Изменение JSON здесь не запускает ваш код и не выставляет оценку. В этом тренажёре метки ограничены точными целыми JavaScript: 0…9007199254740991. В задании разрешён весь неотрицательный диапазон signed 64-bit."
+      },
+      "EN": {
+        "title": "Validate a proposed result",
+        "intro": "A program may return the correct sum with invalid edges. Edit a proposed JSON answer and find a concrete acceptance or rejection reason. These are shortened learning witnesses, not complete JSON Lines submission responses.",
+        "model": "These use small fixed graphs. Forest checks cover IDs, cycles, spanning every input component and optimal cost; order checks cover all vertices and dependency directions.",
+        "state": "Routes need consecutive original IDs and their sum; SCCs need a correct partition and exact condensation pairs. Non-unique answers are not compared with one reference string.",
+        "use": "Meaningful result checks require a witness: selected links, an order or a route, rather than only a number.",
+        "limit": "Passing these small examples does not cover the full input domain. Editing JSON here does not execute your program or award marks. This trainer restricts labels to exact JavaScript integers: 0…9007199254740991. The assignment permits the full nonnegative signed 64-bit range."
+      }
+    }
+  },
+  "traces": [
+    {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "events": [
+        {
+          "before": {
+            "states": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [],
+            "finish": []
+          },
+          "action": "start",
+          "vertex": 0,
+          "after": {
+            "states": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 1,
+          "edge": 0,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 1,
+          "to": 3,
+          "edge": 2,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "finish",
+          "vertex": 3,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          },
+          "action": "finish",
+          "vertex": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              0,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              0,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 2,
+          "edge": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "skip",
+          "vertex": 2,
+          "to": 3,
+          "edge": 3,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "finish",
+          "vertex": 2,
+          "after": {
+            "states": [
+              1,
+              2,
+              2,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              2,
+              2
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          },
+          "action": "finish",
+          "vertex": 0,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        }
+      ],
+      "acyclic": true
+    },
+    {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "events": [
+        {
+          "before": {
+            "states": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [],
+            "finish": []
+          },
+          "action": "start",
+          "vertex": 0,
+          "after": {
+            "states": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 1,
+          "edge": 0,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 1,
+          "to": 3,
+          "edge": 2,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "cycle",
+          "vertex": 3,
+          "to": 0,
+          "edge": 4,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "finish": []
+          }
+        }
+      ],
+      "acyclic": false
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "events": [
+        {
+          "before": {
+            "states": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [],
+            "finish": []
+          },
+          "action": "start",
+          "vertex": 0,
+          "after": {
+            "states": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 1,
+          "edge": 0,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 1,
+          "to": 3,
+          "edge": 2,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "finish",
+          "vertex": 3,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          },
+          "action": "finish",
+          "vertex": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 2,
+          "edge": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "skip",
+          "vertex": 2,
+          "to": 3,
+          "edge": 3,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "finish",
+          "vertex": 2,
+          "after": {
+            "states": [
+              1,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          },
+          "action": "finish",
+          "vertex": 0,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          },
+          "action": "start",
+          "vertex": 4,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              1
+            ],
+            "stack": [
+              [
+                4,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              1
+            ],
+            "stack": [
+              [
+                4,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          },
+          "action": "finish",
+          "vertex": 4,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0,
+              4
+            ]
+          }
+        }
+      ],
+      "acyclic": true
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "events": [
+        {
+          "before": {
+            "states": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [],
+            "finish": []
+          },
+          "action": "start",
+          "vertex": 0,
+          "after": {
+            "states": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 1,
+          "edge": 0,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "descend",
+          "vertex": 1,
+          "to": 3,
+          "edge": 2,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "finish": []
+          },
+          "action": "finish",
+          "vertex": 3,
+          "after": {
+            "states": [
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "finish": [
+              3
+            ]
+          },
+          "action": "finish",
+          "vertex": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              0,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "descend",
+          "vertex": 0,
+          "to": 2,
+          "edge": 1,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "skip",
+          "vertex": 2,
+          "to": 3,
+          "edge": 3,
+          "after": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1
+            ]
+          },
+          "action": "finish",
+          "vertex": 2,
+          "after": {
+            "states": [
+              1,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              1,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [
+              [
+                0,
+                2
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2
+            ]
+          },
+          "action": "finish",
+          "vertex": 0,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ],
+            "stack": [],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          },
+          "action": "start",
+          "vertex": 4,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              1
+            ],
+            "stack": [
+              [
+                4,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        },
+        {
+          "before": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              1
+            ],
+            "stack": [
+              [
+                4,
+                0
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          },
+          "action": "cycle",
+          "vertex": 4,
+          "to": 4,
+          "edge": 4,
+          "after": {
+            "states": [
+              2,
+              2,
+              2,
+              2,
+              1
+            ],
+            "stack": [
+              [
+                4,
+                1
+              ]
+            ],
+            "finish": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        }
+      ],
+      "acyclic": false
+    }
+  ],
+  "module_cases": [
+    {
+      "mask": 0,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "mask": 1,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": []
+    },
+    {
+      "mask": 2,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            4,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": []
+    },
+    {
+      "mask": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            4,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "mask": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "mask": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "mask": 6,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            4,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          [
+            5,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            5,
+            3,
+            1
+          ],
+          [
+            5,
+            3,
+            1,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "mask": 7,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "paths": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2
+          ],
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          null
+        ],
+        [
+          [
+            4,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          null
+        ],
+        [
+          [
+            5,
+            3,
+            1,
+            2,
+            0
+          ],
+          [
+            5,
+            3,
+            1
+          ],
+          [
+            5,
+            3,
+            1,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      "labels": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "pairs": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    }
+  ]
+}

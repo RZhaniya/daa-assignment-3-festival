@@ -24,7 +24,7 @@ function render(){
  $('searchLabel').textContent=tr('Найти тему','Find a topic');$('search').placeholder=tr('Например, цикл или очередь','For example, cycle or queue');$('navHint').textContent=tr('Сначала попробуйте на схеме. К доказательству и деталям кода переходите, когда понятна идея.','Try the diagram first. Move to proofs and code details once the idea makes sense.');
  $('eyebrow').textContent=tr('Раздел ','Chapter ')+(i+1)+' / '+chapters.length;$('progress').style.width=((i+1)/chapters.length*100)+'%';$('title').textContent=t.title;$('story').textContent=t.story;
  $('routebar').innerHTML=[tr('01 · Ситуация','01 · Situation'),tr('02 · Попробуйте','02 · Explore'),tr('03 · Разберите','03 · Explain'),tr('04 · Примените','04 · Apply')].map(x=>'<span>'+x+'</span>').join('');
- $('activity').replaceChildren();if(c.lab)paintLab($('activity'),c.lab);
+ $('activity').replaceChildren();if(c.lab)paintLab($('activity'),c.lab);paintFieldwork(c);
  $('steps').innerHTML=t.steps.map((s,k)=>'<div class="stepcard"><b>'+(k+1)+'</b><p>'+esc(s)+'</p></div>').join('');
  if(t.bridge){const b=document.createElement('div');b.className='explanationBridge';b.innerHTML='<h2>'+tr('Свяжите пример с состоянием программы','Connect the example with program state')+'</h2><p>'+esc(t.bridge)+'</p>';$('steps').append(b);}
  $('transfer').innerHTML='<h2>'+tr('Где это пригодится и что сделать в задании','Where it applies and what to do in the assignment')+'</h2><p>'+esc(t.transfer)+'</p>';
@@ -47,14 +47,14 @@ function graph(rows,options={}){
   let [u,v]=e;if(options.reverse)[u,v]=[v,u];
   const[x,y]=points[u],[a,b]=points[v],color=i===candidate?'#b77b1b':selected.has(i)?'#25735e':'#a6b5c0',width=i===candidate||selected.has(i)?4:1.7;
   let path,tx,ty;
-  if(u===v){const direction=y<90?1:-1;path='M'+(x-15)+','+(y+direction*16)+' C'+(x-64)+','+(y+direction*72)+' '+(x+64)+','+(y+direction*72)+' '+(x+15)+','+(y+direction*16);tx=x;ty=y+direction*68;}
+  if(u===v){const rank=rows.slice(0,i).filter(r=>r[0]===u&&r[1]===v).length,direction=y<90?1:-1,radius=72+rank*38;path='M'+(x-15)+','+(y+direction*16)+' C'+(x-64)+','+(y+direction*radius)+' '+(x+64)+','+(y+direction*radius)+' '+(x+15)+','+(y+direction*16);tx=x;ty=y+direction*(68+rank*30);}
   else {
    const dx=a-x,dy=b-y,l=Math.hypot(dx,dy),siblings=rows.map((r,id)=>({r,id})).filter(({r})=>Math.min(r[0],r[1])===Math.min(u,v)&&Math.max(r[0],r[1])===Math.max(u,v));
    const rank=siblings.findIndex(s=>s.id===i),offset=(rank-(siblings.length-1)/2)*42,orientation=u<v?1:-1,nx=-dy/l*orientation,ny=dx/l*orientation,cx=(x+a)/2+nx*offset,cy=(y+b)/2+ny*offset;
    const start=Math.hypot(cx-x,cy-y),end=Math.hypot(a-cx,b-cy),sx=x+(cx-x)/start*22,sy=y+(cy-y)/start*22,ex=a-(a-cx)/end*25,ey=b-(b-cy)/end*25;
    path='M'+sx+','+sy+' Q'+cx+','+cy+' '+ex+','+ey;tx=(sx+2*cx+ex)/4+nx*12;ty=(sy+2*cy+ey)/4+ny*12;
   }
-  html+='<path d="'+path+'" stroke="'+color+'" stroke-width="'+width+'" fill="none"'+(options.directed?' marker-end="url(#'+arrow+')"':'')+'/>';
+  html+='<path d="'+path+'" stroke="'+color+'" stroke-width="'+width+'" fill="none"'+((options.unavailable||[]).includes(i)?' stroke-dasharray="5 6" opacity="0.3"':'')+(options.directed?' marker-end="url(#'+arrow+')"':'')+'/>';
   if(e.length>2&&options.weights!==false)html+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" font-size="15" font-weight="650" fill="#3c566a" stroke="#f4f8fa" stroke-width="5" paint-order="stroke">'+e[2]+(options.showIds?' · ID '+i:'')+'</text>';
  });
  for(let v=0;v<n;v++){const[x,y]=points[v],label=options.names?options.names[v]:String(v),group=options.groups?options.groups[v]:-1;let fill=group>=0?palette[group%palette.length]:'#fff';if(options.done&&options.done.includes(v))fill='#cfe6dc';if(active.has(v)&&!options.groups)fill='#f1ddbc';html+='<g class="node" data-node="'+v+'"'+(options.clickable?' role="button" tabindex="0" aria-label="'+esc(tr('Выбрать вершину ','Select vertex ')+label)+'"':'')+'><circle cx="'+x+'" cy="'+y+'" r="21" fill="'+fill+'" stroke="'+(active.has(v)?'#a86b10':'#3e647c')+'"/><text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="15" fill="#213e52">'+v+'</text>'+(options.names?'<text x="'+x+'" y="'+(y+43)+'" text-anchor="middle" font-size="13" fill="#365971">'+esc(label)+'</text>':'')+'</g>';}
