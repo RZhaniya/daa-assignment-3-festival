@@ -24,7 +24,9 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 
 ## Quiz preparation
 
-[Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 questions with answers and explanations on different examples. [Common pitfalls](docs/Common_Pitfalls.pdf).
+The [Assignment 3 defence quiz](https://lms.astanait.edu.kz/mod/quiz/view.php?id=93521) is in English: 20 questions in 20 minutes, with one attempt. There are 10 single-answer multiple-choice questions and 10 numerical questions. Each correct answer earns 1 raw point; an incorrect or blank answer earns 0. The quiz mark is `correct / 20 × 50`, up to 50 points.
+
+[Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 additional practice questions with answers and explanations on different examples. These practice sets do not reproduce the format or length of the graded attempt. [Common pitfalls](docs/Common_Pitfalls.pdf).
 
 
 ## Graph algorithms: interactive lesson

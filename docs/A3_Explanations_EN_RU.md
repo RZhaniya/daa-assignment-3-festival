@@ -1930,9 +1930,9 @@ Then click Submit assignment and confirm its status. Give the instructor access 
 
 Практика: 50 автоматических баллов. Квиз: 50 автоматических баллов.
 
-Квиз: 30 вопросов за 30 минут. 15 правильных → 25 из 50.
+Квиз на английском: 20 вопросов за 20 минут, одна попытка. 10 вопросов — с выбором одного правильного ответа, 10 — с числовым ответом. 10 правильных ответов → 25 из 50.
 
-Квиз имеет одну попытку. Каждый правильный ответ даёт 1 сырой балл, неправильный или пустой — 0. Итог raw/30×50. Практика использует опубликованные автоматические группы из RUBRIC.md. Ручных баллов и устного восстановления нет. Обязательные материалы и требуемые алгоритмы сохраняются.
+Квиз имеет одну попытку. Каждый правильный ответ даёт 1 сырой балл, неправильный или пустой — 0. Итог correct/20×50. Практика использует опубликованные автоматические группы из RUBRIC.md. Ручных баллов и устного восстановления нет. Обязательные материалы и требуемые алгоритмы сохраняются.
 
 Проверьте шесть методов, tests/student, английский ANALYSIS.md и две ссылки одного SHA.
 
@@ -1940,9 +1940,9 @@ Then click Submit assignment and confirm its status. Give the instructor access 
 
 Practical: 50 automatic points. Quiz: 50 automatic points.
 
-Quiz: 30 questions in 30 minutes. 15 correct → 25 out of 50.
+Quiz in English: 20 questions in 20 minutes, one attempt. There are 10 single-answer multiple-choice questions and 10 numerical questions. 10 correct answers → 25 out of 50.
 
-The quiz has one attempt. A correct answer gives 1 raw point, an incorrect or blank answer gives 0. Scale as raw/30×50. The practical uses the published automatic groups in RUBRIC.md. There are no manual points or oral score recovery. Required deliverables and methods still apply.
+The quiz has one attempt. A correct answer gives 1 raw point, an incorrect or blank answer gives 0. Scale as correct/20×50. The practical uses the published automatic groups in RUBRIC.md. There are no manual points or oral score recovery. Required deliverables and methods still apply.
 
 Check six methods, tests/student, English ANALYSIS.md and two links for one SHA.
 
