@@ -1932,7 +1932,7 @@ Then click Submit assignment and confirm its status. Give the instructor access 
 
 Квиз на английском: 20 вопросов за 20 минут, одна попытка. 15 вопросов — с одним правильным ответом, 5 — с несколькими правильными ответами. 10 первичных баллов → 25 из 50.
 
-Максимум за вопрос — 1 первичный балл. В одиночном выборе верный ответ даёт 1, неверный — 0. В множественном выборе +1 делится поровну между верными вариантами, а −1 — между неверными. Суммируются значения отмеченных вариантов, минимум за вопрос — 0. Пропуск и выбор всех вариантов дают 0. Итог raw/20×50. Практика использует опубликованные автоматические группы из RUBRIC.md. Ручных баллов и устного восстановления нет. Обязательные материалы и требуемые алгоритмы сохраняются.
+Максимум за вопрос — 1 первичный балл. В одиночном выборе верный ответ даёт 1, неверный — 0. В вопросах с двумя верными вариантами каждая верная отметка даёт 0,50, а каждая неверная вычитает 0,25. При трёх верных вариантах используются веса +1/3 и −1/6. Суммируются веса отмеченных вариантов; минимум за вопрос — 0. Пропуск даёт 0. Выбор всех вариантов даёт соответственно 0,25 или примерно 0,67. Для полного балла нужно отметить все верные варианты и ни одного неверного. Итог raw/20×50. Практика использует опубликованные автоматические группы из RUBRIC.md. Ручных баллов и устного восстановления нет. Обязательные материалы и требуемые алгоритмы сохраняются.
 
 Проверьте шесть методов, tests/student, английский ANALYSIS.md и две ссылки одного SHA.
 
@@ -1942,7 +1942,7 @@ Practical: 50 automatic points. Quiz: 50 automatic points.
 
 Quiz in English: 20 questions in 20 minutes, one attempt. There are 15 single-answer questions and 5 multiple-response questions. 10 raw marks → 25 out of 50.
 
-Each question is worth 1 raw mark. Single-answer questions earn 1 for the correct choice and 0 otherwise. In multiple-response questions, correct options share +1 mark equally and incorrect options share −1 mark equally; sum selected values, with a minimum of 0 for the question. Blank answers and selecting every option earn 0. Scale as raw/20×50. The practical uses the published automatic groups in RUBRIC.md. There are no manual points or oral score recovery. Required deliverables and methods still apply.
+Each question is worth 1 raw mark. Single-answer questions earn 1 for the correct choice and 0 otherwise. In multiple-response questions with two correct options, each selected correct option earns 0.50 and each selected incorrect option deducts 0.25. With three correct options, the weights are +1/3 and −1/6. Add the selected weights; the minimum question score is 0. Blank answers earn 0. Selecting every option earns 0.25 or approximately 0.67, respectively. Full credit requires all correct options and no incorrect options. Scale as raw/20×50. The practical uses the published automatic groups in RUBRIC.md. There are no manual points or oral score recovery. Required deliverables and methods still apply.
 
 Check six methods, tests/student, English ANALYSIS.md and two links for one SHA.
 
