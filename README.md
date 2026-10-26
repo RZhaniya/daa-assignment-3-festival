@@ -24,6 +24,8 @@ Follow the syllabus AI policy: written acknowledgement of tools and contribution
 
 ## Quiz preparation
 
+[Defence practice: 20 questions with answers and explanations (English)](docs/A3_Defence_Practice_EN.pdf). Try the paper in 20 minutes before reading the key.
+
 The [Assignment 3 defence quiz](https://lms.astanait.edu.kz/mod/quiz/view.php?id=93521) is in English: 20 questions in 20 minutes, with one attempt. There are 15 single-answer questions and 5 multiple-response questions (select all that apply). Each question is worth 1 raw mark. Single-answer questions earn 1 for the correct choice and 0 otherwise. In multiple-response questions with two correct options, each selected correct option earns 0.50 and each selected incorrect option deducts 0.25. With three correct options, the weights are +1/3 and −1/6. Add the selected weights; the minimum question score is 0. Blank answers earn 0. Selecting every option earns 0.25 or approximately 0.67, respectively. Full credit requires all correct options and no incorrect options. The quiz mark is `raw / 20 × 50`, up to 50 points.
 
 [Practice A (English / Russian)](docs/A3_Practice_A_EN_RU.pdf) · [Practice B (English / Russian)](docs/A3_Practice_B_EN_RU.pdf). Each contains 30 additional practice questions with answers and explanations on different examples. These practice sets do not reproduce the format or length of the graded attempt. [Common pitfalls](docs/Common_Pitfalls.pdf).
